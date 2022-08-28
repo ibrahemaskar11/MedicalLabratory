@@ -1,0 +1,346 @@
+@media screen and (max-width:600px) {
+
+
+    .hero{
+    width: 100%;
+}
+.hero-img-container {
+    background: rgba(17, 24, 39, 0.9);
+    width: 100%;
+    position: absolute;
+  }
+  .hero-content {
+    max-width: var(--max-width-lg);
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    color: white;
+    padding: 18rem 0rem;
+    text-align: center;
+  }
+  .hero-content h3 {
+    color: var(--slate);
+    font-size: 1rem;
+  }
+  .hero-content h1 {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+  .hero-content p {
+    margin-top: 2rem;
+    font-size: .75rem;
+    color: var(--slate);
+  }
+  .btn-book {
+    margin-top: .5rem;
+    font-size: .5rem;
+    /* border-radius: 0.375rem; */
+    padding: .5rem 1rem;
+    font-size: .85rem;
+    font-weight: 400;
+    color: var(--whitish);
+    border-bottom: 2px solid white;
+  
+    position: relative;
+  }
+  .about {
+    padding: 8rem 2rem;
+    width: 100%;
+  }
+ 
+  .about-container h1 {
+    
+    text-transform: capitalize;
+    font-size: 1.3rem;
+    line-height: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+  }
+  .about-container p {
+    width: fit-content;
+    color: rgb(100, 116, 139);
+    font-size: .9rem;
+    line-height: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .about-details {
+    display: grid;
+    grid-template-columns: 2fr 2fr ;
+    gap: 1rem;
+  
+    margin-bottom: 3rem;
+  }
+  .about-details-item {
+    display: flex;
+
+    padding: 2rem 4rem;
+  
+    border-radius: 0.65rem;
+
+  }
+  .about-details-item h3:nth-child(1) {
+    color: var(--indigo);
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 0;
+    margin-bottom: 3rem;
+  }
+
+
+}
+
+
+
+
+
+
+@media screen and (min-width:601px)  and (max-width:1200px) {
+    
+    .hero{
+        width: 100%;
+    }
+    .hero-img-container {
+        background: rgba(17, 24, 39, 0.9);
+        width: 100%;
+        position: absolute;
+      }
+    
+      .hero-content h3 {
+        color: var(--slate);
+        font-size: 1.4rem;
+      }
+      .hero-content h1 {
+        margin-top: 1.2rem;
+        font-size: 1.9rem;
+        font-weight: 900;
+      }
+      .hero-content p {
+        margin-top: 1.5rem;
+        font-size: .75rem;
+        color: var(--slate);
+      }
+      .btn-book {
+        margin-top: .5rem;
+        font-size: .5rem;
+        /* border-radius: 0.375rem; */
+        padding: .5rem 1rem;
+        font-size: .95rem;
+        font-weight: 400;
+        color: var(--whitish);
+        border-bottom: 2px solid white;
+      
+        position: relative;
+      }
+      .about {
+        padding: 8rem 2rem;
+        width: 100%;
+      }
+     
+      .about-container h1 {
+        
+        text-transform: capitalize;
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 2.5rem;
+      }
+      .about-container p {
+        width: fit-content;
+        color: rgb(100, 116, 139);
+        font-size: 1.2rem;
+        line-height: 1.3rem;
+        margin-bottom: 3rem;
+      }
+      .about-details {
+        display: grid;
+        grid-template-columns: 2fr 2fr ;
+        gap: 1.2rem;
+      
+        margin-bottom: 3rem;
+      }
+      .about-details-item {
+        display: flex;
+    
+        padding: 2rem 4rem;
+      
+        border-radius: 0.65rem;
+    
+      }
+      .about-details-item h3:nth-child(1) {
+        color: var(--indigo);
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 0;
+        margin-bottom: 3rem;
+      }
+
+    }
+    @media screen  and (min-width:901px) and (max-width:1200px) {
+    
+        .hero{
+            width: 100%;
+        }
+        .hero-img-container {
+            background: rgba(17, 24, 39, 0.9);
+            width: 100%;
+            position: absolute;
+          }
+        
+          .hero-content h3 {
+            color: var(--slate);
+            font-size: 1.3rem;
+          }
+          .hero-content h1 {
+            margin-top: 1.5rem;
+            font-size: 2.1rem;
+            font-weight: 900;
+          }
+          .hero-content p {
+            margin-top: 1.4rem;
+            font-size: 1rem;
+            color: var(--slate);
+          }
+          .btn-book {
+            margin-top: .8rem;
+            font-size: .8rem;
+            /* border-radius: 0.375rem; */
+            padding: .8rem 1.2rem;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--whitish);
+            border-bottom: 2px solid white;
+          
+            position: relative;
+          }
+          .about {
+            padding: 8rem 2rem;
+            width: 100%;
+          }
+         
+          .about-container h1 {
+            
+            text-transform: capitalize;
+            font-size: 1.8rem;
+            line-height: 2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+          }
+          .about-container p {
+            width: fit-content;
+            color: rgb(100, 116, 139);
+            font-size: 1.6rem;
+            line-height: 1.6rem;
+            margin-bottom: 3rem;
+          }
+          .about-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 1.2rem;
+          
+            margin-bottom: 3rem;
+          }
+          .about-details-item {
+            display: flex;
+        
+            padding: 2.5rem 4.5rem;
+          
+            border-radius: 0.65rem;
+        
+          }
+          .about-details-item h3:nth-child(1) {
+            color: var(--indigo);
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 0;
+            margin-bottom: 3rem;
+          }
+    
+        }
+        @media screen  and (min-width:1201px) and (max-width:1600px) {
+    
+            .hero{
+                width: 100%;
+            }
+            .hero-img-container {
+                background: rgba(17, 24, 39, 0.9);
+                width: 100%;
+                position: absolute;
+              }
+            
+              .hero-content h3 {
+                color: var(--slate);
+                font-size: 1.7rem;
+              }
+              .hero-content h1 {
+                margin-top: .1rem;
+             
+                font-size: 2.4rem;
+                font-weight: 900;
+              }
+              .hero-content p {
+                margin-top: .1rem;
+                font-size: 1.4rem;
+                color: var(--slate);
+              }
+              .btn-book {
+                margin-top: .1rem;
+                font-size: 1rem;
+                /* border-radius: 0.375rem; */
+                padding: 1em .8rem;
+                font-size: 1.6rem;
+                font-weight: 400;
+                color: var(--whitish);
+                border-bottom: 2px solid white;
+              
+                position: relative;
+              }
+              .about {
+                padding: 8rem 2rem;
+                width: 100%;
+              }
+             
+              .about-container h1 {
+                
+                text-transform: capitalize;
+                font-size: 2.8rem;
+                line-height: 2.4rem;
+                font-weight: 700;
+                margin-bottom: 2.8rem;
+              }
+              .about-container p {
+                width: fit-content;
+                color: rgb(100, 116, 139);
+                font-size: 2rem;
+                line-height: 2rem;
+                margin-bottom: 3rem;
+              }
+              .about-details {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                gap: 1.6rem;
+              
+                margin-bottom: 3rem;
+              }
+              .about-details-item {
+                display: flex;
+            
+                padding: 4rem 6rem;
+              
+                border-radius: 0.65rem;
+            
+              }
+              .about-details-item h3:nth-child(1) {
+                color: var(--indigo);
+                font-size: 4rem;
+                font-weight: 700;
+                line-height: 0;
+                margin-bottom: 3rem;
+              }
+        
+            }
