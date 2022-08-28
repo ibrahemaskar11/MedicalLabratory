@@ -259,6 +259,7 @@ ul {
   line-height: 0;
   color: var(--slate-500);
 }
+/* ////////////////////////////// */
 .services {
   padding: 8rem 2rem;
   width: 100%;
@@ -333,7 +334,7 @@ ul {
   margin-bottom: 1rem;
 }
 .service p {
-  color: var(--mostly-black);
+
   font-size: 1.375rem;
   font-weight: 500;
 }
