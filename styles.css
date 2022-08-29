@@ -633,8 +633,11 @@ ul {
 .footer-company {
   grid-column: 3/4;
 }
-.footer-subscribe {
+.footer-legal {
   grid-column: 4/5;
+}
+.footer-subscribe {
+  grid-column: 5/6;
 }
 .footer-subscribe h3 {
   font-weight: 600;
