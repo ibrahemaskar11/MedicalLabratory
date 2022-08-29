@@ -1,6 +1,6 @@
 /* extra small devices */
 
-@media screen and (max-width:600px) {
+@media screen and (min-width:0)and (max-width:600px) {
     .hero{
       padding: 40px 0; 
     width: 100%;
@@ -436,7 +436,7 @@ padding:0;
 /* ///////////// */
 /*   //////  */
 /* ///////////////////////////////////////////////////////////////////// */
-@media screen and (min-width:600px)   {
+@media screen and (min-width:601px) and(max-width:768px))  {
     
   .hero{
     padding: 55px 0; 
@@ -877,7 +877,7 @@ color: var(--whitish);
 /*   //////  */
 /* ///////////////////////////////////////////////////////////////////// */
 
-    @media screen  and (min-width:768px) {
+    @media screen  and (min-width:769px) and (max-width:992){
     
       .hero{
         padding: 60px 0; 
@@ -1320,7 +1320,7 @@ color: var(--whitish);
 /*   //////  */
 /* ///////////////////////////////////////////////////////////////////// */
 
-    @media screen  and (min-width:992px) {
+    @media screen  and (min-width:993px) and (max-width:1200) {
     
       .hero{
         width: 100%;
@@ -1797,207 +1797,3 @@ color: var(--whitish);
             }
 
 
-/* ///////////////////////////////////////// */
-
-/*    ////// */
-/* larger devices */
-/* ///////////// */
-/*   //////  */
-/* ///////////////////////////////////////////////////////////////////// */
-            @media only screen and (min-width: 1200px) {
-
-             
-  .hero{
-        width: 100%;
-    }
- 
-      .hero-content {
-      
-       
-        padding: 18rem 0rem;
-     
-      }
-      .hero-content h3 {
-    
-        font-size: 2rem;
-      }
-      .hero-content h1 {
-        margin-top: 1rem;
-        font-size: 3rem;
-        font-weight: 900;
-      }
-      .hero-content p {
-        margin-top: 2rem;
-        font-size: 1.5rem;
-     
-      }
-      .btn-book {
-        margin-top: 1rem;
-        font-size: 1rem;
-        /* border-radius: 0.375rem; */
-        padding: 1rem 2rem;
-        font-size: 1.25rem;
-     
-  
-     
-
-      
-
-      }
-      .about {
-        padding: 8rem 2rem;
-        width: 100%;
-      }
-     
-      .about-container h1 {
-        
-      
-        font-size: 3rem;
-        line-height: 1rem;
-        font-weight: 700;
-        margin-bottom: 3.5rem;
-      }
-      .about-container p {
-        
-        font-size: 1.875rem;
-  line-height: 2.25rem;
-  margin-bottom: 3rem;
-      }
-      .about-details {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr ;
-        gap: 2rem;
-      
-        margin-bottom: 3rem;
-      }
-      
-      .about-details-item {
- 
-    
-        padding: 3rem 5rem;
-      
-
-    
-      }
-      .about-details-item h3:nth-child(1) {
-
-        font-size: 3.5rem;
-        font-weight: 700;
-        line-height: 0;
-        margin-bottom: 3rem;
-      }
-    .services{
-      padding: 8rem 2rem;
-    }
-    .services-container {
-      max-width: 1480px;
-     
-    }
-    .services h3 {
-    
-      font-weight: 500;
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .services h1 {
-      font-size: 3rem;
-    
-      letter-spacing: 0.2rem;
-      margin-bottom: 3rem;
-    }
-    
-    .services-box {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr ;
-      column-gap: 2rem;
-      row-gap: 2rem;
-    }
-    .service {
-      
-      width: 100%;
-    }
-    .service img {
-      width: 50px;
-      height: 50px;
-    }
-    .service img:nth-child(1) {
-      width: 40px;
-      height: 40px;
-    }
-    .serivce-img-container {
-      padding: 1rem 1rem;
-      border-radius: 50%;
-    }
-    .service h3 {
-      color: #222;
-      font-size: 2rem;
-      padding-top: 12px;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    .service p {
-     
-      font-size: 1.375rem;
-      font-weight: 500;
-    }
-    .pricing {
-      padding: 8rem 2rem;
-      width: 100%;
-    }
-    .pricing-container h3:nth-child(1) {
-    
-    
-      font-weight: 300;
-      margin-bottom: 2rem;
-      font-size: 3rem;
-      letter-spacing: 0.2rem;
-    }
-    .pricing-container h1 {
-      font-size: 4rem;
-    
-    
-    }
-    .pricing-container p {
-      font-size: 2rem;
-    
-      margin-top: 1.5rem;
-    
-      margin-bottom: 2rem;
-    }
-    .pricing-plan-container {
-     
-      grid-template-columns: 1fr 1fr 1fr;
-      margin: 1rem 0;
-      row-gap: 2rem;
-      column-gap: 2rem;
-      
-    }
-    .pricing-plan {
-      padding: 2rem;
-    }
-    .plan-content p {
-      font-size: 2.5rem;
-      line-height: 1;
-      font-weight: 700;
-    
-      padding: 1rem 0;
-    }
-      .plan-content span {
-        margin-left: 0.5rem;
-        font-size: 1.25rem;
-        line-height: 1.75rem;
-     
-      }
-      .plan-content h3 {
-        font-size: 1.25rem;
-        line-height: 2rem;
-        padding: 1rem 0;
-      }
-      .plan-list {
-        font-size: 1.25rem;
-        line-height: 2rem;
-        font-weight: 500;
-      }
-
-
-            }
