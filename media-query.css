@@ -365,9 +365,10 @@ padding: .5rem;
   grid-column: 1/2;
   text-align: center;
   grid-row: 1/2;
+
 }
-.footer-contact-us li{
-  text-align: center;
+.footer-contact-us h3 {
+padding-right: 2%;
 }
 
 .footer-account {
@@ -386,20 +387,23 @@ grid-row: 2/2;
 
 .footer-company {
   grid-column: 2/2;
-  text-align: center;
+
   grid-row: 1/2;
 }
 .footer-company li{
-  text-align: center;
+
 }
 .footer-legal {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 7%;
   grid-column: 2/2;
   padding-top:2rem ;
   grid-row: 2/2;
 }
-.footer-legal li{
-padding-left: 14%;
+.footer-legal h3{
+padding-left: 2%;
 }
 
 .footer-subscribe {
