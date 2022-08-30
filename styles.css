@@ -832,6 +832,29 @@ ul {
   cursor: pointer;
 }
 /* //////////////////////////////////////////////////////////user page///////////////////////////////////////// */
+.home-group h1 {
+  font-size: 1.75rem;
+  color: var(--slate-900);
+}
+.home-group {
+  max-width: var(--max-width-lg);
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: white;
+  margin-top: 1rem;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  border-radius: 0.75rem;
+}
+
+.upage-right-group {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border-width: 2px;
+}
+
+
 .basic-ul {
   line-height: 200%;
   width: 100%;
@@ -996,7 +1019,7 @@ margin-top: 3%;
   font-weight: 600;
 
 }
-
+/*//////////////////////////////////////////////////// admin tables///////////////////////////////////// */
 .content-table {
   width: 100%;
   text-align: center;
