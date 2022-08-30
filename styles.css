@@ -972,12 +972,14 @@ margin-top: 3%;
   font-size: 132px;
 
   font-weight: 600;
+  
+
   color: rgb(206, 202, 235)
 
-
-
 }
-
+.blue{
+  color: rgb(206, 202, 235)
+}
 .know-me {
   position: absolute;
 
@@ -991,5 +993,9 @@ margin-top: 3%;
   font-size: 36px;
 
   font-weight: 600;
+
+}
+#bor-left{
+  border-left:solid;
 
 }
