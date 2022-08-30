@@ -1079,3 +1079,9 @@ margin-top: 3%;
   filter: var(--drop-shadow-lg);
   font-size: 1rem;
 }
+.file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
