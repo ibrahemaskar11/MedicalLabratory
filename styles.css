@@ -72,22 +72,21 @@ ul {
   border-bottom: 2px solid rgb(199, 199, 200);
   padding: 8px 0;
   width: 100%;
-  
 }
-.navbar-mobile__actions{
+.navbar-mobile__actions {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-.sign-in__mobile{
+.sign-in__mobile {
   background-color: transparent;
   color: var(--indigo);
   padding: 0.75rem 0;
   border: 2px solid var(--indigo);
   border-radius: 0.375rem;
 }
-.sign-up__mobile{
+.sign-up__mobile {
   color: var(--whitish);
   background: var(--indigo);
   border: 2px solid var(--indigo);
@@ -740,14 +739,7 @@ ul {
 .footer {
   cursor: default;
 }
-<<<<<<< Updated upstream
-.navbar-right span {
-  display: block;
-  width: 35px;
-  height: 10px;
-  color: black;
-  border-top: 3px solid black;
-=======
+
 .signup-page {
   background-color: rgb(243 244 246);
   min-height: screen;
@@ -837,5 +829,4 @@ ul {
 }
 .signup__providers svg:hover {
   cursor: pointer;
->>>>>>> Stashed changes
 }
