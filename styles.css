@@ -18,6 +18,7 @@ ul {
   padding: 0;
   margin: 0;
 }
+
 :root {
   --indigo: rgb(79, 70, 229);
   --indigo-200: rgb(199 210 254);
@@ -995,7 +996,86 @@ margin-top: 3%;
   font-weight: 600;
 
 }
-#bor-left{
-  border-left:solid;
 
+.content-table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  margin: 0px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.content-table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+.up-user {
+  margin-left: 28%;
+
+  color: var(--whitish);
+  background: var(--indigo);
+  border: 2px solid var(--indigo);
+  border-radius: 0.375rem;
+   padding: 0.55rem 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.del-user {
+  color: var(--whitish);
+  background: rgb(174, 91, 91);
+  border: 2px solid rgb(174, 91, 91);
+  border-radius: 0.375rem;
+  padding: 0.55rem 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.add-more{
+  color: var(--whitish);
+  background: var(--indigo);
+  border: 2px solid var(--indigo);
+  border-radius: 0.375rem;
+  padding: 0.2rem .6rem;
+  font-size: .8rem;
+  font-weight: 400;
+}
+.table-div{
+  margin-bottom: 12%;
+}
+
+.navbar-admin {
+  width: 100%;
+  background: var(--zinc-200);
+  position: static;
+  z-index: 10;
+  height: 80px;
+  filter: var(--drop-shadow-lg);
+  font-size: 1rem;
 }
