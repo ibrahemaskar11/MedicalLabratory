@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,25 +11,50 @@
   </head>
   <body>
     <nav class="navbar">
+      <div class="navbar-container">  
       <div class="navbar-left">
         <h1>Edge.</h1>
-        <ul class="nav-list">
+        <div class="">
+        <ul class="nav-list ">
           <li><a href="#"> Home</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Services</a></li>
           <li><a href="#">Pricing</a></li>
           <li><a href="#">Contact us</a></li>
         </ul>
+        </div>
       </div>
-      <div class="navbar-right">
+      <div class="">
+      <div class="navbar-right ">
         <button class="btn sign-in">Sign In</button>
-        <button class="btn sign-up">Sign Up</button>
+        <a class="btn sign-up" href="/signup.html" target="_blank">Sign Up</a>
+      </div>
+      </div>
+      <!-- <div class="navbar-right">
+        <div class="navbar-btn hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 30 30" width="36px" height="36px"><path d="M 3 7 A 1.0001 1.0001 0 1 0 3 9 L 27 9 A 1.0001 1.0001 0 1 0 27 7 L 3 7 z M 3 14 A 1.0001 1.0001 0 1 0 3 16 L 27 16 A 1.0001 1.0001 0 1 0 27 14 L 3 14 z M 3 21 A 1.0001 1.0001 0 1 0 3 23 L 27 23 A 1.0001 1.0001 0 1 0 27 21 L 3 21 z"/></svg>
+        </div>
+        
+      </div> -->
+      </div>
+      <div class="navbar-mobile hidden">
+        <ul class="navbar-mobile__list">
+          <li><a href="#"> Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Contact us</a></li>
+        </ul>
+        <div class="navbar-mobile__actions">
+            <button class=" sign-in__mobile">Sign In</button>
+            <button class=" sign-up__mobile">Sign Up</button>
+        </div>
       </div>
     </nav>
     <main>
       <section class="hero" id="hero">
         <div class="hero-img-container">
-          <img class="hero-img" src="assets/background.jpg" alt="" />
+          <img class="hero-img" src="/assets/background.jpg" alt="" />
         </div>
         <div class="hero-content">
           <div class="hero-text">
