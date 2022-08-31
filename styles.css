@@ -1,4 +1,4 @@
-* {
+* {scroll-behavior: smooth;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -12,6 +12,7 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
   background-color: #f3f3f3;
+scroll-behavior: smooth;
 }
 ul {
   list-style: none;
