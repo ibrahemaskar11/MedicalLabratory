@@ -1,3 +1,59 @@
+<?php
+session_start();
+
+if(isset($_POST['submit'])){
+    $errors=[];
+    if(!isset($_SESSION['user'])){
+        $errors[]= 'You need to login first';
+        exit();
+    }
+    include 'conn-db.php';
+    $username=filter_var($_POST['username'],FILTER_SANITIZE_STRING);
+    $phoneNumber=filter_var($_POST['phone'],FILTER_SANITIZE_STRING);
+    $email=filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
+    $selected = $_POST['disease'];
+    $time = $_POST['time'];
+    $date = $_POST['date'];
+    $userid = $_SESSION['user']['userid'];
+  if(empty($username)){
+    $errors[]="Please provide your name";
+  }
+  if(strlen($username)>100){
+    $errors[]="Name can not exceed 100 character";
+  }
+  
+  if(empty($email)){
+    $errors[]="Please provide your email";
+  }
+  if(filter_var($email,FILTER_VALIDATE_EMAIL) === false){
+    $errors[]="Enter a valid Email";
+  }
+  if(empty($phoneNumber)){
+    $errors[]="Please provide your phone number";
+  }
+  if(empty($time)){
+    $errors[]="Please provide time of reservation";
+  }
+  if(empty($date)){
+    $errors[]="Please provide the date";
+  }
+  if(empty($errors)){
+    try{
+    $statement = "INSERT INTO appointments(username, email, phone_number, test_type, appointment_date, time, userid) VALUES ('$username', '$email', '$phoneNumber', '$selected', '$date', '$time', '$userid')";
+    $conn->prepare($statement)->execute();
+    $_POST['username']='';
+    $_POST['email']='';
+    $_POST['phone']='';
+    $_POST['disease']='';
+    $_POST['date']='';
+    $_POST['time']='';
+    header('location:profile.php');
+    }catch (Exception $err){
+        echo $err;
+    }
+  }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,42 +65,43 @@
     <link rel="stylesheet" href="media-query.css" />
     <title>Edge Laboratory</title>
   </head>
-  
   <body>
     <nav class="navbar">
       <div class="navbar-container">  
       <div class="navbar-left">
         <h1>Edge.</h1>
-        <div class="">
+        <div class="nav-list-container">
         <ul class="nav-list ">
+          <li><a href="#"> Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Contact us</a></li>
+        </ul>
+        </div>
+      </div>
+      <div class="navbar-right__actions ">
+      <div class="navbar-right ">
+        <a class="btn sign-in" href="http://localhost:1337/MedicalLaboratory/login.php" target="_blank">Sign In</a>
+        <a class="btn sign-up" href="http://localhost:1337/MedicalLaboratory/signup.php" target="_blank">Sign Up</a>
+      </div>
+      </div>
+      <div class="navbar-right ">
+        <div class="navbar-btn ">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+      </div>
+      </div>
+      <div class="navbar-mobile ">
+        <ul class="navbar-mobile__list hidden" id="list-mobile">
           <li><a href="#hom"> Home</a></li>
           <li><a href="#abt">About</a></li>
           <li><a href="#srvs">Services</a></li>
           <li><a href="#pri">Pricing</a></li>
           <li><a href="#us">Contact us</a></li>
-        </ul>
-        </div>
-      </div>
-      <div class="">
-      <div class="navbar-right ">
-        <button class="btn sign-in">Sign In</button>
-        <a class="btn sign-up" href="/signup.html" target="_blank">Sign Up</a>
-      </div>
-      </div>
-      <!-- <div class="navbar-right">
-        <div class="navbar-btn ">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 30 30" width="36px" height="36px"><path d="M 3 7 A 1.0001 1.0001 0 1 0 3 9 L 27 9 A 1.0001 1.0001 0 1 0 27 7 L 3 7 z M 3 14 A 1.0001 1.0001 0 1 0 3 16 L 27 16 A 1.0001 1.0001 0 1 0 27 14 L 3 14 z M 3 21 A 1.0001 1.0001 0 1 0 3 23 L 27 23 A 1.0001 1.0001 0 1 0 27 21 L 3 21 z"/></svg>
-        </div>
-        
-      </div> -->
-      </div>
-      <div class="navbar-mobile hidden">
-        <ul class="navbar-mobile__list">
-            <li><a href="#hom"> Home</a></li>
-            <li><a href="#abt">About</a></li>
-            <li><a href="#srvs">Services</a></li>
-            <li><a href="#pri">Pricing</a></li>
-            <li><a href="#us">Contact us</a></li>
         </ul>
         <div class="navbar-mobile__actions">
             <button class=" sign-in__mobile">Sign In</button>
@@ -53,11 +110,11 @@
       </div>
     </nav>
     <main>
-      <section class="hero" id="hero" >
-        <div class="hero-img-container"id="hom">
-          <img class="hero-img" src="/assets/background.jpg" alt="" />
+      <section class="hero" id="hero">
+        <div class="hero-img-container">
+          <img class="hero-img" src="http://localhost:1337/MedicalLaboratory/assets/background.jpg" alt="" />
         </div>
-        <div class="hero-content">
+        <div class="hero-content" id="hom">
           <div class="hero-text">
             <h3>Edge Laboratories</h3>
             <h1>Edge Laboratories is Specialized in Medical Tests and Research</h1>
@@ -106,7 +163,7 @@
                     <div class="service">
                         <div class="service-left">
                             <div class="serivce-img-container">
-                            <img src="assets/icons8-optical-microscope-64.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/icons8-optical-microscope-64.png" alt="">
                             </div>
                         </div>
                         <div class="service-right">
@@ -117,7 +174,7 @@
                     <div class="service">
                         <div>
                             <div class="serivce-img-container">
-                            <img src="assets/icons8-biology-64.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/icons8-biology-64.png" alt="">
                             </div>
                         </div>
                         <div>
@@ -128,7 +185,7 @@
                     <div class="service">
                         <div>
                             <div class="serivce-img-container">
-                             <img src="assets/icons8-diabetes-64.png" alt="">
+                             <img src="http://localhost:1337/MedicalLaboratory/assets/icons8-diabetes-64.png" alt="">
                             </div>
                         </div>
                         <div>
@@ -139,7 +196,7 @@
                     <div class="service">
                         <div>
                          <div class="serivce-img-container">
-                            <img src="assets/icons8-chemistry-64.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/icons8-chemistry-64.png" alt="">
                          </div>
                         </div>
                         <div>
@@ -150,7 +207,7 @@
                     <div class="service">
                         <div>
                             <div class="serivce-img-container">
-                            <img src="assets/icons8-lungs-64.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/icons8-lungs-64.png" alt="">
                             </div>
                         </div>
                         <div>
@@ -162,7 +219,7 @@
                         <div>
                         <div class="serivce-img-container">
 
-                            <img src="assets/icons8-anatomy-64.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/icons8-anatomy-64.png" alt="">
                             </div>
                         </div>
                         <div>
@@ -173,7 +230,7 @@
                 </div>
             </div>
     </section>
-    <section class="pricing"id="pri">
+    <section class="pricing" id="pri">
         <div class="pricing-container">
             <h3>Pricing</h3>   
             <h1>The right price for your needs.</h1>
@@ -185,16 +242,16 @@
                         <p class="price">400 L.E <span class="price-span">/mo</span></p>
                         <h3>400 L.E for a Monthly Cheeckup Including The Following Medical Tests</h3>
                         <ul class="plan-list">
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>  Complete Blood Count</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Prothrombin Time</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Hemoglobin A1C</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Urinalysis</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>  Complete Blood Count</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Prothrombin Time</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Hemoglobin A1C</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Urinalysis</li>
                             
-                            <li style="visibility: hidden;"> <span><img src="assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                            <li style="visibility: hidden;"> <span><img src="assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                            <li style="visibility: hidden;"> <span><img src="assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                            <li style="visibility: hidden;"> <span><img src="assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                            <li style="visibility: hidden;"> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                            <li style="visibility: hidden;"> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                            <li style="visibility: hidden;"> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                            <li style="visibility: hidden;"> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
                         </ul>
                         <button class="btn plan-actions">Get Started</button>
                     </div>
@@ -205,15 +262,15 @@
                         <p class="price">800 L.E <span class="price-span">/mo</span></p>
                         <h3>800 L.E for a Monthly Cheeckup Including The Following Medical Tests</h3>
                         <ul class="plan-list">
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>  Complete Blood Count</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Prothrombin Time</li>
-                             <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Hemoglobin A1C</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Urinalysis</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Comprehensive Metabolic</li>
-                            <li > <span><img src="assets/icons8-done-48.png" alt=""></span>Female General Health Panel</li>
-                            <li style="visibility: hidden;"> <span><img src="assets/icons8-done-48.png" alt=""></span> Transmitted Diaseases</li>
-                            <li style="visibility: hidden;"> <span><img src="assets/icons8-done-48.png" alt=""></span>  Cholesterol Lipid Levels</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>  Complete Blood Count</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Prothrombin Time</li>
+                             <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Hemoglobin A1C</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Urinalysis</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Comprehensive Metabolic</li>
+                            <li > <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Female General Health Panel</li>
+                            <li style="visibility: hidden;"> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span> Transmitted Diaseases</li>
+                            <li style="visibility: hidden;"> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>  Cholesterol Lipid Levels</li>
                             
                         </ul>
                         <button class="btn plan-actions">Get Started</button>
@@ -225,15 +282,15 @@
                         <p class="price">1200 L.E <span class="price-span">/mo</span></p>
                         <h3>1200 L.E for a Monthly Cheeckup Including The Following Medical Tests</h3>
                         <ul class="plan-list">
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>  Complete Blood Count</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Prothrombin Time</li>
-                             <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Hemoglobin A1C</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Urinalysis</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Comprehensive Metabolic</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Female General Health Panel</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span> Transmitted Diaseases</li>
-                            <li> <span><img src="assets/icons8-done-48.png" alt=""></span>Cholesterol Lipid Levels</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>  Complete Blood Count</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Prothrombin Time</li>
+                             <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Hemoglobin A1C</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Urinalysis</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Comprehensive Metabolic</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Female General Health Panel</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span> Transmitted Diaseases</li>
+                            <li> <span><img src="http://localhost:1337/MedicalLaboratory/assets/icons8-done-48.png" alt=""></span>Cholesterol Lipid Levels</li>
                         </ul>
                         <button class="btn plan-actions">Get Started</button>
                     </div>
@@ -241,9 +298,9 @@
             </div>
         </div>
     </section>
-    <section class="contact" id="us">
+    <section class="contact id=" id="us">
         <div class="contact-img-container">
-          <img class="contact-img" src="assets/background2.jpg" alt="" />
+          <img class="contact-img" src="http://localhost:1337/MedicalLaboratory/assets/background2.jpg" alt="" />
         </div>
         <div class="contact-content">
             <h1>Medical Tests Carried Out By Our Expert Lab Scientists</h1>
@@ -251,19 +308,28 @@
             <div class="contact-us-form-group">
                 <div class="contact-us-right-group">
                     <h1>Make an Appointment</h1>
-                    <form action="#" class="contact-form">
+                    <?php 
+                        if(isset($errors)){
+                            if(!empty($errors)){
+                                foreach($errors as $msg){
+                                    echo "<p style='color:red; text-align: center;'>". $msg ."</p>". "<br>";
+                                }
+                            }
+                        }
+                ?>
+                    <form action="index.php" method="POST" class="contact-form">
                         <ul class="contact-form-input">
                             <li>
-                                <input type="text"  placeholder="Your Name">
+                                <input type="text"  placeholder="Your Name" name="username">
                             </li>
                             <li>
-                                <input type="email"  placeholder="Your Email">
+                                <input type="email"  placeholder="Your Email" name="email">
                             </li>
                             <li>
-                                <input type="text"  placeholder="Your Phone Number">
+                                <input type="text"  placeholder="Your Phone Number" name="phone">
                             </li>
                             <li>
-                                <select class="select">
+                                <select class="select" name="disease">
                                     <option value="0">Test Type:</option>
                                     <option value="1">Cardiologists</option>
                                     <option value="2">Dermatologists</option>
@@ -273,22 +339,24 @@
                                     <option value="6">Immunologists</option>
                                 </select>
                             </li>
-                            <li class="address">
-                                <input   type="address" placeholder="address">
+                            <li>
+                                <input  class="date" type="time" placeholder="time"
+                                name="time">
                             </li>
                             <li>
-                                <input  class="date" type="date" placeholder="Date">
+                                <input  class="date" type="date" placeholder="Date"
+                                name="date">
                             </li>
                             
                         </ul>
                         <div class="contact-actions"></div>
-                        <button class="btn btn-appointment btn-action-1">make an appointment</button>
+                        <button class="btn btn-appointment btn-action-1" name="submit" type="submit">make an appointment</button>
                     </form>
                 </div>
                 <div class="contact-us-left-group">
                     <div class="contacts-item">
                         <div class="contacts-item-left">
-                            <img src="assets/pin.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/pin.png" alt="">
                         </div>
                         <div class="contacts-item-right">
                         <h3>OUR ADDRESS</h3>
@@ -299,7 +367,7 @@
                     </div>
                     <div class="contacts-item">
                         <div class="contacts-item-left">
-                            <img src="assets/telephone.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/telephone.png" alt="">
                         </div>
                         <div class="contacts-item-right">
                         <h3>PHONE NUMBER</h3>
@@ -310,7 +378,7 @@
                     </div>
                     <div class="contacts-item">
                         <div class="contacts-item-left">
-                            <img src="assets/mail.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/mail.png" alt="">
                         </div>
                         <div class="contacts-item-right">
                         <h3>EMAIL ADDRESS</h3>
@@ -321,7 +389,7 @@
                     </div>
                     <div class="contacts-item">
                         <div class="contacts-item-left">
-                            <img src="assets/settings.png" alt="">
+                            <img src="http://localhost:1337/MedicalLaboratory/assets/settings.png" alt="">
                         </div>
                         <div class="contacts-item-right">
                         <h3>WORKING HOURS</h3>
@@ -398,5 +466,16 @@
             </div>
         </footer>  
     </main>
+    <script defer>
+        const btn = document.querySelector(".navbar-btn");
+            btn.onclick = function () {
+            if (document.querySelector('.navbar-mobile').style.display !== "none") {
+                document.querySelector('.navbar-mobile').style.display = "none";
+                 }  else {
+                    document.querySelector('.navbar-mobile').style.display = "block";
+                }
+}; 
+    </script>
   </body>
 </html>
+
