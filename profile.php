@@ -494,12 +494,13 @@ deleteButtons.forEach(function(deleteButton) {
 closeButton.onclick = function() {
     modal.style.display = "none";
 }
-window.onclick = function(event) {
-    if (event.target == modal) {
+window.addEventListener("click", function(event) {
+    // Check if the target of the click event is the modal
+    if (event.target === modal) {
+        // Hide the modal
         modal.style.display = "none";
     }
-};
-
+})
 // When the user clicks on confirm, delete the row and close the modal
 confirmButton.onclick = function() {
     // Delete the row here
