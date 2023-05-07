@@ -1,135 +1,204 @@
-<?php
-session_start();
-if(isset($_SESSION['user'])){
+ <?php
+  require_once __DIR__ . '/db/db.php';
+  session_start();
+  if (isset($_SESSION['user'])) {
     header('location:profile.php');
     exit();
-}
-if(isset($_POST['submit'])){
-include 'conn-db.php';
-  $username=filter_var($_POST['username'],FILTER_SANITIZE_STRING);
-  $password=filter_var($_POST['password'],FILTER_SANITIZE_STRING);
-  $age=filter_var($_POST['age'],FILTER_SANITIZE_STRING);
-  $address=filter_var($_POST['address'],FILTER_SANITIZE_STRING);
-  $email=filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
-  
-  $errors=[];
-  if(empty($username)){
-    $errors[]="Please provide your name";
   }
-  if(strlen($username)>100){
-    $errors[]="Name can not exceed 100 character";
-  }
-  
-  if(empty($email)){
-    $errors[]="Please provide your email";
-  }
-  if(empty($age)){
-    $errors[]="Please provide your age";
-  }
-  if(empty($address)){
-    $errors[]="Please provide your address";
-  }
-  if(filter_var($email,FILTER_VALIDATE_EMAIL) === false){
-    $errors[]="Enter a valid Email";
+  if (isset($_POST['signup'])) {
+    $stmt = db_connect();
+    $username = $_POST["username"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $address = $_POST["address"];
+    $birthDate = $_POST["date"];
+    $inputErrors = [];
+    $error = "";
+
+    if (empty($username)) {
+      $error = "Missing credentials";
     }
-    $statement="SELECT email FROM users WHERE email ='$email'";
-    $query=$conn->prepare($statement);
-    $query->execute();
-    $data=$query->fetch();
-       if($data){
-     $errors[]="Email already exists";
-   }
+    if (empty($email)) {
+      $error = "Missing credentials";
+    }
+    if (empty($password)) {
+      $error = "Missing credentials";
+    } else if (empty($address)) {
+      $error = "Missing credentials";
+    } else if (empty($birthDate)) {
+      $error = "Missing credentials";
+    }
+    if (empty($error)) {
+      try {
+        signup($email, $username, $password, $address, $birthDate);
+        header("location: profile.php");
+      } catch (Exception $e) {
+        $error = $e->getMessage();
+      }
+    }
 
-  if(empty($password)){
-    $errors[]="Please provide your password";
-  }elseif(strlen($password)<6){
-    $errors[]="Passwords must be more than 6 characters";
-}
-  if(empty($errors)){
-     $password=password_hash($password,PASSWORD_DEFAULT);
-      $stm="INSERT INTO users (username,email,password,age,address) VALUES ('$username','$email','$password', '$age','$address')";
-      $conn->prepare($stm)->execute();
-      $_POST['username']='';
-      $_POST['email']='';
-      $_POST['password']='';
-      $_POST['age']='';
-      $_POST['address']='';
-      $_SESSION['user']=[
-        "name"=>$username,
-        "email"=>$email,
-        "age"=>$age,
-        "address"=>$address,
-      ];
-      $statement="SELECT * FROM users WHERE email ='$email'";
-      $query=$conn->prepare($statement);
-      $query->execute();
-      $data=$query->fetch();
-      $_SESSION['user']=[
-        "name"=>$username,
-        "userid"=>$data['id'],
-        "age"=>$age,
-        "address"=>$address,
-        "email"=>$email,
-      ];
-      header('location:profile.php');
+    // $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+    // $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+    // $age = filter_var($_POST['age'], FILTER_SANITIZE_STRING);
+    // $address = filter_var($_POST['address'], FILTER_SANITIZE_STRING);
+    // $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+
+    // $errors = [];
+    // if (empty($username)) {
+    //   $errors[] = "Please provide your name";
+    // }
+    // if (strlen($username) > 100) {
+    //   $errors[] = "Name can not exceed 100 character";
+    // }
+
+    // if (empty($email)) {
+    //   $errors[] = "Please provide your email";
+    // }
+    // if (empty($age)) {
+    //   $errors[] = "Please provide your age";
+    // }
+    // if (empty($address)) {
+    //   $errors[] = "Please provide your address";
+    // }
+    // if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+    //   $errors[] = "Enter a valid Email";
+    // }
+    // $statement = "SELECT email FROM users WHERE email ='$email'";
+    // $query = $conn->prepare($statement);
+    // $query->execute();
+    // $data = $query->fetch();
+    // if ($data) {
+    //   $errors[] = "Email already exists";
+    // }
+
+    // if (empty($password)) {
+    //   $errors[] = "Please provide your password";
+    // } elseif (strlen($password) < 6) {
+    //   $errors[] = "Passwords must be more than 6 characters";
+    // }
+    // if (empty($errors)) {
+    //   $password = password_hash($password, PASSWORD_DEFAULT);
+    //   $stm = "INSERT INTO users (username,email,password,age,address) VALUES ('$username','$email','$password', '$age','$address')";
+    //   $conn->prepare($stm)->execute();
+    //   $_POST['username'] = '';
+    //   $_POST['email'] = '';
+    //   $_POST['password'] = '';
+    //   $_POST['age'] = '';
+    //   $_POST['address'] = '';
+    //   $_SESSION['user'] = [
+    //     "name" => $username,
+    //     "email" => $email,
+    //     "age" => $age,
+    //     "address" => $address,
+    //   ];
+    //   $statement = "SELECT * FROM users WHERE email ='$email'";
+    //   $query = $conn->prepare($statement);
+    //   $query->execute();
+    //   $data = $query->fetch();
+    //   $_SESSION['user'] = [
+    //     "name" => $username,
+    //     "userid" => $data['id'],
+    //     "age" => $age,
+    //     "address" => $address,
+    //     "email" => $email,
+    //   ];
+    //   header('location:profile.php');
+    // }
   }
-}
 
-?>
+  ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Sign up</title>
-  </head>
-  <body>
-    <div class="signup-page">
-      <form action="signup.php" class="signup-form" name="POST" method="POST">
-        <div class="form-container">
-          <h1 class="signup-header">Sign up</h1>
-          <?php 
-            if(isset($errors)){
-                if(!empty($errors)){
-                    foreach($errors as $msg){
-                        echo "<p style='color:red; text-align: center;'>". $msg ."</p>". "<br>";
-                    }
-                }
-            }
-        ?>
-          <input type="text"
-            placeholder="Full Name"
-            name="username"
-            value="<?php if(isset($_POST['username'])){echo $_POST['username'];} ?>"
-            />
-          <input type="email"
-           placeholder="Email"  
-           name="email"
-           value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>"
-           />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value="<?php if(isset($_POST['password'])){echo $_POST['password'];} ?>"
-          />
-          <input type="text"
-           placeholder="Age"  
-           name="age"
-           value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>"
-           />
-           <input type="text"
-           placeholder="Address"  
-           name="address"
-           value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>"
-           />
-          <button type="submit" class="btn signup-form__btn" name="submit" value="Register">
-            Create Account
-          </button>
-          <div class="signup__providers--container">
+ <!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+   <meta charset="UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link rel="stylesheet" href="styles.css" />
+   <title>Sign up</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script>
+     $(document).ready(function() {
+       let submit = $('#submit')
+       $("#email").on("keyup", function() {
+         let errorContainer = $('#email-error')
+         setTimeout(() => {
+           console.log("hello");
+           let inputVal = $(this).val();
+           if (inputVal.length > 0 && !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(inputVal))) {
+             $(this).css("border-color", "red");
+             errorContainer.text("please enter a valid email")
+             submit.prop('disabled', true)
+           } else {
+             $(this).css('border-color', 'rgb(203, 213, 225)')
+             errorContainer.text("")
+             submit.prop('disabled', false)
+           }
+         }, 1000)
+
+       });
+       $("#name").on("keyup", function() {
+         setTimeout(() => {
+           let errorContainer = $('#name-error')
+           console.log("hello");
+           var inputVal = $(this).val();
+           if (inputVal.length > 0 && !(/^[a-zA-Z ]{2,30}$/.test(inputVal))) {
+             $(this).css("border-color", "red");
+             errorContainer.text("please enter a valid email")
+             submit.prop('disabled', true)
+           } else {
+             $(this).css('border-color', 'rgb(203, 213, 225)')
+             errorContainer.text("")
+             submit.prop('disabled', false)
+           }
+         }, 1000)
+       });
+       $("#password").on("keyup", function() {
+         let errorContainer = $('#password-error')
+         setTimeout(() => {
+           console.log("hello");
+           let inputVal = $(this).val();
+           if (inputVal.length > 0 && !(/^(?=.{6,16}$)/.test(inputVal))) {
+             $(this).css("border-color", "red");
+             errorContainer.text("Password must be between 6 and 16 characters")
+             submit.prop('disabled', true);
+           } else {
+             $(this).css('border-color', 'rgb(203, 213, 225)')
+             errorContainer.text("")
+             submit.prop('disabled', false)
+           }
+         }, 1000)
+
+       });
+     });
+   </script>
+ </head>
+
+ <body>
+   <div class="signup-page">
+     <form action="signup.php" class="signup-form" name="POST" method="POST">
+       <div class="form-container">
+         <h1 class="signup-header" id="form-error">Sign up</h1>
+         <h3 class="input-error" id="form-error">
+           <?php if (!empty($error)) : ?>
+             <?php echo $error; ?>
+           <?php endif; ?>
+         </h3>
+         <input type="text" id="name" placeholder="Full Name" name="username" />
+         <h3 class="input-error" id="name-error"></h3>
+         <input type="email" id="email" placeholder="Email" name="email" />
+         <h3 class="input-error" id="email-error"></h3>
+         <input type="password" id="password" placeholder="Password" name="password" />
+         <h3 class="input-error" id="password-error"></h3>
+         <input type="text" id="address" placeholder="Address" name="address" />
+         <h3 class="input-error" id="address-error"></h3>
+         <input type="date" id="date" placeholder="date" name="date" />
+         <h3 class="input-error" id="date-error"></h3>
+         <button type="submit" id="submit" class="btn signup-form__btn" name="signup" value="Signup">
+           Create Account
+         </button>
+         <!-- <div class="signup__providers--container">
             <p>or sign up with</p>
             <div class="signup__providers">
               <span
@@ -214,14 +283,14 @@ include 'conn-db.php';
                   /></svg
               ></span>
             </div>
-          </div>
-        </div>
-        <div class="signup__footer">
-          Already have an account?
-          <a class="login__link" href="#"> Log in </a>
-          .
-        </div>
-      </form>
-    </div>
-  </body>
-</html>
+          </div> -->
+         <div class="signup__footer">
+           Already have an account?
+           <a class="login__link" href="http://localhost:8001/MedicalLaboratory/login.php"> Log in </a>
+         </div>
+       </div>
+     </form>
+   </div>
+ </body>
+
+ </html>

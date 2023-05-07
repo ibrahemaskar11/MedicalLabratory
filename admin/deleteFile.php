@@ -9,7 +9,7 @@ if(isset($_POST['submit'])){
     $fileId = $_POST['fileid'];
         $sql = $conn->prepare("DELETE from tests WHERE id = '$fileId'");
         $sql->execute();
-        header("location:/admin/dashboard.php");
+        header("http://localhost:1337/MedicalLaboratory/admin/");
 }
 ?>
 <!DOCTYPE html>

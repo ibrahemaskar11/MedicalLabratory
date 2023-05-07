@@ -1,10 +1,6 @@
 /* extra small devices */
 
 @media screen and (min-width: 0) and (max-width: 600px) {
-  .child1-container{
-    grid-template-columns: 1fr;
-  }
-
   .hero {
     padding: 40px 0;
     width: 100%;
@@ -304,11 +300,7 @@
     border-radius: 0.75rem;
     margin-top: 1rem;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    -webkit-border-radius:;
-    -moz-border-radius:;
-    -ms-border-radius:;
-    -o-border-radius:;
-}
+  }
   .date {
     width: 13.8rem;
     height: 2rem;
@@ -411,11 +403,7 @@
     padding: 0.5rem;
     font-size: 1rem;
     font-weight: 400;
-    -webkit-border-radius:;
-    -moz-border-radius:;
-    -ms-border-radius:;
-    -o-border-radius:;
-}
+  }
 
   .footer-copyright {
     width: 100%;
@@ -452,11 +440,7 @@
     margin-top: 1rem;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     border-radius: 0.75rem;
-    -webkit-border-radius:;
-    -moz-border-radius:;
-    -ms-border-radius:;
-    -o-border-radius:;
-}
+  }
   .name {
     width: 100%;
     border-width: 2px;
@@ -510,12 +494,9 @@
     background-color: #1bac81;
     width: 30%;
     text-align: center;
+
     border-radius: 15%;
-    -webkit-border-radius: 15%;
-    -moz-border-radius: 15%;
-    -ms-border-radius: 15%;
-    -o-border-radius: 15%;
-}
+  }
 
   .rep-card h2 {
     font-size: 18px;
@@ -538,7 +519,6 @@
 /* ///////////////////////////////////////////////////////////////////// */
 
 @media screen and (min-width: 601px) and (max-width: 767px) {
-
   .hero {
     padding: 55px 0;
     width: 100%;
@@ -1574,14 +1554,6 @@
 
     font-weight: 350;
   }
-
-   .parent-container .child1-container {
-    grid-template-columns: 1fr;
-  }
-  .navbar-container {
-    flex-direction: column;
-  }
- 
 }
 
 /* ended */
@@ -2193,21 +2165,3 @@
     font-weight: 350;
   }
 }
-@media only screen and (min-width: 700px) {
-  .navbar-btn{
-    display: none;
-  }
-  .navbar-btn{
-    display: none;
-  }
-  .navbar-right__actions{
-    padding-left: 58%;
-  }
-  .navbar-mobile{
-    display: none;
-  }
-
-
-}
-
-

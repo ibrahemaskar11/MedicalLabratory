@@ -26,7 +26,7 @@ if($_FILES["avatar"]["error"] == UPLOAD_ERR_OK){
         $query=$conn->prepare($sql);
         $query->execute();
         $data=$query->fetch();
-            header('http://localhost:1337/test/admin/');
+            header('http://localhost:1337/MedicalLaboratory/admin/');
 
 }
 ?>

@@ -1,9 +1,9 @@
 <?php
-// session_start();
-// if(!isset($_SESSION['user'])){
-//     header('location:login.php');
-//     exit();
-// }
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('location:login.php');
+    exit();
+}
 //     $tests=['Cardiologists', 'Dermatologists', 'Endocrinologists', 'Gastroenterologists', 'Allergists', 'Immunologists'];
 //     $id = $_SESSION['user']['userid'];
 //     require('conn-db.php');
@@ -56,25 +56,52 @@
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-left">
-                <h1>Edge.</h1>
+                <h1 class="Poiret">edge.</h1>
                 <div class="nav-list-container">
                     <ul class="nav-list ">
-                        <li><a href="#home"> Home</a></li>
-
-                        <li><a href="#reports">Reports</a></li>
-                        <li><a href="#appointments">Appointments</a></li>
-                        <li><a href="#contact">Contact </a></li>
+                        <li><a href="http://localhost:8001/MedicalLaboratory/"> Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact us</a></li>
                     </ul>
                 </div>
             </div>
             <div class="navbar-right__actions ">
                 <div class="navbar-right ">
-
-                    <a class="logout" href="http://localhost:1337/MedicalLaboratory/signup.php"
-                        target="_blank">Logout</a>
+                    <?php if (!isset($_SESSION['user'])) : ?>
+                        <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/login.php">Sign In</a>
+                        <a class="btn sign-up" href="http://localhost:8001/MedicalLaboratory/signup.php">Sign Up</a>
+                    <?php else : ?>
+                        <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/logout.php">Logout</a>
+                        <!-- <a class="account-btn" href="http://localhost:8001/MedicalLaboratory/profile.php">
+                            <img src="./assets/icons8-user-24.png" alt="">
+                        </a> -->
+                    <?php endif; ?>
                 </div>
             </div>
+            <div class="navbar-right ">
+                <div class="navbar-btn ">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
 
+            </div>
+        </div>
+        <div class="navbar-mobile ">
+            <ul class="navbar-mobile__list hidden" id="list-mobile">
+                <li><a href="#hom"> Home</a></li>
+                <li><a href="#abt">About</a></li>
+                <li><a href="#srvs">Services</a></li>
+                <li><a href="#pri">Pricing</a></li>
+                <li><a href="#us">Contact us</a></li>
+            </ul>
+            <div class="navbar-mobile__actions">
+                <button class=" sign-in__mobile">Sign In</button>
+                <button class=" sign-up__mobile">Sign Up</button>
+            </div>
+        </div>
     </nav>
 
     <section class="contact" id="home">
@@ -85,34 +112,34 @@
             <h1>Medical Tests Carried Out By Our Expert Lab Scientists</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis itaque facilis eveniet numquam
                 consequatur sed quam recusandae quos atem.</p>
-            <div class="contact-us-form-group">
+            <div class="profile-card">
 
 
-                <div class="contact-us-right-group">
+                <div class="profile-card-right-group">
 
 
                     <div>
                         <ul class="basic-ul  user-card-right">
                             <li>
                                 <p><span> full name:<?php
-                            // echo " ".$_SESSION['user']['name'];
-                            ?></p>
+                                                    // echo " ".$_SESSION['user']['name'];
+                                                    ?></p>
 
                             </li>
                             <li>
                                 <p><span>email:<?php
-                            // echo " ".$_SESSION['user']['email'];
-                            ?></p>
+                                                // echo " ".$_SESSION['user']['email'];
+                                                ?></p>
                             </li>
                             <li>
                                 <p><span>age: <?php
-                            // echo " ".$_SESSION['user']['age'];
-                            ?></p>
+                                                // echo " ".$_SESSION['user']['age'];
+                                                ?></p>
                             </li>
                             <li>
                                 <p><span>from: <?php
-                            // echo " ".$_SESSION['user']['address'];
-                            ?></p>
+                                                // echo " ".$_SESSION['user']['address'];
+                                                ?></p>
                             </li>
 
 
@@ -124,7 +151,8 @@
                 </div>
                 <div class="name">
                     <div class="welcome">
-                        <p>welcome <span> <?php //echo $_SESSION['user']['name'] ;?></span> to</p>
+                        <p>welcome <span> <?php //echo $_SESSION['user']['name'] ;
+                                            ?></span> to</p>
                         <h2>EDGE.</h2>
                         <p>we care about your health</p>
                     </div>
@@ -143,17 +171,18 @@
 
 
                 <?php
-        // foreach($reports as $report){
-        //     $id = $report['id'];
-        //     $testIndex = $report['test_type'] ;
-        //     $testIndex= $testIndex-1;
-        //     $testType = $tests[$testIndex];
-        //     $appointmentId = $report['appointment_id'];
-        //     $sql = $conn->prepare("SELECT * FROM appointments where id = '$appointmentId'");
-        //     $sql->execute();
-        //     $data = $sql->fetch();
-        //     $reportLink = $report['filename'];
-           // echo  ?>
+                // foreach($reports as $report){
+                //     $id = $report['id'];
+                //     $testIndex = $report['test_type'] ;
+                //     $testIndex= $testIndex-1;
+                //     $testType = $tests[$testIndex];
+                //     $appointmentId = $report['appointment_id'];
+                //     $sql = $conn->prepare("SELECT * FROM appointments where id = '$appointmentId'");
+                //     $sql->execute();
+                //     $data = $sql->fetch();
+                //     $reportLink = $report['filename'];
+                // echo  
+                ?>
                 <div class="child1-container">
                     <div class='card indgo pointer'>
                         <div class="date-card">
@@ -232,17 +261,18 @@
 
 
                     <?php
-        // foreach($reports as $report){
-        //     $id = $report['id'];
-        //     $testIndex = $report['test_type'] ;
-        //     $testIndex= $testIndex-1;
-        //     $testType = $tests[$testIndex];
-        //     $appointmentId = $report['appointment_id'];
-        //     $sql = $conn->prepare("SELECT * FROM appointments where id = '$appointmentId'");
-        //     $sql->execute();
-        //     $data = $sql->fetch();
-        //     $reportLink = $report['filename'];
-           // echo  ?>
+                    // foreach($reports as $report){
+                    //     $id = $report['id'];
+                    //     $testIndex = $report['test_type'] ;
+                    //     $testIndex= $testIndex-1;
+                    //     $testType = $tests[$testIndex];
+                    //     $appointmentId = $report['appointment_id'];
+                    //     $sql = $conn->prepare("SELECT * FROM appointments where id = '$appointmentId'");
+                    //     $sql->execute();
+                    //     $data = $sql->fetch();
+                    //     $reportLink = $report['filename'];
+                    // echo  
+                    ?>
                     <div class="child1-container">
                         <div class='card indgo pointer'>
                             <div class="date-card">
@@ -388,8 +418,7 @@
                 <h3>EDGE</h3>
                 <p class="footer__copyright">
                     &copy; Copyright by
-                    <a class="footer__link twitter-link" target="_blank"
-                        href="https://twitter.com/ibrahim_askar11">Ibrahim
+                    <a class="footer__link twitter-link" target="_blank" href="https://twitter.com/ibrahim_askar11">Ibrahim
                         Askar </a>All rights reserved
                 </p>
             </div>
@@ -447,114 +476,114 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
         <script>
-        new WOW().init();
+            new WOW().init();
         </script>
 
 
 </body>
 
 <script defer>
-const btn = document.querySelector(".navbar-btn");
-btn.onclick = function() {
-    if (document.querySelector('.navbar-mobile').style.display !== "none") {
-        document.querySelector('.navbar-mobile').style.display = "none";
-    } else {
-        document.querySelector('.navbar-mobile').style.display = "block";
-    }
-};
+    const btn = document.querySelector(".navbar-btn");
+    btn.onclick = function() {
+        if (document.querySelector('.navbar-mobile').style.display !== "none") {
+            document.querySelector('.navbar-mobile').style.display = "none";
+        } else {
+            document.querySelector('.navbar-mobile').style.display = "block";
+        }
+    };
 </script>
 <script>
-// Get the modal element
-let modal = document.getElementById("deleteModal");
+    // Get the modal element
+    let modal = document.getElementById("deleteModal");
 
-// Get all the delete buttons
-let deleteButtons = document.querySelectorAll('.delete');
+    // Get all the delete buttons
+    let deleteButtons = document.querySelectorAll('.delete');
 
-// Get the cancel button element
-let cancelButton = document.getElementById("cancelButton");
+    // Get the cancel button element
+    let cancelButton = document.getElementById("cancelButton");
 
-// Get the confirm button element
-let confirmButton = document.getElementById("confirmButton");
+    // Get the confirm button element
+    let confirmButton = document.getElementById("confirmButton");
 
-let closeButton = document.querySelector(".close");
-// When the user clicks on a delete button, open the modal
-deleteButtons.forEach(function(deleteButton) {
-    deleteButton.addEventListener("click", function() {
-        modal.style.display = "block";
-        // Set the row to delete as the parent of the clicked button
-        let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
-        // Store the row to delete as a property of the confirm button
-        confirmButton.rowToDelete = rowToDelete;
+    let closeButton = document.querySelector(".close");
+    // When the user clicks on a delete button, open the modal
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener("click", function() {
+            modal.style.display = "block";
+            // Set the row to delete as the parent of the clicked button
+            let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
+            // Store the row to delete as a property of the confirm button
+            confirmButton.rowToDelete = rowToDelete;
+        });
     });
-});
 
 
 
-// When the user clicks on the close button, close the modal
-closeButton.onclick = function() {
-    modal.style.display = "none";
-}
-window.addEventListener("click", function(event) {
-    // Check if the target of the click event is the modal
-    if (event.target === modal) {
-        // Hide the modal
+    // When the user clicks on the close button, close the modal
+    closeButton.onclick = function() {
         modal.style.display = "none";
     }
-})
-// When the user clicks on confirm, delete the row and close the modal
-confirmButton.onclick = function() {
-    // Delete the row here
-    let rowToDelete = confirmButton.rowToDelete;
-    rowToDelete.parentNode.removeChild(rowToDelete);
-    modal.style.display = "none";
-};
+    window.addEventListener("click", function(event) {
+        // Check if the target of the click event is the modal
+        if (event.target === modal) {
+            // Hide the modal
+            modal.style.display = "none";
+        }
+    })
+    // When the user clicks on confirm, delete the row and close the modal
+    confirmButton.onclick = function() {
+        // Delete the row here
+        let rowToDelete = confirmButton.rowToDelete;
+        rowToDelete.parentNode.removeChild(rowToDelete);
+        modal.style.display = "none";
+    };
 </script>
 
 <script defer>
-// Get the update modal element
-let updateModal = document.getElementById("updateModal");
+    // Get the update modal element
+    let updateModal = document.getElementById("updateModal");
 
-// Get all the update buttons
-let updateButtons = document.querySelectorAll('.update');
+    // Get all the update buttons
+    let updateButtons = document.querySelectorAll('.update');
 
-// Get the close button element
-let closeupdate = updateModal.querySelector(".closeupdate");
+    // Get the close button element
+    let closeupdate = updateModal.querySelector(".closeupdate");
 
-// Get the update button element
-let updateButton = updateModal.querySelector("#updateButton");
-let row = ""
-// When the user clicks on an update button, open the update modal
-updateButtons.forEach(function(updateButton) {
-    updateButton.addEventListener("click", function() {
-        updateModal.style.display = "block";
-        // Set the row to update as the parent of the clicked button
-        let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
-        // Set the input values to the current row values
+    // Get the update button element
+    let updateButton = updateModal.querySelector("#updateButton");
+    let row = ""
+    // When the user clicks on an update button, open the update modal
+    updateButtons.forEach(function(updateButton) {
+        updateButton.addEventListener("click", function() {
+            updateModal.style.display = "block";
+            // Set the row to update as the parent of the clicked button
+            let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
+            // Set the input values to the current row values
 
-        row = rowToUpdate;
+            row = rowToUpdate;
 
+        });
     });
-});
 
 
-closeupdate.onclick = function() {
-    updateModal.style.display = "none";
-};
-
-
-window.onclick = function(event) {
-    if (event.target == updateModal) {
+    closeupdate.onclick = function() {
         updateModal.style.display = "none";
-    }
-};
+    };
 
 
-updateButton.addEventListener("click", function() {
+    window.onclick = function(event) {
+        if (event.target == updateModal) {
+            updateModal.style.display = "none";
+        }
+    };
+
+
+    updateButton.addEventListener("click", function() {
 
 
 
-    document.getElementById("updateModal").style.display = "none";
-});
+        document.getElementById("updateModal").style.display = "none";
+    });
 </script>
 
 <!-- Include ScrollReveal.js -->

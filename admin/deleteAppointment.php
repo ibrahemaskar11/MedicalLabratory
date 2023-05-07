@@ -9,7 +9,7 @@ if(isset($_POST['submit'])){
     $appointmentId = $_POST['appointmentid'];
         $sql = $conn->prepare("DELETE from appointments WHERE id = '$appointmentId'");
         $sql->execute();
-        header("location:/admin/dashboard.php");
+        header("http://localhost:1337/MedicalLaboratory/admin/");
 }
 ?>
 <!DOCTYPE html>

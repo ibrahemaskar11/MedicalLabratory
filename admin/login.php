@@ -32,9 +32,10 @@ if(isset($_POST['submit'])){
             $_SESSION['admin']=[
                 "username"=>$username,
               ];
-            header('location:dashboard.php');
+                          header('http://localhost:1337/MedicalLaboratory/admin/');
 
          }
+
     }
      
     
