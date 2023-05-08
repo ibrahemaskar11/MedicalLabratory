@@ -1,9 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('location:login.php');
-    exit();
-}
+// session_start();
+// if (!isset($_SESSION['user'])) {
+//     header('location:login.php');
+//     exit();
+// }
 //     $tests=['Cardiologists', 'Dermatologists', 'Endocrinologists', 'Gastroenterologists', 'Allergists', 'Immunologists'];
 //     $id = $_SESSION['user']['userid'];
 //     require('conn-db.php');
@@ -70,11 +70,11 @@ if (!isset($_SESSION['user'])) {
             <div class="navbar-right__actions ">
                 <div class="navbar-right ">
                     <?php if (!isset($_SESSION['user'])) : ?>
-                        <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/login.php">Sign In</a>
-                        <a class="btn sign-up" href="http://localhost:8001/MedicalLaboratory/signup.php">Sign Up</a>
+                    <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/login.php">Sign In</a>
+                    <a class="btn sign-up" href="http://localhost:8001/MedicalLaboratory/signup.php">Sign Up</a>
                     <?php else : ?>
-                        <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/logout.php">Logout</a>
-                        <!-- <a class="account-btn" href="http://localhost:8001/MedicalLaboratory/profile.php">
+                    <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/logout.php">Logout</a>
+                    <!-- <a class="account-btn" href="http://localhost:8001/MedicalLaboratory/profile.php">
                             <img src="./assets/icons8-user-24.png" alt="">
                         </a> -->
                     <?php endif; ?>
@@ -273,7 +273,7 @@ if (!isset($_SESSION['user'])) {
                     //     $reportLink = $report['filename'];
                     // echo  
                     ?>
-                    <div class="child1-container">
+                    <div class="chhild2-container">
                         <div class='card indgo pointer'>
                             <div class="date-card">
                                 <div class="day">21</div>
@@ -418,7 +418,8 @@ if (!isset($_SESSION['user'])) {
                 <h3>EDGE</h3>
                 <p class="footer__copyright">
                     &copy; Copyright by
-                    <a class="footer__link twitter-link" target="_blank" href="https://twitter.com/ibrahim_askar11">Ibrahim
+                    <a class="footer__link twitter-link" target="_blank"
+                        href="https://twitter.com/ibrahim_askar11">Ibrahim
                         Askar </a>All rights reserved
                 </p>
             </div>
@@ -476,114 +477,114 @@ if (!isset($_SESSION['user'])) {
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
         <script>
-            new WOW().init();
+        new WOW().init();
         </script>
 
 
 </body>
 
 <script defer>
-    const btn = document.querySelector(".navbar-btn");
-    btn.onclick = function() {
-        if (document.querySelector('.navbar-mobile').style.display !== "none") {
-            document.querySelector('.navbar-mobile').style.display = "none";
-        } else {
-            document.querySelector('.navbar-mobile').style.display = "block";
-        }
-    };
+const btn = document.querySelector(".navbar-btn");
+btn.onclick = function() {
+    if (document.querySelector('.navbar-mobile').style.display !== "none") {
+        document.querySelector('.navbar-mobile').style.display = "none";
+    } else {
+        document.querySelector('.navbar-mobile').style.display = "block";
+    }
+};
 </script>
 <script>
-    // Get the modal element
-    let modal = document.getElementById("deleteModal");
+// Get the modal element
+let modal = document.getElementById("deleteModal");
 
-    // Get all the delete buttons
-    let deleteButtons = document.querySelectorAll('.delete');
+// Get all the delete buttons
+let deleteButtons = document.querySelectorAll('.delete');
 
-    // Get the cancel button element
-    let cancelButton = document.getElementById("cancelButton");
+// Get the cancel button element
+let cancelButton = document.getElementById("cancelButton");
 
-    // Get the confirm button element
-    let confirmButton = document.getElementById("confirmButton");
+// Get the confirm button element
+let confirmButton = document.getElementById("confirmButton");
 
-    let closeButton = document.querySelector(".close");
-    // When the user clicks on a delete button, open the modal
-    deleteButtons.forEach(function(deleteButton) {
-        deleteButton.addEventListener("click", function() {
-            modal.style.display = "block";
-            // Set the row to delete as the parent of the clicked button
-            let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
-            // Store the row to delete as a property of the confirm button
-            confirmButton.rowToDelete = rowToDelete;
-        });
+let closeButton = document.querySelector(".close");
+// When the user clicks on a delete button, open the modal
+deleteButtons.forEach(function(deleteButton) {
+    deleteButton.addEventListener("click", function() {
+        modal.style.display = "block";
+        // Set the row to delete as the parent of the clicked button
+        let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
+        // Store the row to delete as a property of the confirm button
+        confirmButton.rowToDelete = rowToDelete;
     });
+});
 
 
 
-    // When the user clicks on the close button, close the modal
-    closeButton.onclick = function() {
+// When the user clicks on the close button, close the modal
+closeButton.onclick = function() {
+    modal.style.display = "none";
+}
+window.addEventListener("click", function(event) {
+    // Check if the target of the click event is the modal
+    if (event.target === modal) {
+        // Hide the modal
         modal.style.display = "none";
     }
-    window.addEventListener("click", function(event) {
-        // Check if the target of the click event is the modal
-        if (event.target === modal) {
-            // Hide the modal
-            modal.style.display = "none";
-        }
-    })
-    // When the user clicks on confirm, delete the row and close the modal
-    confirmButton.onclick = function() {
-        // Delete the row here
-        let rowToDelete = confirmButton.rowToDelete;
-        rowToDelete.parentNode.removeChild(rowToDelete);
-        modal.style.display = "none";
-    };
+})
+// When the user clicks on confirm, delete the row and close the modal
+confirmButton.onclick = function() {
+    // Delete the row here
+    let rowToDelete = confirmButton.rowToDelete;
+    rowToDelete.parentNode.removeChild(rowToDelete);
+    modal.style.display = "none";
+};
 </script>
 
 <script defer>
-    // Get the update modal element
-    let updateModal = document.getElementById("updateModal");
+// Get the update modal element
+let updateModal = document.getElementById("updateModal");
 
-    // Get all the update buttons
-    let updateButtons = document.querySelectorAll('.update');
+// Get all the update buttons
+let updateButtons = document.querySelectorAll('.update');
 
-    // Get the close button element
-    let closeupdate = updateModal.querySelector(".closeupdate");
+// Get the close button element
+let closeupdate = updateModal.querySelector(".closeupdate");
 
-    // Get the update button element
-    let updateButton = updateModal.querySelector("#updateButton");
-    let row = ""
-    // When the user clicks on an update button, open the update modal
-    updateButtons.forEach(function(updateButton) {
-        updateButton.addEventListener("click", function() {
-            updateModal.style.display = "block";
-            // Set the row to update as the parent of the clicked button
-            let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
-            // Set the input values to the current row values
-
-            row = rowToUpdate;
-
-        });
-    });
-
-
-    closeupdate.onclick = function() {
-        updateModal.style.display = "none";
-    };
-
-
-    window.onclick = function(event) {
-        if (event.target == updateModal) {
-            updateModal.style.display = "none";
-        }
-    };
-
-
+// Get the update button element
+let updateButton = updateModal.querySelector("#updateButton");
+let row = ""
+// When the user clicks on an update button, open the update modal
+updateButtons.forEach(function(updateButton) {
     updateButton.addEventListener("click", function() {
+        updateModal.style.display = "block";
+        // Set the row to update as the parent of the clicked button
+        let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
+        // Set the input values to the current row values
 
+        row = rowToUpdate;
 
-
-        document.getElementById("updateModal").style.display = "none";
     });
+});
+
+
+closeupdate.onclick = function() {
+    updateModal.style.display = "none";
+};
+
+
+window.onclick = function(event) {
+    if (event.target == updateModal) {
+        updateModal.style.display = "none";
+    }
+};
+
+
+updateButton.addEventListener("click", function() {
+
+
+
+    document.getElementById("updateModal").style.display = "none";
+});
 </script>
 
 <!-- Include ScrollReveal.js -->

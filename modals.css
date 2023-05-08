@@ -10,7 +10,7 @@
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
   }
-  
+ 
   .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -74,15 +74,15 @@
       overflow: auto;
       background-color: rgba(0, 0, 0, 0.4);
     }
-    .closeupdate {
+    .closeupdate,.close-update-test,.close-update-appoint {
       color: #aaa;
       float: right;
       font-size: 28px;
       font-weight: bold;
     }
     
-    .closeupdate:hover,
-    .closeupdate:focus {
+    .closeupdate:hover,.close-update-test:hover,.close-update-appoint:hover
+    .closeupdate:focus,.close-update-test:focus,.close-update-appoint:focus {
       color: black;
       text-decoration: none;
       cursor: pointer;
@@ -118,7 +118,9 @@
     }
     
     .update-modal-content .close:hover,
-    .update-modal-content .close:focus {
+    .update-modal-content .close-update-appoint:hover,
+    .update-modal-content .close:focus
+     {
       color: black;
       text-decoration: none;
       cursor: pointer;

@@ -97,27 +97,27 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="http://localhost:8001/MedicalLaboratory/styles.css" />
-    <link rel="stylesheet" href="http://localhost:8001/MedicalLaboratory/media-query.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./media-query.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#phone").on("keyup", function() {
-                setTimeout(() => {
-                    console.log("hello");
-                    let inputVal = $(this).val();
-                    if (inputVal.length > 0 && inputVal.length < 11 || inputVal.length > 11) {
-                        $(this).css("border-color", "red");
-                        submit.prop('disabled', true)
-                    } else {
-                        $(this).css('border-color', 'rgb(203, 213, 225)')
-                        errorContainer.text("")
-                        submit.prop('disabled', false)
-                    }
-                }, 1000)
+    $(document).ready(function() {
+        $("#phone").on("keyup", function() {
+            setTimeout(() => {
+                console.log("hello");
+                let inputVal = $(this).val();
+                if (inputVal.length > 0 && inputVal.length < 11 || inputVal.length > 11) {
+                    $(this).css("border-color", "red");
+                    submit.prop('disabled', true)
+                } else {
+                    $(this).css('border-color', 'rgb(203, 213, 225)')
+                    errorContainer.text("")
+                    submit.prop('disabled', false)
+                }
+            }, 1000)
 
-            });
-        })
+        });
+    })
     </script>
     <title>Edge Laboratory</title>
 </head>
@@ -129,7 +129,7 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                 <h1 class="Poiret">edge.</h1>
                 <div class="nav-list-container">
                     <ul class="nav-list ">
-                        <li><a href="http://localhost:8001/MedicalLaboratory/"> Home</a></li>
+                        <li><a href="./"> Home</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Services</a></li>
                         <li><a href="#">Pricing</a></li>
@@ -140,13 +140,13 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
             <div class="navbar-right__actions ">
                 <div class="navbar-right ">
                     <?php if (!isset($_SESSION['user'])) : ?>
-                        <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/login.php">Sign In</a>
-                        <a class="btn sign-up" href="http://localhost:8001/MedicalLaboratory/signup.php">Sign Up</a>
+                    <a class="btn sign-in" href="./login.php">Sign In</a>
+                    <a class="btn sign-up" href="./signup.php">Sign Up</a>
                     <?php else : ?>
-                        <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/logout.php">Logout</a>
-                        <a class="account-btn" href="http://localhost:8001/MedicalLaboratory/profile.php">
-                            <img src="./assets/icons8-user-24.png" alt="">
-                        </a>
+                    <a class="btn sign-in" href="./logout.php">Logout</a>
+                    <a class="account-btn" href="./profile.php">
+                        <img src="./assets/icons8-user-24.png" alt="">
+                    </a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -197,7 +197,8 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                 <h1>
                     trusted by the egyptian ministry of health
                 </h1>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam pariatur optio dolorem assumenda ea tempore tempora doloribus provident cupiditate tenetur.</p>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam pariatur optio dolorem assumenda ea
+                    tempore tempora doloribus provident cupiditate tenetur.</p>
 
                 <div class="about-details">
                     <div class="about-details-item">
@@ -325,10 +326,14 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                     <li> <span><img src="./assets/icons8-done-48.png" alt=""></span>Hemoglobin A1C</li>
                                     <li> <span><img src="./assets/icons8-done-48.png" alt=""></span>Urinalysis</li>
 
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
+                                                alt=""></span>Liver Function Blood Test</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
+                                                alt=""></span>Liver Function Blood Test</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
+                                                alt=""></span>Liver Function Blood Test</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
+                                                alt=""></span>Liver Function Blood Test</li>
                                 </ul>
                                 <button class="btn plan-actions">Get Started</button>
                             </div>
@@ -385,8 +390,10 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                     <li> <span><img src="./assets/icons8-done-48.png" alt=""></span>Female General
                                         Health
                                         Panel</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span> Transmitted Diaseases</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span> Cholesterol Lipid Levels</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
+                                                alt=""></span> Transmitted Diaseases</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
+                                                alt=""></span> Cholesterol Lipid Levels</li>
 
                                 </ul>
                                 <button class="btn plan-actions">Get Started</button>
@@ -403,15 +410,16 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
             </div>
             <div class="contact-content">
                 <h1>Medical Tests Carried Out By Our Expert Lab Scientists</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis itaque facilis eveniet numquam consequatur sed quam recusandae quos at dolorem.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis itaque facilis eveniet numquam
+                    consequatur sed quam recusandae quos at dolorem.</p>
                 <div class="contact-us-form-group">
                     <div class="contact-us-right-group">
                         <form action="index.php" method="POST" class="contact-form">
                             <h1 class="appointment-header">Make an Appointment</h1>
                             <?php if (!empty($appointmentError)) : ?>
-                                <h3 class="input-error" id="form-error">
-                                    <?php echo $appointmentError; ?>
-                                </h3>
+                            <h3 class="input-error" id="form-error">
+                                <?php echo $appointmentError; ?>
+                            </h3>
                             <?php endif; ?>
                             <ul class="contact-form-input">
                                 <li>
@@ -455,7 +463,8 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
 
                             </ul>
                             <div class="contact-actions"></div>
-                            <button class="btn btn-appointment btn-action-1" name="appointment" type="submit" id="appointment-submit">make an appointment</button>
+                            <button class="btn btn-appointment btn-action-1" name="appointment" type="submit"
+                                id="appointment-submit">make an appointment</button>
                         </form>
                     </div>
                     <div class="contact-us-left-group">
@@ -560,21 +569,22 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                     <h3 class="Poiret">edge</h3>
                     <p class="footer__copyright">
                         &copy; Copyright by
-                        <a class="footer__link twitter-link" href="https://twitter.com/ibrahim_askar11">Ibrahim Askar </a>All rights reserved
+                        <a class="footer__link twitter-link" href="https://twitter.com/ibrahim_askar11">Ibrahim Askar
+                        </a>All rights reserved
                     </p>
                 </div>
                 </div>
             </footer>
     </main>
     <script defer>
-        const btn = document.querySelector(".navbar-btn");
-        btn.onclick = function() {
-            if (document.querySelector('.navbar-mobile').style.display !== "none") {
-                document.querySelector('.navbar-mobile').style.display = "none";
-            } else {
-                document.querySelector('.navbar-mobile').style.display = "block";
-            }
-        };
+    const btn = document.querySelector(".navbar-btn");
+    btn.onclick = function() {
+        if (document.querySelector('.navbar-mobile').style.display !== "none") {
+            document.querySelector('.navbar-mobile').style.display = "none";
+        } else {
+            document.querySelector('.navbar-mobile').style.display = "block";
+        }
+    };
     </script>
 </body>
 

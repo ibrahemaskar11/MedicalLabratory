@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto");
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 * {
   padding: 0;
   margin: 0;
@@ -1456,7 +1457,15 @@ html .pricing {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  width: 80%;
+  max-width: 70%;
+  margin: 2rem 0;
+}
+.chhild2-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 70%;
+  margin: 2rem 0;
 }
 .card {
   width: 100%;
@@ -1480,6 +1489,10 @@ html .pricing {
   transition: transform 0.3s ease-in-out;
 
   /* add this line */
+}
+.chhild2-container .card{
+  padding-bottom: 3%;
+  /* background-color: red; */
 }
 .indgo {
   border-top: 3px solid var(--indigo);
@@ -1674,11 +1687,12 @@ html .pricing {
   content: "";
   display: block;
   height: 3px;
-  width: 75px;
+  width: 40px;
+
   margin-bottom: 5px;
   transform: translateX(-50%);
-  right: 22%;
-  bottom: 103%;
+  left: 22%;
+  bottom: 90%;
 }
 
 .title2 h1:after {
@@ -1687,11 +1701,15 @@ html .pricing {
   display: block;
   position: absolute;
   bottom: 0;
-  left: 70%;
+  left: 75%;
   transform: translateX(-50%);
   height: 3px;
-  width: 75px;
+  width: 40px;
   margin-bottom: 0.25em;
+  -webkit-transform:;
+  -moz-transform:;
+  -ms-transform:;
+  -o-transform:;
 }
 .title {
   color: #333333;
