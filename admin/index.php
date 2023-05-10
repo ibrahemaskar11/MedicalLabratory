@@ -1042,7 +1042,7 @@ updateTestButtons.forEach(function(updateTestButton) {
 
 // When the user clicks on the close button, close the update modal
 closeupdatetest.onclick = function() {
-    document.querySelector("#updateTestModal").style.display = "none";
+    document.querySelector("#updateTestModal").style.display = "none"
 };
 
 // When the user clicks outside the update modal, close it
