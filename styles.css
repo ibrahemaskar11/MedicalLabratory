@@ -542,7 +542,7 @@ html {
 }
 .plan-actions:hover {
   background: inherit;
-  color: var(--indigo);
+  color: var(--indigo)
 }
 
 .contact {
