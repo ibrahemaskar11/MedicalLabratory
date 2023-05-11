@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="adminstyles.css" />
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="../modals.css" />
+    <link rel="stylesheet" href="../styles/adminstyles.css" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <link rel="stylesheet" href="../styles/modals.css" />
 
-    <link rel="stylesheet" href="media-query.css" />
+    <link rel="stylesheet" href="../styles/media-query.css" />
     <title>Edge Laboratory</title>
 </head>
 
@@ -22,15 +22,14 @@
                 <div class=" nav-list-container">
                     <ul class="nav-list ">
                         <li><a href="index.php"> Users</a></li>
-                        <li><a href="tests.php">Reports</a></li>
+                        <li><a href="reports.php">Reports</a></li>
                         <li><a href="appointments.php">Apointments</a></li>
-                        <li><a href="#contact">Contact</a></li>
 
                     </ul>
             </div>
         </div>
         <div class="navbar-right ">
-            <a class="btn sign-up" href="logout.php">log out</a>
+            <a class="btn sign-in" href="logout.php">log out</a>
 
         </div>
     </nav>
@@ -315,7 +314,7 @@
         </div>
     </section>
 
-    <footer class="footer" id="contact">
+    <!-- <footer class="footer" id="contact">
         <div class="footer-container">
             <div class="footer-contact-us">
                 <h3>Contact Us</h3>
@@ -366,15 +365,15 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <h3>EDGE</h3>
-            <p class="footer__copyright">
+            <h3 class="Poiret">EDGE</h3>
+            <p class=" footer__copyright">
                 &copy; Copyright by
                 <a class="footer__link twitter-link" target="_blank" href="https://twitter.com/ibrahim_askar11">Ibrahim
                     Askar </a>All rights reserved
-            </p>
+                </p>
         </div>
         </div>
-    </footer>
+    </footer> -->
 
 
 
@@ -431,126 +430,126 @@
 
 
 <script defer>
-// Get the update modal element
-let updateTestModal = document.querySelector("#updateTestModal");
+    // Get the update modal element
+    let updateTestModal = document.querySelector("#updateTestModal");
 
-// Get all the update buttons
-let updateTestButtons = document.querySelectorAll('.update-test');
+    // Get all the update buttons
+    let updateTestButtons = document.querySelectorAll('.update-test');
 
-// Get the close button element
-let closeupdatetest = updateTestModal.querySelector(".close-update-test");
+    // Get the close button element
+    let closeupdatetest = updateTestModal.querySelector(".close-update-test");
 
-// Get the update button element
-let updateTestButton = updateTestModal.querySelector("#updateButton");
+    // Get the update button element
+    let updateTestButton = updateTestModal.querySelector("#updateButton");
 
-let testrow = "";
+    let testrow = "";
 
-// When the user clicks on an update button, open the update modal
-updateTestButtons.forEach(function(updateTestButton) {
-    updateTestButton.addEventListener("click", function() {
-        updateTestModal.style.display = "block";
-        // Set the row to update as the parent of the clicked button
-        let testRowToUpdate = updateTestButton.parentNode.parentNode.parentNode.parentElement;
+    // When the user clicks on an update button, open the update modal
+    updateTestButtons.forEach(function(updateTestButton) {
+        updateTestButton.addEventListener("click", function() {
+            updateTestModal.style.display = "block";
+            // Set the row to update as the parent of the clicked button
+            let testRowToUpdate = updateTestButton.parentNode.parentNode.parentNode.parentElement;
 
-        // Set the input values to the current row values
-        let emailInput = updateTestModal.querySelector("#testemailform");
-        let phoneInput = updateTestModal.querySelector("#testphoneform");
-        let userid = updateTestModal.querySelector("#userIdform");
-        let testusername = updateTestModal.querySelector("#testnameform");
+            // Set the input values to the current row values
+            let emailInput = updateTestModal.querySelector("#testemailform");
+            let phoneInput = updateTestModal.querySelector("#testphoneform");
+            let userid = updateTestModal.querySelector("#userIdform");
+            let testusername = updateTestModal.querySelector("#testnameform");
 
-        emailInput.value = testRowToUpdate.querySelector("#testemail").textContent.trim();
-        phoneInput.value = testRowToUpdate.querySelector("#testphone").textContent.trim();
-        userid.value = testRowToUpdate.querySelector("#testuserId").textContent.trim();
-        testusername.value = testRowToUpdate.querySelector("#testname").textContent.trim();
-        // Store the row to update and the update button as properties of the update button
-        testrow = testRowToUpdate;
+            emailInput.value = testRowToUpdate.querySelector("#testemail").textContent.trim();
+            phoneInput.value = testRowToUpdate.querySelector("#testphone").textContent.trim();
+            userid.value = testRowToUpdate.querySelector("#testuserId").textContent.trim();
+            testusername.value = testRowToUpdate.querySelector("#testname").textContent.trim();
+            // Store the row to update and the update button as properties of the update button
+            testrow = testRowToUpdate;
+        });
     });
-});
 
 
-// When the user clicks on the close button, close the update modal
-closeupdatetest.onclick = function() {
-    document.querySelector("#updateTestModal").style.display = "none"
-};
+    // When the user clicks on the close button, close the update modal
+    closeupdatetest.onclick = function() {
+        document.querySelector("#updateTestModal").style.display = "none"
+    };
 
-// When the user clicks outside the update modal, close it
-window.addEventListener("click", function(event) {
-    if (event.target == updateTestModal) {
-        updateTestModal.style.display = "none";
-    }
-});
-
-
-// When the user clicks on the update button, update the row and close the update modal
-updateTestButton.addEventListener("click", function() {
-
-    // Update the row here
+    // When the user clicks outside the update modal, close it
+    window.addEventListener("click", function(event) {
+        if (event.target == updateTestModal) {
+            updateTestModal.style.display = "none";
+        }
+    });
 
 
+    // When the user clicks on the update button, update the row and close the update modal
+    updateTestButton.addEventListener("click", function() {
+
+        // Update the row here
 
 
-    let emailvalue = document.getElementById("testemailform").value;
-    let phonevalue = document.getElementById("testphoneform").value;
-    let userid = document.getElementById("userIdform").value;
-    let nameValue = document.getElementById("testnameform").value
-    // Update the text content of an element with ID "name" inside a row element
 
-    testrow.querySelector("#testemail").textContent =
-        emailvalue;
 
-    testrow.querySelector("#testphone").textContent = phonevalue;
+        let emailvalue = document.getElementById("testemailform").value;
+        let phonevalue = document.getElementById("testphoneform").value;
+        let userid = document.getElementById("userIdform").value;
+        let nameValue = document.getElementById("testnameform").value
+        // Update the text content of an element with ID "name" inside a row element
 
-    testrow.querySelector("#testuserId").textContent = userid;
-    testrow.querySelector("#testname").textContent = nameValue
-    document.getElementById("updateTestModal")
-        .style.display = "none";
-});
+        testrow.querySelector("#testemail").textContent =
+            emailvalue;
+
+        testrow.querySelector("#testphone").textContent = phonevalue;
+
+        testrow.querySelector("#testuserId").textContent = userid;
+        testrow.querySelector("#testname").textContent = nameValue
+        document.getElementById("updateTestModal")
+            .style.display = "none";
+    });
 </script>
 
 
 
 <script>
-// Get the modal element
-let modal = document.getElementById("deleteModal");
+    // Get the modal element
+    let modal = document.getElementById("deleteModal");
 
-// Get all the delete buttons
-let deleteButtons = document.querySelectorAll('.delete');
+    // Get all the delete buttons
+    let deleteButtons = document.querySelectorAll('.delete');
 
-// Get the cancel button element
-let cancelButton = document.getElementById("cancelButton");
+    // Get the cancel button element
+    let cancelButton = document.getElementById("cancelButton");
 
-// Get the confirm button element
-let confirmButton = document.getElementById("confirmButton");
+    // Get the confirm button element
+    let confirmButton = document.getElementById("confirmButton");
 
-let closeButton = document.querySelector(".close");
-// When the user clicks on a delete button, open the modal
-deleteButtons.forEach(function(deleteButton) {
-    deleteButton.addEventListener("click", function() {
-        modal.style.display = "block";
-        // Set the row to delete as the parent of the clicked button
-        let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
-        // Store the row to delete as a property of the confirm button
-        confirmButton.rowToDelete = rowToDelete;
+    let closeButton = document.querySelector(".close");
+    // When the user clicks on a delete button, open the modal
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener("click", function() {
+            modal.style.display = "block";
+            // Set the row to delete as the parent of the clicked button
+            let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
+            // Store the row to delete as a property of the confirm button
+            confirmButton.rowToDelete = rowToDelete;
+        });
     });
-});
 
 
 
-// When the user clicks on the close button, close the modal
-closeButton.onclick = function() {
-    modal.style.display = "none";
-}
-window.addEventListener("click", function(event) {
-    if (event.target == modal) {
+    // When the user clicks on the close button, close the modal
+    closeButton.onclick = function() {
         modal.style.display = "none";
     }
-});
+    window.addEventListener("click", function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
 
-// When the user clicks on confirm, delete the row and close the modal
-confirmButton.onclick = function() {
-    // Delete the row here
-    let rowToDelete = confirmButton.rowToDelete;
-    rowToDelete.parentNode.removeChild(rowToDelete);
-    modal.style.display = "none";
-};
+    // When the user clicks on confirm, delete the row and close the modal
+    confirmButton.onclick = function() {
+        // Delete the row here
+        let rowToDelete = confirmButton.rowToDelete;
+        rowToDelete.parentNode.removeChild(rowToDelete);
+        modal.style.display = "none";
+    };
 </script>

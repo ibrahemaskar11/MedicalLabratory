@@ -1,84 +1,117 @@
 <?php
+require_once __DIR__ . '/../db/admin.php';
 session_start();
-if(isset($_SESSION['admin'])){
-    header('http://localhost:1337/MedicalLaboratory/admin/');
-    exit();
+if (isset($_SESSION['admin'])) {
+  header('location:index.php');
+  exit();
 }
-if(isset($_POST['submit'])){
- include '../conn-db.php';
-   $password=filter_var($_POST['password'],FILTER_SANITIZE_STRING);
-   $username=filter_var($_POST['username'],FILTER_SANITIZE_EMAIL);
-   $errors=[];
-      if(empty($username)){
-    $errors[]="Email can not be empty";
-   }
-   if(empty($password)){
-        $errors[]="Password can not be empty";
-   }
-   if(empty($errors)){
-    $statement="SELECT * FROM admin WHERE username ='$username'";
-    $query=$conn->prepare($statement);
-    $query->execute();
-    $data=$query->fetch();
-    if(!$data){
-       $errors[] = "Email or password is incorrect";
-    }else{
-        
-         $password_hash=$data['password']; 
-         
-         if(!password_verify($password,$password_hash)){
-            $errors[] = "Email or password is incorrect";
-         }else{
-            $_SESSION['admin']=[
-                "username"=>$username,
-              ];
-                          header('http://localhost:1337/MedicalLaboratory/admin/');
 
-         }
-
+$error = "";
+if (isset($_POST['login'])) {
+  echo "hello";
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $errors = [];
+  if (empty($email)) {
+    $error = "Missing credentials";
+  }
+  if (empty($password)) {
+    $error = "Missing credentials";
+  }
+  if (empty($error)) {
+    $admin = login($email, $password);
+    $_SESSION['admin'] = [
+      "id" => $admin['id'],
+      "name" => $admin['name'],
+      "email" => $admin['email'],
+      "address" => $admin['address'],
+      "birthdate" => $admin['birthdate'],
+      "age" => $admin['age'],
+    ];
+    header('location:index.php');
+    print_r($admin);
+    if ($admin === null) {
+      $error = "Wrong email or password";
+    } else {
+      $error = '';
+      header("location: index.php");
     }
-     
-    
-   }
+  }
 }
+
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="http://localhost:1337/MedicalLaboratory/styles.css" />
-    <title>login</title>
-  </head>
-  <body>
-    <div class="signup-page">
-      <form action="login.php" class="signup-form" name="POST" method="POST">
-        <div class="form-container">
-          <h1 class="signup-header">Login</h1>
-          <?php 
-        if(isset($errors)){
-            if(!empty($errors)){
-                foreach($errors as $msg){
-                    echo "<p style='color:red; text-align: center;'>". $msg ."</p>". "<br>";
-                }
-            }
-        }
-    ?>
-          <input type="name"
-           placeholder="username"  
-           name="username"
-           />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-          />
-          <button type="submit" class="btn signup-form__btn" name="submit" value="Register">
-            Submit
-          </button>
-          <div class="signup__providers--container">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles/styles.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      let submit = $("#submit");
+      $("#email").on("keyup", function() {
+        let errorContainer = $('#email-error')
+        setTimeout(() => {
+          console.log("hello");
+          let inputVal = $(this).val();
+          if (inputVal.length > 0 && !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(inputVal))) {
+            $(this).css("border-color", "red");
+            errorContainer.text("please enter a valid email")
+            submit.prop('disabled', true)
+          } else {
+            $(this).css('border-color', 'rgb(203, 213, 225)')
+            errorContainer.text("")
+            submit.prop('disabled', false)
+          }
+        }, 1000)
+
+      });
+      $("#password").on("keyup", function() {
+        let errorContainer = $('#password-error')
+        setTimeout(() => {
+          console.log("hello");
+          let inputVal = $(this).val();
+          if (inputVal.length > 0 && !(/^(?=.{6,16}$)/.test(inputVal))) {
+            $(this).css("border-color", "red");
+            errorContainer.text("Password must be between 6 and 16 characters")
+            submit.prop('disabled', true)
+          } else {
+            $(this).css('border-color', 'rgb(203, 213, 225)')
+            errorContainer.text("")
+            submit.prop('disabled', false)
+
+          }
+        }, 1000)
+
+      });
+    });
+  </script>
+  <title>login</title>
+</head>
+
+<body>
+  <div class="signup-page">
+    <form action="./login.php" class="signup-form" name="POST" method="POST">
+
+      <div class="form-container">
+        <h1 class="signup-header">Login</h1>
+        <h3 class="input-error" id="form-error">
+          <?php if (!empty($error)) : ?>
+            <?php echo $error; ?>
+          <?php endif; ?>
+        </h3>
+        <input type="text" placeholder="Email" id="email" name="email" />
+        <h3 class="input-error" id="email-error"></h3>
+        <input type="password" placeholder="Password" id="password" name="password" />
+        <h3 class="input-error" id="password-error"></h3>
+        <button type="submit" id="submit" class="btn signup-form__btn" name="login" value="login">
+          Submit
+        </button>
+        <!-- <div class="signup__providers--container">
             <p>or login with</p>
             <div class="signup__providers">
               <span
@@ -163,14 +196,15 @@ if(isset($_POST['submit'])){
                   /></svg
               ></span>
             </div>
-          </div>
-        </div>
-        <div class="signup__footer">
+          </div> -->
+        <!-- <div class="signup__footer">
           you don't have an account?
-          <a class="login__link" href="http://localhost:1337/test/signup.php"> sign up </a>
+          <a class="login__link" href="http://localhost:8001/MedicalLabratory/signup.php  "> sign up </a>
           .
-        </div>
-      </form>
-    </div>
-  </body>
+        </div> -->
+      </div>
+    </form>
+  </div>
+</body>
+
 </html>

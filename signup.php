@@ -115,7 +115,7 @@
    <meta charset="UTF-8" />
    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <link rel="stylesheet" href="styles.css" />
+   <link rel="stylesheet" href="./styles/styles.css" />
    <title>Sign up</title>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
    <script>
@@ -171,6 +171,24 @@
          }, 1000)
 
        });
+       $("#date").on("input", function() {
+         setTimeout(() => {
+           let errorContainer = $('#date-error');
+           let inputVal = $(this).val();
+           let currentDate = new Date().toISOString().split('T')[0]; // Get the current date in ISO format
+
+           if (inputVal > currentDate) {
+             $(this).css("border-color", "red");
+             errorContainer.text("Please enter a valid date (not in the future).");
+             submit.prop('disabled', true);
+           } else {
+             $(this).css('border-color', 'rgb(203, 213, 225)');
+             errorContainer.text("");
+             submit.prop('disabled', false);
+           }
+         }, 1000);
+       });
+
      });
    </script>
  </head>
@@ -286,7 +304,7 @@
           </div> -->
          <div class="signup__footer">
            Already have an account?
-           <a class="login__link" href="http://localhost:8001/MedicalLaboratory/login.php"> Log in </a>
+           <a class="login__link" href="http://localhost:8001/MedicalLabratory/login.php"> Log in </a>
          </div>
        </div>
      </form>
