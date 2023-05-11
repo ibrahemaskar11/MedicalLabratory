@@ -121,23 +121,23 @@
                     <div>
                         <ul class="basic-ul  user-card-right">
                             <li>
-                                <p><span> full name:<?php
+                                <p><span> full name: ahmed<?php
                                                     // echo " ".$_SESSION['user']['name'];
                                                     ?></p>
 
                             </li>
                             <li>
-                                <p><span>email:<?php
+                                <p><span>email:af@gmail.com<?php
                                                 // echo " ".$_SESSION['user']['email'];
                                                 ?></p>
                             </li>
                             <li>
-                                <p><span>age: <?php
+                                <p><span>age: 22<?php
                                                 // echo " ".$_SESSION['user']['age'];
                                                 ?></p>
                             </li>
                             <li>
-                                <p><span>from: <?php
+                                <p><span>from: banha <?php
                                                 // echo " ".$_SESSION['user']['address'];
                                                 ?></p>
                             </li>
@@ -146,8 +146,7 @@
                         </ul>
 
                     </div>
-
-                    <!-- ///////////////////////////////////////////////////////////////////////////////////// -->
+                    <div class="update-user"><img src=" ../assets/icons8-modify-20.png"></div>
                 </div>
                 <div class="name">
                     <div class="welcome">
