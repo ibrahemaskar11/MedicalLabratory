@@ -1,11 +1,13 @@
 <?php
+require_once __DIR__ . '/db/db.php';
 session_start();
 if (!isset($_SESSION['user'])) {
     header('location:login.php');
     exit();
 }
-require_once __DIR__ . '/db/db.php';
 $appointments = fetchAppointments($_SESSION['user']['id'])
+
+
 //     $tests=['Cardiologists', 'Dermatologists', 'Endocrinologists', 'Gastroenterologists', 'Allergists', 'Immunologists'];
 //     $id = $_SESSION['user']['userid'];
 //     require('conn-db.php');
@@ -47,6 +49,9 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
     <link rel="stylesheet" href="./styles/styles.css" />
     <link rel="stylesheet" href="./styles/modals.css" />
     <link rel="stylesheet" href="./styles/media-query.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/modals.css" />
+    <link rel="stylesheet" href="./styles/media-query.css" />
     <title>Edge Laboratory</title>
 
 
@@ -61,6 +66,8 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                 <h1 class="Poiret">edge.</h1>
                 <div class="nav-list-container">
                     <ul class="nav-list ">
+
+                        <li><a href="http://localhost:8001/MedicalLabratory/"> Home</a></li>
                         <li><a href="http://localhost:8001/MedicalLabratory/"> Home</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Services</a></li>
@@ -76,9 +83,6 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                         <a class="btn sign-up" href="http://localhost:8001/MedicalLabratory/signup.php">Sign Up</a>
                     <?php else : ?>
                         <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/logout.php">Logout</a>
-                        <!-- <a class="account-btn" href="http://localhost:8001/MedicalLabratory/profile.php">
-                            <img src="./assets/icons8-user-24.png" alt="">
-                        </a> -->
                     <?php endif; ?>
                 </div>
             </div>
@@ -123,57 +127,48 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                     <div>
                         <ul class="basic-ul  user-card-right">
                             <li>
-<<<<<<< Updated upstream
-                                <p><span> full name: ahmed<?php
-                                                    // echo " ".$_SESSION['user']['name'];
-=======
-                                <p><span> full name:<?php
-                                                    echo " " . $_SESSION['user']['name'];
->>>>>>> Stashed changes
-                                                    ?></p>
-
-                            </li>
-                            <li>
-<<<<<<< Updated upstream
-                                <p><span>email:af@gmail.com<?php
-                                                // echo " ".$_SESSION['user']['email'];
-                                                ?></p>
-                            </li>
-                            <li>
-                                <p><span>age: 22<?php
-                                                // echo " ".$_SESSION['user']['age'];
-                                                ?></p>
-                            </li>
-                            <li>
-                                <p><span>from: banha <?php
-                                                // echo " ".$_SESSION['user']['address'];
-=======
-                                <p><span>email:<?php
-                                                echo " " . $_SESSION['user']['email'];
-                                                ?></p>
-                            </li>
-                            <li>
-                                <p><span>age: <?php
-                                                echo " " . $_SESSION['user']['age'];
-                                                ?></p>
-                            </li>
-                            <li>
-                                <p><span>from: <?php
-                                                echo " " . $_SESSION['user']['address'];
->>>>>>> Stashed changes
-                                                ?></p>
-                            </li>
+                                <p>
+                                    <span> full name: <span id="profilename">
+                                            <?php
+                                            echo $_SESSION['user']['name'];
+                                            ?>
+                                        </span>
 
 
+                            </li>
+
+                            <li>
+                                <p>
+                                    <span>email: 
+                                        <?php
+                                        echo $_SESSION['user']['email'];
+                                        ?>
+                                    </span>
+                            </li>
+                            <li>
+                                <p>
+                                    <span>age: <span id="profileage">
+                                            <?php
+                                            echo $_SESSION['user']['age'];
+                                            ?>
+                                        </span>
+                            </li>
+                            <li>
+                                <p><span>from: <span id="profilefrom">banha</span></span>
+                            </li>
                         </ul>
 
+                        <div class=" update-user-info"><img src=" assets/icons8-modify-20.png">
+                        </div>
                     </div>
-                    <div class="update-user"><img src=" ../assets/icons8-modify-20.png"></div>
                 </div>
                 <div class="name">
                     <div class="welcome">
-                        <p>welcome <span> <?php //echo $_SESSION['user']['name'] ;
-                                            ?></span> to</p>
+                        <p>welcome <span>
+                                <?php
+                                echo $_SESSION['user']['name'];
+                                ?>
+                            </span> to</p>
                         <h2>EDGE.</h2>
                         <p>we care about your health</p>
                     </div>
@@ -499,12 +494,32 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
             </div>
         </div>
 
+        <div id="editUserInfo" class="edit-modal">
+            <div class="edit-modal-content">
+                <span class="close-edit" id="close-user-info">&times;</span>
+                <h2>Edit Info</h2>
+                <form>
 
+                    <label for=""></label>
+                    <input type="text" id="editusername" name="" placeholder="name">
+                    <label for=""></label>
+                    <input type="text" id="edituseremail" name="" placeholder="email">
+                    <label for=""></label>
+                    <input type="text" id="edituserage" name="" placeholder="age">
+                    <label for=""></label>
+                    <input type="text" id="edituserfrom" name="" placeholder="from">
+
+
+
+                    <button type="button" id="edit-user-info-button">Submit Info</button>
+
+                </form>
+            </div>
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
         <script>
             new WOW().init();
         </script>
-
 
 </body>
 
@@ -613,3 +628,37 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
 </script>
 
 <!-- Include ScrollReveal.js -->
+<script>
+    let userinfomodal = document.getElementById("editUserInfo");
+    let closeUserInfo = document.getElementById("close-user-info");
+    let infoToUpdate = ""
+    let submitNewInfo = document.getElementById("edit-user-info-button")
+    let editButton = document.querySelector(".update-user-info")
+    editButton.addEventListener("click", function() {
+        userinfomodal.style.display = "block";
+        infoToUpdate = editButton.parentElement
+        console.log(infoToUpdate.querySelector("#profilename"))
+        document.getElementById("editusername").value = infoToUpdate.querySelector("#profilename").textContent;
+        document.getElementById("edituseremail").value = infoToUpdate.querySelector("#profileemail").textContent;
+        document.getElementById("edituserage").value = infoToUpdate.querySelector("#profileage").textContent;
+        document.getElementById("edituserfrom").value = infoToUpdate.querySelector("#profilefrom").textContent;
+
+    })
+
+
+    window.onclick = function(event) {
+        if (event.target == userinfomodal) {
+            userinfomodal.style.display = "none";
+        }
+    };
+
+
+    closeUserInfo.onclick = function() {
+        userinfomodal.style.display = "none";
+    };
+    submitNewInfo.addEventListener("click", function() {
+
+        userinfomodal.style.display = "none";
+
+    })
+</script>
