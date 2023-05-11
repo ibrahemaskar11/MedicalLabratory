@@ -17,8 +17,8 @@
     <nav class="navbar-admin">
         <div class="navbar-container">
             <div class="navbar-left">
-                <h1>Edge.</h1>
-                <div class="nav-list-container">
+                <h1 class="Poiret"">edge.</h1>
+                <div class=" nav-list-container">
                     <ul class="nav-list ">
                         <li><a href="index.php"> Users</a></li>
                         <li><a href="tests.php">Reports</a></li>
@@ -26,12 +26,12 @@
                         <li><a href="#contact">Contact</a></li>
 
                     </ul>
-                </div>
             </div>
-            <div class="navbar-right ">
-                <a class="btn sign-up" href="logout.php">log out</a>
+        </div>
+        <div class="navbar-right ">
+            <a class="btn sign-up" href="logout.php">log out</a>
 
-            </div>
+        </div>
     </nav>
 
 
