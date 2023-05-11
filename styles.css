@@ -58,6 +58,7 @@ html {
     drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   font-size: 1rem;
 }
+
 .navbar-container {
   padding: 1.25rem 1.75rem;
   display: flex;
@@ -1179,12 +1180,13 @@ html {
 
 .navbar-admin {
   width: 100%;
-  background: var(--zinc-200);
+  background: #fff;
   position: static;
   z-index: 10;
   height: 80px;
-  filter: var(--drop-shadow-lg);
+
   font-size: 1rem;
+
 }
 .file-upload {
   border: 1px solid #ccc;

@@ -87,7 +87,7 @@ html {
 }
 
 .delete,
-.update,.update-test,.update-appoint {
+.update,.update-test,.update-appoint ,.add{
   margin-left: 5%;
   margin-right: 5%;
   display: inline-block;
@@ -101,13 +101,13 @@ html {
   color: #fff; /* add text color if necessary */
 }
 
-.update,.update-test,.update-appoint {
+.update,.update-test,.update-appoint ,.add {
   background-color: #fff;
   border: 1px solid #dee2e6;
 }
 
 .delete:hover,
-.update:hover,.update-test:hover,.update-appoint:hover  {
+.update:hover,.update-test:hover,.update-appoint:hover ,.add:hover {
   background-color: rgba(
     76,
     0,

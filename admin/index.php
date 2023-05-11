@@ -37,22 +37,23 @@
     <nav class="navbar-admin">
         <div class="navbar-container">
             <div class="navbar-left">
-                <h1>Edge.</h1>
-                <div class="nav-list-container">
+                <h1 class="Poiret"">edge.</h1>
+                <div class=" nav-list-container">
                     <ul class="nav-list ">
-                        <li><a href="#users"> Users</a></li>
-                        <li><a href="#reps">Reports</a></li>
-                        <li><a href="#appointments">Apointments</a></li>
+                        <li><a href="index.php"> Users</a></li>
+                        <li><a href="tests.php">Reports</a></li>
+                        <li><a href="appointments.php">Apointments</a></li>
                         <li><a href="#contact">Contact</a></li>
 
                     </ul>
-                </div>
             </div>
-            <div class="navbar-right ">
-                <a class="btn sign-up" href="logout.php">log out</a>
+        </div>
+        <div class="navbar-right ">
+            <a class="btn sign-up" href="logout.php">log out</a>
 
-            </div>
+        </div>
     </nav>
+
 
     <section id="users">
         <h1>USERS</h1>
@@ -107,8 +108,10 @@
                 </li>
                 <li>
                     <div class=" rowButtons">
+                        <div class="add"><img src=" ../assets/icons8-add-20.png"></div>
                         <div class="update"><img src=" ../assets/icons8-modify-20.png"></div>
                         <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
+
                     </div>
                 </li>
 
@@ -164,6 +167,7 @@
                 </li>
                 <li>
                     <div class=" rowButtons">
+                        <div class="add"><img src=" ../assets/icons8-add-20.png"></div>
                         <div class="update"><img src=" ../assets/icons8-modify-20.png"></div>
                         <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
                     </div>
@@ -223,6 +227,7 @@
                 </li>
                 <li>
                     <div class=" rowButtons">
+                        <div class="add"><img src=" ../assets/icons8-add-20.png"></div>
                         <div class="update"><img src=" ../assets/icons8-modify-20.png"></div>
                         <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
                     </div>
@@ -280,6 +285,7 @@
                 </li>
                 <li>
                     <div class=" rowButtons">
+                        <div class="add"><img src=" ../assets/icons8-add-20.png"></div>
                         <div class="update"><img src=" ../assets/icons8-modify-20.png"></div>
                         <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
                     </div>
@@ -291,450 +297,7 @@
 
         </div>
     </section>
-    <section id="reps">
-        <div class="separator"></div>
-        <h1> TESTS</h1>
-        <div class='row containerrow indgo '>
 
-            <div class=" rowcontainer">
-            </div>
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="testname">
-                            ahmed
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            date
-                        </h3>
-                        <h4 id="testdate">
-                            11/12/1011
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4 id="testtype">
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="testemail">
-                            ahmed@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            phone
-                        </h3>
-                        <h4 id="testphone">
-                            01222213
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="testuserId">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-
-                    <div class=" rowButtons">
-                        <div class="update-test"><img src=" ../assets/icons8-modify-20.png">
-                        </div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-
-            </div>
-
-
-
-
-        </div>
-        <div class='row containerrow indgo '>
-
-            <div class=" rowcontainer">
-            </div>
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="testname">
-                            ahmed
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            date
-                        </h3>
-                        <h4 id="testdate">
-                            11/12/1011
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4 id="testtype">
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="testemail">
-                            ahmed@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            phone
-                        </h3>
-                        <h4 id="testphone">
-                            01222213
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="testuserId">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-
-                    <div class=" rowButtons">
-                        <div class="update-test"><img src=" ../assets/icons8-modify-20.png">
-                        </div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-
-            </div>
-
-
-
-
-        </div>
-        <div class='row containerrow indgo '>
-
-            <div class=" rowcontainer">
-            </div>
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="testname">
-                            aloka
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            date
-                        </h3>
-                        <h4 id="testdate">
-                            11/12/1011
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4 id="testtype">
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="testemail">
-                            ysss@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            phone
-                        </h3>
-                        <h4 id="testphone">
-                            01222
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="testuserId">
-                            1233
-                        </h4>
-                    </div>
-                </li>
-                <li>
-
-                    <div class=" rowButtons">
-                        <div class="update-test"><img src=" ../assets/icons8-modify-20.png">
-                        </div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-
-            </div>
-
-
-
-
-        </div>
-    </section>
-
-    <section id="appointments">
-        <div class="separator"></div>
-        <h1>APPOINTMENTS</h1>
-        <div class='row containerrow indgo'>
-
-            <div class=" rowcontainer">
-            </div>
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="appointname">
-                            ahmed
-                        </h4>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4>
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="appointemail">
-                            ahmed@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            appointment-id
-                        </h3>
-                        <h4 id="appointid">
-                            2213
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="appointuserid">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowButtons">
-                        <div class="update-appoint"><img src=" ../assets/icons8-modify-20.png"></div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-            </div>
-
-
-
-        </div>
-        <div class='row containerrow indgo'>
-
-            <div class=" rowcontainer">
-            </div>
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="appointname">
-                            yara
-                        </h4>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4>
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="appointemail">
-                            yara@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            appointment-id
-                        </h3>
-                        <h4 id="appointid">
-                            221311
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="appointuserid">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowButtons">
-                        <div class="update-appoint"><img src=" ../assets/icons8-modify-20.png"></div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-            </div>
-
-
-
-        </div>
-
-    </section>
 
     <footer class="footer" id="contact">
         <div class="footer-container">
@@ -797,9 +360,44 @@
         </div>
     </footer>
 
+    <div id="addappointModal" class="add-modal">
+        <div class="add-modal-content">
+            <span class="close-add" id="close-add-appoint">&times;</span>
+            <h2>add appointment</h2>
+            <form>
+                <label for=""></label>
+                <input type="text" id="" name="" placeholder="name">
+                <label for=""></label>
+                <input type="text" id="" name="" placeholder="user-id">
+                <label for=""></label>
+                <input type="text" id="" name="" placeholder="phone">
 
-    <!-- Add a button to trigger the modal -->
 
+                <label for=""></label>
+                <input type="email" id="" name="email" placeholder="email">
+
+                <select class="select" name="selected">
+                    <option value="0">Test Type:</option>
+                    <option value="1">Cardiologists</option>
+                    <option value="2">Dermatologists</option>
+                    <option value="3">Endocrinologists</option>
+                    <option value="4">Gastroenterologists</option>
+                    <option value="5">Allergists</option>
+                    <option value="6">Immunologists</option>
+                </select>
+                <label for="time"></label>
+                <input name="time" type="time" placeholder="time" name="time">
+
+
+                <label for="date"></label>
+                <input name="date" type="date" id="" placeholder=" Date">
+
+
+                <button type="button" id="add-button">add appointment</button>
+
+            </form>
+        </div>
+    </div>
 
 
     <div id="deleteModal" class="modal">
@@ -812,8 +410,42 @@
             </div>
         </div>
     </div>
+    <!-- Add a button to trigger the modal -->
 
 
+
+    <div id="addtestModal" class="add-modal">
+        <div class="add-modal-content">
+            <span class="close-add" id="close-add-test">&times;</span>
+            <h2>add test</h2>
+            <form>
+
+                <label for=""></label>
+                <input type="text" id="" name="" placeholder="user-id">
+                <label for=""></label>
+                <input type="text" id="" name="" placeholder="appoint-id">
+
+
+
+                <select class="select" name="selected">
+                    <option value="0">Test Type:</option>
+                    <option value="1">Cardiologists</option>
+                    <option value="2">Dermatologists</option>
+                    <option value="3">Endocrinologists</option>
+                    <option value="4">Gastroenterologists</option>
+                    <option value="5">Allergists</option>
+                    <option value="6">Immunologists</option>
+                </select>
+
+
+
+
+                <input type="file" id="myFile" name="myFile" class="file-input">
+                <button type="button" id="add-button-test">add test</button>
+
+            </form>
+        </div>
+    </div>
 
     <!-- The update modal form -->
     <div id="updateUserModal" class="update-modal">
@@ -833,83 +465,30 @@
     </div>
 
 
-    <div id="updateTestModal" class="update-modal">
-        <div class="update-modal-content">
-            <span class="close-update-test">&times;</span>
-            <h2>Update test</h2>
-            <form>
-                <label for="testname"></label>
-                <input type="text" id="testnameform" placeholder="name">
-                <label for="testuserid"></label>
-                <input type="text" id="userIdform" name="appointmentid" placeholder="userId">
-
-                <label for=" email"></label>
-                <input type="email" id="testemailform" name="email" placeholder="email">
-                <label for="phone"></label>
-                <input type="tel" id="testphoneform" name="phone" placeholder="phone">
-                <label for="select"></label>
-                <select class="select" name="selected">
-                    <option value="0">Test Type:</option>
-                    <option value="1">Cardiologists</option>
-                    <option value="2">Dermatologists</option>
-                    <option value="3">Endocrinologists</option>
-                    <option value="4">Gastroenterologists</option>
-                    <option value="5">Allergists</option>
-                    <option value="6">Immunologists</option>
-                </select>
-                <label for="time"></label>
-                <input name="time" type="time" placeholder="time" name="time">
 
 
-                <label for="date"></label>
-                <input name="date" type="date" id="testdateform" placeholder=" Date">
 
 
-                <button type="button" id="updateButton">Update</button>
 
-            </form>
+
+
+
+    <!-- add appointment or report modal  -->
+    <div id="chooseModal" class="choose-modal">
+        <div class="choose-modal-content">
+            <span class="choose-modal-close">&times;</span>
+            <h3>what do you want to add?</h3>
+            <div class="choose-options">
+                <div class="choose-test"><img src=" ../assets/icons8-test-32.png">
+                    <h4>Test</h4>
+                </div>
+                <div class="choose-appointment"> <img src="../assets/icons8-appointment-32.png">
+                    <h4>Appointment</h4>
+                </div>
+            </div>
         </div>
+
     </div>
-
-    <div id="updateappointModal" class="update-modal">
-        <div class="update-modal-content">
-            <span class="close-update-appoint">&times;</span>
-            <h2>Update appointment</h2>
-            <form>
-                <label for="appointnameform"></label>
-                <input type="text" id="appointnameform" placeholder="name">
-                <label for="appointUserIdform"></label>
-                <input type="text" id="appointUserIdform" name="appointmentid" placeholder="user-id">
-                <label for="appointIDform"></label>
-                <input type="email" id="appointIdform" name="email" placeholder="appointment-id">
-
-                <label for=" appointEmailform"></label>
-                <input type="email" id="appointEmailform" name="email" placeholder="email">
-
-                <select class="select" name="selected">
-                    <option value="0">Test Type:</option>
-                    <option value="1">Cardiologists</option>
-                    <option value="2">Dermatologists</option>
-                    <option value="3">Endocrinologists</option>
-                    <option value="4">Gastroenterologists</option>
-                    <option value="5">Allergists</option>
-                    <option value="6">Immunologists</option>
-                </select>
-                <label for="time"></label>
-                <input name="time" type="time" placeholder="time" name="time">
-
-
-                <label for="date"></label>
-                <input name="date" type="date" id="testdateform" placeholder=" Date">
-
-
-                <button type="button" id="updateAppointButton">Update</button>
-
-            </form>
-        </div>
-    </div>
-
-
 
 </body>
 
@@ -922,162 +501,12 @@
 
 
 
-<script defer>
-// Get the update modal element
-let updateAppointModal = document.querySelector("#updateappointModal");
-
-// Get all the update buttons
-let updateAppointButtons = document.querySelectorAll('.update-appoint');
-
-// Get the close button element
-let closeupdateappoint = updateAppointModal.querySelector(".close-update-appoint");
-
-// Get the update button element
-let updatappointButton = updateAppointModal.querySelector("#updateAppointButton");
-
-let appointrow = "";
-
-// When the user clicks on an update button, open the update modal
-updateAppointButtons.forEach(function(updatappointButton) {
-    updatappointButton.addEventListener("click", function() {
-        updateAppointModal.style.display = "block";
-        // Set the row to update as the parent of the clicked button
-        let appointRowToUpdate = updatappointButton.parentNode.parentNode.parentNode;
-
-        // Set the input values to the current row values
-        let emailInput = updateAppointModal.querySelector("#appointEmailform");
-        let appointIdInput = updateAppointModal.querySelector("#appointIdform");
-        let userid = updateAppointModal.querySelector("#appointUserIdform");
-        let appointusername = updateAppointModal.querySelector("#appointnameform");
-
-        emailInput.value = appointRowToUpdate.querySelector("#appointemail").textContent.trim();
-        appointIdInput.value = appointRowToUpdate.querySelector("#appointid").textContent.trim();
-        userid.value = appointRowToUpdate.querySelector("#appointuserid").textContent.trim();
-        appointusername.value = appointRowToUpdate.querySelector("#appointname").textContent.trim();
-        // Store the row to update and the update button as properties of the update button
-        appointrow = appointRowToUpdate;
-    });
-});
-
-
-// When the user clicks on the close button, close the update modal
-closeupdateappoint.onclick = function() {
-    document.querySelector("#updateappointModal").
-    style.display = "none";
-};
-
-// When the user clicks outside the update modal, close it
-window.addEventListener("click", function(event) {
-    if (event.target == updateAppointModal) {
-        updateAppointModal.style.display = "none";
-    }
-});
-
-// When the user clicks on the update button, update the row and close the update modal
-updatappointButton.addEventListener("click", function() {
-
-    // Update the row here
 
 
 
 
-    let emailvalue = document.getElementById("appointEmailform").value;
-    let appointId = document.getElementById("appointIdform").value;
-    let userid = document.getElementById("appointUserIdform").value;
-    let nameValue = document.getElementById("appointnameform").value
-    // Update the text content of an element with ID "name" inside a row element
+<!-- update tests -->
 
-    appointrow.querySelector("#appointemail").textContent = emailvalue;
-
-    appointrow.querySelector("#appointid").textContent = appointId;
-
-    appointrow.querySelector("#appointuserid").textContent = userid;
-    appointrow.querySelector("#appointname").textContent = nameValue
-    updateAppointModal.style.display = "none";
-});
-</script>
-
-
-
-
-
-
-<script defer>
-// Get the update modal element
-let updateTestModal = document.querySelector("#updateTestModal");
-
-// Get all the update buttons
-let updateTestButtons = document.querySelectorAll('.update-test');
-
-// Get the close button element
-let closeupdatetest = updateTestModal.querySelector(".close-update-test");
-
-// Get the update button element
-let updateTestButton = updateTestModal.querySelector("#updateButton");
-
-let testrow = "";
-
-// When the user clicks on an update button, open the update modal
-updateTestButtons.forEach(function(updateTestButton) {
-    updateTestButton.addEventListener("click", function() {
-        updateTestModal.style.display = "block";
-        // Set the row to update as the parent of the clicked button
-        let testRowToUpdate = updateTestButton.parentNode.parentNode.parentNode.parentElement;
-
-        // Set the input values to the current row values
-        let emailInput = updateTestModal.querySelector("#testemailform");
-        let phoneInput = updateTestModal.querySelector("#testphoneform");
-        let userid = updateTestModal.querySelector("#userIdform");
-        let testusername = updateTestModal.querySelector("#testnameform");
-
-        emailInput.value = testRowToUpdate.querySelector("#testemail").textContent.trim();
-        phoneInput.value = testRowToUpdate.querySelector("#testphone").textContent.trim();
-        userid.value = testRowToUpdate.querySelector("#testuserId").textContent.trim();
-        testusername.value = testRowToUpdate.querySelector("#testname").textContent.trim();
-        // Store the row to update and the update button as properties of the update button
-        testrow = testRowToUpdate;
-    });
-});
-
-
-// When the user clicks on the close button, close the update modal
-closeupdatetest.onclick = function() {
-    document.querySelector("#updateTestModal").style.display = "none"
-};
-
-// When the user clicks outside the update modal, close it
-window.addEventListener("click", function(event) {
-    if (event.target == updateTestModal) {
-        updateTestModal.style.display = "none";
-    }
-});
-
-
-// When the user clicks on the update button, update the row and close the update modal
-updateTestButton.addEventListener("click", function() {
-
-    // Update the row here
-
-
-
-
-    let emailvalue = document.getElementById("testemailform").value;
-    let phonevalue = document.getElementById("testphoneform").value;
-    let userid = document.getElementById("userIdform").value;
-    let nameValue = document.getElementById("testnameform").value
-    // Update the text content of an element with ID "name" inside a row element
-
-    testrow.querySelector("#testemail").textContent =
-        emailvalue;
-
-    testrow.querySelector("#testphone").textContent = phonevalue;
-
-    testrow.querySelector("#testuserId").textContent = userid;
-    testrow.querySelector("#testname").textContent = nameValue
-    document.getElementById("updateTestModal")
-        .style.display = "none";
-});
-</script>
 
 
 
@@ -1197,4 +626,137 @@ updateButton.addEventListener("click", function() {
     updateModal.style.display = "none";
 
 });
+</script>
+
+
+
+
+<script>
+// Get the modal element
+let addmodal = document.getElementById("chooseModal");
+
+// Get all the delete buttons
+let addButtons = document.querySelectorAll('.add');
+
+// Get the cancel button element
+
+
+// Get the confirm button element
+
+
+let addcloseButton = document.querySelector(".choose-modal-close");
+// When the user clicks on a delete button, open the modal
+addButtons.forEach(function(addButton) {
+    addButton.addEventListener("click", function() {
+        addmodal.style.display = "block";
+        // Set the row to delete as the parent of the clicked button
+
+        // Store the row to delete as a property of the confirm button
+
+    });
+});
+
+
+
+// When the user clicks on the close button, close the modal
+addcloseButton.addEventListener("click", function() {
+    addmodal.style.display = "none";
+})
+
+
+window.addEventListener("click", function(event) {
+    if (event.target == addmodal) {
+        addmodal.style.display = "none";
+    }
+});
+
+// When the user clicks on confirm, delete the row and close the modal
+</script>
+
+
+
+<script>
+// Get the modal element
+let addAppointmodal = document.getElementById("addappointModal");
+
+// Get all the delete buttons
+let addButton = document.querySelector('#add-button');
+
+// Get the cancel button element
+let addappoint = document.querySelector(".choose-appointment")
+
+
+// Get the confirm button element
+
+
+let closeaddapoint = document.querySelector("#close-add-appoint");
+// When the user clicks on a delete button, open the modal
+
+addappoint.addEventListener('click', function() {
+    addAppointmodal.style.display = "block"
+
+
+})
+
+
+// When the user clicks on the close button, close the modal
+closeaddapoint.onclick = function() {
+    addAppointmodal.style.display = "none";
+}
+window.addEventListener("click", function(event) {
+    if (event.target == addAppointmodal) {
+        addAppointmodal.style.display = "none";
+    }
+});
+
+// When the user clicks on confirm, delete the row and close the modal
+addButton.onclick = function() {
+    // Delete the row here
+    document.getElementById("chooseModal").style.display = "none";
+    addAppointmodal.style.display = "none";
+};
+</script>
+
+
+
+<script>
+// Get the modal element
+let addtestmodal = document.getElementById("addtestModal");
+
+// Get all the delete buttons
+let addButtontest = document.querySelector('#add-button-test');
+
+// Get the cancel button element
+let addtest = document.querySelector(".choose-test")
+
+
+// Get the confirm button element
+
+
+let closeaddtest = document.querySelector("#close-add-test");
+// When the user clicks on a delete button, open the modal
+
+addtest.addEventListener('click', function() {
+    addtestmodal.style.display = "block"
+
+
+})
+
+
+// When the user clicks on the close button, close the modal
+closeaddtest.onclick = function() {
+    addtestmodal.style.display = "none";
+}
+window.addEventListener("click", function(event) {
+    if (event.target == addtestmodal) {
+        addtestmodal.style.display = "none";
+    }
+});
+
+// When the user clicks on confirm, delete the row and close the modal
+addButtontest.onclick = function() {
+    // Delete the row here
+    document.getElementById("chooseModal").style.display = "none";
+    addtestmodal.style.display = "none";
+};
 </script>
