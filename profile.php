@@ -1,9 +1,11 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['user'])) {
-//     header('location:login.php');
-//     exit();
-// }
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('location:login.php');
+    exit();
+}
+require_once __DIR__ . '/db/db.php';
+$appointments = fetchAppointments($_SESSION['user']['id'])
 //     $tests=['Cardiologists', 'Dermatologists', 'Endocrinologists', 'Gastroenterologists', 'Allergists', 'Immunologists'];
 //     $id = $_SESSION['user']['userid'];
 //     require('conn-db.php');
@@ -42,9 +44,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="modals.css" />
-    <link rel="stylesheet" href="media-query.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/modals.css" />
+    <link rel="stylesheet" href="./styles/media-query.css" />
     <title>Edge Laboratory</title>
 
 
@@ -59,7 +61,7 @@
                 <h1 class="Poiret">edge.</h1>
                 <div class="nav-list-container">
                     <ul class="nav-list ">
-                        <li><a href="http://localhost:8001/MedicalLaboratory/"> Home</a></li>
+                        <li><a href="http://localhost:8001/MedicalLabratory/"> Home</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Services</a></li>
                         <li><a href="#">Pricing</a></li>
@@ -70,11 +72,11 @@
             <div class="navbar-right__actions ">
                 <div class="navbar-right ">
                     <?php if (!isset($_SESSION['user'])) : ?>
-                    <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/login.php">Sign In</a>
-                    <a class="btn sign-up" href="http://localhost:8001/MedicalLaboratory/signup.php">Sign Up</a>
+                        <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/login.php">Sign In</a>
+                        <a class="btn sign-up" href="http://localhost:8001/MedicalLabratory/signup.php">Sign Up</a>
                     <?php else : ?>
-                    <a class="btn sign-in" href="http://localhost:8001/MedicalLaboratory/logout.php">Logout</a>
-                    <!-- <a class="account-btn" href="http://localhost:8001/MedicalLaboratory/profile.php">
+                        <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/logout.php">Logout</a>
+                        <!-- <a class="account-btn" href="http://localhost:8001/MedicalLabratory/profile.php">
                             <img src="./assets/icons8-user-24.png" alt="">
                         </a> -->
                     <?php endif; ?>
@@ -121,12 +123,18 @@
                     <div>
                         <ul class="basic-ul  user-card-right">
                             <li>
+<<<<<<< Updated upstream
                                 <p><span> full name: ahmed<?php
                                                     // echo " ".$_SESSION['user']['name'];
+=======
+                                <p><span> full name:<?php
+                                                    echo " " . $_SESSION['user']['name'];
+>>>>>>> Stashed changes
                                                     ?></p>
 
                             </li>
                             <li>
+<<<<<<< Updated upstream
                                 <p><span>email:af@gmail.com<?php
                                                 // echo " ".$_SESSION['user']['email'];
                                                 ?></p>
@@ -139,6 +147,20 @@
                             <li>
                                 <p><span>from: banha <?php
                                                 // echo " ".$_SESSION['user']['address'];
+=======
+                                <p><span>email:<?php
+                                                echo " " . $_SESSION['user']['email'];
+                                                ?></p>
+                            </li>
+                            <li>
+                                <p><span>age: <?php
+                                                echo " " . $_SESSION['user']['age'];
+                                                ?></p>
+                            </li>
+                            <li>
+                                <p><span>from: <?php
+                                                echo " " . $_SESSION['user']['address'];
+>>>>>>> Stashed changes
                                                 ?></p>
                             </li>
 
@@ -273,28 +295,33 @@
                     // echo  
                     ?>
                     <div class="chhild2-container">
-                        <div class='card indgo pointer'>
-                            <div class="date-card">
-                                <div class="day">21</div>
-                                <div>
-                                    <div class="month">September</div>
-                                    <div class="year">2017</div>
-                                </div>
-                            </div>
-                            <div class="cardcontent">
-                                <h2> testType</h2>
-                                <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                    ad mea essent possim iriure.
-                                <div class="download">
-                                    <div class=" rowButtons">
-                                        <div class="update"><img src="assets/icons8-modify-20.png"></div>
-                                        <div class="delete"> <img src="assets/icons8-delete-20.png"></div>
+                        <?php foreach ($appointments as $appointment) : ?>
+                            <div class='card indgo pointer'>
+                                <div class="date-card">
+                                    <div class="day"><?php echo date('d', strtotime($appointment['date'])) ?></div>
+                                    <div>
+                                        <div class="month"><?php echo date('M', strtotime($appointment['date'])) ?></div>
+                                        <div class="year"><?php echo date('Y', strtotime($appointment['date'])) ?></div>
                                     </div>
                                 </div>
+                                <div class="cardcontent">
+                                    <h2><?php echo $appointment['test_name'] ?></h2>
+                                    <p>
+                                        You have an appointment on <?php echo $appointment['date'] ?> at
+                                        <?php echo $appointment['time'] ?> for a <?php echo $appointment['test_name'] ?> test
 
+                                    </p>
+                                    <div class="download">
+                                        <div class=" rowButtons">
+                                            <div class="update"><img src="assets/icons8-modify-20.png"></div>
+                                            <div class="delete"> <img src="assets/icons8-delete-20.png"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class='card indgo pointer'>
+                        <?php endforeach; ?>
+                        <!-- <div class='card indgo pointer'>
                             <div class="date-card">
                                 <div class="day">21</div>
                                 <div>
@@ -314,8 +341,8 @@
                                 </div>
 
                             </div>
-                        </div>
-                        <div class='card indgo pointer'>
+                        </div> -->
+                        <!-- <div class='card indgo pointer'>
                             <div class="date-card">
                                 <div class="day">21</div>
                                 <div>
@@ -335,8 +362,8 @@
                                 </div>
 
                             </div>
-                        </div>
-                        <div class='card indgo pointer'>
+                        </div> -->
+                        <!-- <div class='card indgo pointer'>
                             <div class="date-card">
                                 <div class="day">21</div>
                                 <div>
@@ -355,7 +382,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
 
                     </div>
@@ -417,8 +444,7 @@
                 <h3>EDGE</h3>
                 <p class="footer__copyright">
                     &copy; Copyright by
-                    <a class="footer__link twitter-link" target="_blank"
-                        href="https://twitter.com/ibrahim_askar11">Ibrahim
+                    <a class="footer__link twitter-link" target="_blank" href="https://twitter.com/ibrahim_askar11">Ibrahim
                         Askar </a>All rights reserved
                 </p>
             </div>
@@ -476,114 +502,114 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
         <script>
-        new WOW().init();
+            new WOW().init();
         </script>
 
 
 </body>
 
 <script defer>
-const btn = document.querySelector(".navbar-btn");
-btn.onclick = function() {
-    if (document.querySelector('.navbar-mobile').style.display !== "none") {
-        document.querySelector('.navbar-mobile').style.display = "none";
-    } else {
-        document.querySelector('.navbar-mobile').style.display = "block";
-    }
-};
+    const btn = document.querySelector(".navbar-btn");
+    btn.onclick = function() {
+        if (document.querySelector('.navbar-mobile').style.display !== "none") {
+            document.querySelector('.navbar-mobile').style.display = "none";
+        } else {
+            document.querySelector('.navbar-mobile').style.display = "block";
+        }
+    };
 </script>
 <script>
-// Get the modal element
-let modal = document.getElementById("deleteModal");
+    // Get the modal element
+    let modal = document.getElementById("deleteModal");
 
-// Get all the delete buttons
-let deleteButtons = document.querySelectorAll('.delete');
+    // Get all the delete buttons
+    let deleteButtons = document.querySelectorAll('.delete');
 
-// Get the cancel button element
-let cancelButton = document.getElementById("cancelButton");
+    // Get the cancel button element
+    let cancelButton = document.getElementById("cancelButton");
 
-// Get the confirm button element
-let confirmButton = document.getElementById("confirmButton");
+    // Get the confirm button element
+    let confirmButton = document.getElementById("confirmButton");
 
-let closeButton = document.querySelector(".close");
-// When the user clicks on a delete button, open the modal
-deleteButtons.forEach(function(deleteButton) {
-    deleteButton.addEventListener("click", function() {
-        modal.style.display = "block";
-        // Set the row to delete as the parent of the clicked button
-        let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
-        // Store the row to delete as a property of the confirm button
-        confirmButton.rowToDelete = rowToDelete;
+    let closeButton = document.querySelector(".close");
+    // When the user clicks on a delete button, open the modal
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener("click", function() {
+            modal.style.display = "block";
+            // Set the row to delete as the parent of the clicked button
+            let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
+            // Store the row to delete as a property of the confirm button
+            confirmButton.rowToDelete = rowToDelete;
+        });
     });
-});
 
 
 
-// When the user clicks on the close button, close the modal
-closeButton.onclick = function() {
-    modal.style.display = "none";
-}
-window.addEventListener("click", function(event) {
-    // Check if the target of the click event is the modal
-    if (event.target === modal) {
-        // Hide the modal
+    // When the user clicks on the close button, close the modal
+    closeButton.onclick = function() {
         modal.style.display = "none";
     }
-})
-// When the user clicks on confirm, delete the row and close the modal
-confirmButton.onclick = function() {
-    // Delete the row here
-    let rowToDelete = confirmButton.rowToDelete;
-    rowToDelete.parentNode.removeChild(rowToDelete);
-    modal.style.display = "none";
-};
+    window.addEventListener("click", function(event) {
+        // Check if the target of the click event is the modal
+        if (event.target === modal) {
+            // Hide the modal
+            modal.style.display = "none";
+        }
+    })
+    // When the user clicks on confirm, delete the row and close the modal
+    confirmButton.onclick = function() {
+        // Delete the row here
+        let rowToDelete = confirmButton.rowToDelete;
+        rowToDelete.parentNode.removeChild(rowToDelete);
+        modal.style.display = "none";
+    };
 </script>
 
 <script defer>
-// Get the update modal element
-let updateModal = document.getElementById("updateModal");
+    // Get the update modal element
+    let updateModal = document.getElementById("updateModal");
 
-// Get all the update buttons
-let updateButtons = document.querySelectorAll('.update');
+    // Get all the update buttons
+    let updateButtons = document.querySelectorAll('.update');
 
-// Get the close button element
-let closeupdate = updateModal.querySelector(".closeupdate");
+    // Get the close button element
+    let closeupdate = updateModal.querySelector(".closeupdate");
 
-// Get the update button element
-let updateButton = updateModal.querySelector("#updateButton");
-let row = ""
-// When the user clicks on an update button, open the update modal
-updateButtons.forEach(function(updateButton) {
-    updateButton.addEventListener("click", function() {
-        updateModal.style.display = "block";
-        // Set the row to update as the parent of the clicked button
-        let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
-        // Set the input values to the current row values
+    // Get the update button element
+    let updateButton = updateModal.querySelector("#updateButton");
+    let row = ""
+    // When the user clicks on an update button, open the update modal
+    updateButtons.forEach(function(updateButton) {
+        updateButton.addEventListener("click", function() {
+            updateModal.style.display = "block";
+            // Set the row to update as the parent of the clicked button
+            let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
+            // Set the input values to the current row values
 
-        row = rowToUpdate;
+            row = rowToUpdate;
 
+        });
     });
-});
 
 
-closeupdate.onclick = function() {
-    updateModal.style.display = "none";
-};
-
-
-window.onclick = function(event) {
-    if (event.target == updateModal) {
+    closeupdate.onclick = function() {
         updateModal.style.display = "none";
-    }
-};
+    };
 
 
-updateButton.addEventListener("click", function() {
+    window.onclick = function(event) {
+        if (event.target == updateModal) {
+            updateModal.style.display = "none";
+        }
+    };
+
+
+    updateButton.addEventListener("click", function() {
 
 
 
-    document.getElementById("updateModal").style.display = "none";
-});
+        document.getElementById("updateModal").style.display = "none";
+    });
 </script>
 
 <!-- Include ScrollReveal.js -->

@@ -5,6 +5,8 @@ $appointmentError = "";
 $appointmentSuccess = "";
 //  print_r($_SESSION['user']);
 
+
+
 if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
     $username = $_SESSION['user']['name'];
     $userid = $_SESSION['user']['id'];
@@ -24,6 +26,12 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
     }
     if (empty($selected)) {
         $appointmentError = "Missing information";
+    }
+    if ($date < date('Y-m-d')) {
+        $appointmentError = "incorrect information";
+    }
+    if (!preg_match("/^[0-9]{11}$/", $phoneNumber)) {
+        $appointmentError = "incorrect information";
     }
     if (empty($appointmentError)) {
         try {
@@ -97,27 +105,54 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="./media-query.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/media-query.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-    $(document).ready(function() {
-        $("#phone").on("keyup", function() {
-            setTimeout(() => {
-                console.log("hello");
-                let inputVal = $(this).val();
-                if (inputVal.length > 0 && inputVal.length < 11 || inputVal.length > 11) {
-                    $(this).css("border-color", "red");
-                    submit.prop('disabled', true)
-                } else {
-                    $(this).css('border-color', 'rgb(203, 213, 225)')
-                    errorContainer.text("")
-                    submit.prop('disabled', false)
-                }
-            }, 1000)
+        // $(document).ready(function() {
+        //     $("#phone").on("keyup", function() {
+        //         let submit = $("#appointment-submit")
+        //         setTimeout(() => {
+        //             console.log("hello");
+        //             let inputVal = $(this).val();
+        //             if (inputVal.length > 0 && inputVal.length < 11 || inputVal.length > 11) {
+        //                 $(this).css("border-color", "red");
+        //                 submit.prop('disabled', true)
+        //                 phoneErr = true
+        //             } else {
+        //                 phoneErr = false
+        //                 $(this).css('border-color', 'rgb(203, 213, 225)')
+        //                 errorContainer.text("")
+        //                 const date = $("#date")
+        //                 let currentDate = new Date().toISOString().split('T')[0]; // Get the current date in ISO format
+        //                 if (date.val() > currentDate) {
+        //                     submit.prop('disabled', false)
+        //                 }
+        //             }
+        //         }, 1000)
 
-        });
-    })
+        //     });
+        //     $("#date").on("input", function() {
+        //         let submit = $("#appointment-submit")
+        //         setTimeout(() => {
+        //             let errorContainer = $('#date-error');
+        //             let inputVal = $(this).val();
+        //             let currentDate = new Date().toISOString().split('T')[0]; // Get the current date in ISO format
+
+        //             if (inputVal < currentDate) {
+        //                 $(this).css("border-color", "red");
+        //                 errorContainer.text("Please enter a valid date (not in the future).");
+        //                 submit.prop('disabled', true);
+        //             } else {
+        //                 $(this).css('border-color', 'rgb(203, 213, 225)');
+        //                 errorContainer.text("");
+        //                 if ($("#phone").val().length == 11) {
+        //                     submit.prop('disabled', false);
+        //                 }
+        //             }
+        //         }, 1000);
+        //     });
+        // })
     </script>
     <title>Edge Laboratory</title>
 </head>
@@ -140,13 +175,13 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
             <div class="navbar-right__actions ">
                 <div class="navbar-right ">
                     <?php if (!isset($_SESSION['user'])) : ?>
-                    <a class="btn sign-in" href="./login.php">Sign In</a>
-                    <a class="btn sign-up" href="./signup.php">Sign Up</a>
+                        <a class="btn sign-in" href="./login.php">Sign In</a>
+                        <a class="btn sign-up" href="./signup.php">Sign Up</a>
                     <?php else : ?>
-                    <a class="btn sign-in" href="./logout.php">Logout</a>
-                    <a class="account-btn" href="./profile.php">
-                        <img src="./assets/icons8-user-24.png" alt="">
-                    </a>
+                        <a class="btn sign-in" href="./logout.php">Logout</a>
+                        <a class="account-btn" href="./profile.php">
+                            <img src="./assets/icons8-user-24.png" alt="">
+                        </a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -326,14 +361,10 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                     <li> <span><img src="./assets/icons8-done-48.png" alt=""></span>Hemoglobin A1C</li>
                                     <li> <span><img src="./assets/icons8-done-48.png" alt=""></span>Urinalysis</li>
 
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
-                                                alt=""></span>Liver Function Blood Test</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
-                                                alt=""></span>Liver Function Blood Test</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
-                                                alt=""></span>Liver Function Blood Test</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
-                                                alt=""></span>Liver Function Blood Test</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
                                 </ul>
                                 <button class="btn plan-actions">Get Started</button>
                             </div>
@@ -390,10 +421,8 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                     <li> <span><img src="./assets/icons8-done-48.png" alt=""></span>Female General
                                         Health
                                         Panel</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
-                                                alt=""></span> Transmitted Diaseases</li>
-                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png"
-                                                alt=""></span> Cholesterol Lipid Levels</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span> Transmitted Diaseases</li>
+                                    <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span> Cholesterol Lipid Levels</li>
 
                                 </ul>
                                 <button class="btn plan-actions">Get Started</button>
@@ -417,9 +446,9 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                         <form action="index.php" method="POST" class="contact-form">
                             <h1 class="appointment-header">Make an Appointment</h1>
                             <?php if (!empty($appointmentError)) : ?>
-                            <h3 class="input-error" id="form-error">
-                                <?php echo $appointmentError; ?>
-                            </h3>
+                                <h3 class="input-error" id="form-error">
+                                    <?php echo $appointmentError; ?>
+                                </h3>
                             <?php endif; ?>
                             <ul class="contact-form-input">
                                 <li>
@@ -458,13 +487,12 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                     <input class="date" type="time" placeholder="time" name="time">
                                 </li>
                                 <li>
-                                    <input class="date" type="date" placeholder="Date" name="date">
+                                    <input class="date" id="date" type="date" placeholder="Date" name="date">
                                 </li>
 
                             </ul>
                             <div class="contact-actions"></div>
-                            <button class="btn btn-appointment btn-action-1" name="appointment" type="submit"
-                                id="appointment-submit">make an appointment</button>
+                            <button class="btn btn-appointment btn-action-1" name="appointment" type="submit" id="appointment-submit">make an appointment</button>
                         </form>
                     </div>
                     <div class="contact-us-left-group">
@@ -577,14 +605,14 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
             </footer>
     </main>
     <script defer>
-    const btn = document.querySelector(".navbar-btn");
-    btn.onclick = function() {
-        if (document.querySelector('.navbar-mobile').style.display !== "none") {
-            document.querySelector('.navbar-mobile').style.display = "none";
-        } else {
-            document.querySelector('.navbar-mobile').style.display = "block";
-        }
-    };
+        const btn = document.querySelector(".navbar-btn");
+        btn.onclick = function() {
+            if (document.querySelector('.navbar-mobile').style.display !== "none") {
+                document.querySelector('.navbar-mobile').style.display = "none";
+            } else {
+                document.querySelector('.navbar-mobile').style.display = "block";
+            }
+        };
     </script>
 </body>
 

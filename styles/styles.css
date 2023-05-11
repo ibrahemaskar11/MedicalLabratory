@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto");
-@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poiret+One&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -543,7 +543,7 @@ html {
 }
 .plan-actions:hover {
   background: inherit;
-  color: var(--indigo)
+  color: var(--indigo);
 }
 
 .contact {
@@ -975,6 +975,9 @@ html {
   text-align: start;
   flex-direction: column;
 }
+.user-card-right p {
+  font-size: 1.25rem;
+}
 .rep-date {
   transition: all 0.3s ease-in-out;
 }
@@ -1180,13 +1183,12 @@ html {
 
 .navbar-admin {
   width: 100%;
-  background: #fff ;
+  background: #fff;
   position: static;
   z-index: 10;
   height: 80px;
 
   font-size: 1rem;
-
 }
 .file-upload {
   border: 1px solid #ccc;
@@ -1474,7 +1476,7 @@ html .pricing {
   padding-left: 6%;
   padding-right: 6%;
   padding-bottom: 8%;
-  padding-top: 8%;
+  padding-top: 6%;
   border-radius: 5px solid #dee2e6;
   margin-top: 3%;
   margin-bottom: 3%;
@@ -1489,10 +1491,11 @@ html .pricing {
   flex-direction: row;
   justify-content: space-between;
   transition: transform 0.3s ease-in-out;
-
+  /* width: 46rem;
+  height: 13rem; */
   /* add this line */
 }
-.chhild2-container .card{
+.chhild2-container .card {
   padding-bottom: 3%;
   /* background-color: red; */
 }
@@ -1527,6 +1530,7 @@ html .pricing {
   padding-bottom: 1%;
   height: 100%;
   justify-content: space-between;
+  width: 100%;
 }
 .cardcontent h2 {
   margin-bottom: 10px;
@@ -1536,6 +1540,7 @@ html .pricing {
 }
 .cardcontent p {
   margin-bottom: 10px;
+  min-width: 100%;
 }
 .cardcontent a {
   margin-top: 10px;
@@ -1708,10 +1713,6 @@ html .pricing {
   height: 3px;
   width: 40px;
   margin-bottom: 0.25em;
-  -webkit-transform:;
-  -moz-transform:;
-  -ms-transform:;
-  -o-transform:;
 }
 .title {
   color: #333333;
@@ -1724,7 +1725,19 @@ html .pricing {
   display: flex;
   justify-content: center;
 }
+<<<<<<< Updated upstream:styles.css
 .update-user{
 margin-left: 90%;
 
 }
+=======
+
+.navbar-admin .navbar-left{
+  justify-content: flex-start;
+  align-items: center;
+}
+.navbar-admin{
+    padding: 0 1rem;
+
+}
+>>>>>>> Stashed changes:styles/styles.css

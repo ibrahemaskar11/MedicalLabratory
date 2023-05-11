@@ -63,3 +63,22 @@ function addAppointment($mrn, $phoneNumber, $testType, $time, $date)
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 }
+
+function fetchAppointments($userId)
+{
+    $conn = db_connect();
+
+    $sql = "SELECT a.app_id, a.date, a.time, a.phone_number, t.name AS test_name
+        FROM appointments a
+        JOIN tests t ON a.test_type = t.test_id
+        WHERE a.mrn = ?";
+
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $userId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $appointments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return $appointments;
+}

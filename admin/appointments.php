@@ -1,3 +1,14 @@
+<?php
+require_once __DIR__ . '/../db/admin.php';
+session_start();
+if (!isset($_SESSION['admin'])) {
+    header('location:login.php');
+    exit();
+}
+$appointments = fetchAppointments();
+// print_r($appointments);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,11 +16,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="adminstyles.css" />
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="../modals.css" />
+    <link rel="stylesheet" href="../styles/adminstyles.css" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <link rel="stylesheet" href="../styles/modals.css" />
 
-    <link rel="stylesheet" href="media-query.css" />
+    <link rel="stylesheet" href="../styles/media-query.css" />
     <title>Edge Laboratory</title>
 </head>
 
@@ -17,21 +28,20 @@
     <nav class="navbar-admin">
         <div class="navbar-container">
             <div class="navbar-left">
-                <h1 class="Poiret"">edge.</h1>
+                <h1 class="Poiret">edge.</h1>
                 <div class=" nav-list-container">
                     <ul class="nav-list ">
-                        <li><a href="index.php"> Users</a></li>
-                        <li><a href="tests.php">Reports</a></li>
-                        <li><a href="appointments.php">Apointments</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="./index.php"> Users</a></li>
+                        <li><a href="./reports.php">Reports</a></li>
+                        <li><a href="./appointments.php">Apointments</a></li>
 
                     </ul>
+                </div>
             </div>
-        </div>
-        <div class="navbar-right ">
-            <a class="btn sign-up" href="logout.php">log out</a>
+            <div class="navbar-right ">
+                <a class="btn sign-in" href="logout.php">log out</a>
 
-        </div>
+            </div>
     </nav>
 
 
@@ -39,7 +49,87 @@
     <section id="appointments">
 
         <h1>APPOINTMENTS</h1>
-        <div class='row containerrow indgo'>
+        <?php foreach ($appointments as $appointment) : ?>
+            <div class='row containerrow indgo'>
+
+
+                <div class="rowheaders">
+
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                id
+                            </h3>
+                            <h4>
+                                <?php echo $appointment['app_id'] ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                name
+                            </h3>
+                            <h4 id="appointname">
+                                <?php echo $appointment['user_name'] ?>
+                            </h4>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                type
+                            </h3>
+                            <h4>
+                                <?php echo $appointment['test_name'] ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                email
+                            </h3>
+                            <h4 id="appointemail">
+                                <?php echo $appointment['email'] ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                appointment-id
+                            </h3>
+                            <h4 id="appointid">
+                                <?php echo $appointment['app_id'] ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class=" rowItem">
+                            <h3>
+                                user-id
+                            </h3>
+                            <h4 id="appointuserid">
+                                <?php echo $appointment['mrn'] ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class=" rowButtons">
+                            <div class="update-appoint"><img src=" ../assets/icons8-modify-20.png"></div>
+                            <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
+                        </div>
+                    </li>
+
+                </div>
+
+
+
+            </div>
+        <?php endforeach; ?>
+        <!-- <div class='row containerrow indgo'>
 
 
             <div class="rowheaders">
@@ -116,86 +206,8 @@
 
 
 
-        </div>
-        <div class='row containerrow indgo'>
-
-
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="appointname">
-                            ahmed
-                        </h4>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4>
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="appointemail">
-                            ahmed@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            appointment-id
-                        </h3>
-                        <h4 id="appointid">
-                            2213
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="appointuserid">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowButtons">
-                        <div class="update-appoint"><img src=" ../assets/icons8-modify-20.png"></div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-            </div>
-
-
-
-        </div>
-        <div class='row containerrow indgo'>
+        </div> -->
+        <!-- <div class='row containerrow indgo'>
 
             <div class=" rowcontainer">
             </div>
@@ -273,7 +285,7 @@
 
 
 
-        </div>
+        </div> -->
 
     </section>
 
@@ -281,7 +293,7 @@
 
 
 
-    <footer class="footer" id="contact">
+    <!-- <footer class="footer" id="contact">
         <div class="footer-container">
             <div class="footer-contact-us">
                 <h3>Contact Us</h3>
@@ -340,7 +352,7 @@
             </p>
         </div>
         </div>
-    </footer>
+    </footer> -->
 
 
     <div id="updateappointModal" class="update-modal">
@@ -396,122 +408,122 @@
 <!-- update appointments -->
 
 <script defer>
-// Get the update modal element
-let updateAppointModal = document.querySelector("#updateappointModal");
+    // Get the update modal element
+    let updateAppointModal = document.querySelector("#updateappointModal");
 
-// Get all the update buttons
-let updateAppointButtons = document.querySelectorAll('.update-appoint');
+    // Get all the update buttons
+    let updateAppointButtons = document.querySelectorAll('.update-appoint');
 
-// Get the close button element
-let closeupdateappoint = updateAppointModal.querySelector(".close-update-appoint");
+    // Get the close button element
+    let closeupdateappoint = updateAppointModal.querySelector(".close-update-appoint");
 
-// Get the update button element
-let updatappointButton = updateAppointModal.querySelector("#updateAppointButton");
+    // Get the update button element
+    let updatappointButton = updateAppointModal.querySelector("#updateAppointButton");
 
-let appointrow = "";
+    let appointrow = "";
 
-// When the user clicks on an update button, open the update modal
-updateAppointButtons.forEach(function(updatappointButton) {
-    updatappointButton.addEventListener("click", function() {
-        updateAppointModal.style.display = "block";
-        // Set the row to update as the parent of the clicked button
-        let appointRowToUpdate = updatappointButton.parentNode.parentNode.parentNode;
+    // When the user clicks on an update button, open the update modal
+    updateAppointButtons.forEach(function(updatappointButton) {
+        updatappointButton.addEventListener("click", function() {
+            updateAppointModal.style.display = "block";
+            // Set the row to update as the parent of the clicked button
+            let appointRowToUpdate = updatappointButton.parentNode.parentNode.parentNode;
 
-        // Set the input values to the current row values
-        let emailInput = updateAppointModal.querySelector("#appointEmailform");
-        let appointIdInput = updateAppointModal.querySelector("#appointIdform");
-        let userid = updateAppointModal.querySelector("#appointUserIdform");
-        let appointusername = updateAppointModal.querySelector("#appointnameform");
+            // Set the input values to the current row values
+            let emailInput = updateAppointModal.querySelector("#appointEmailform");
+            let appointIdInput = updateAppointModal.querySelector("#appointIdform");
+            let userid = updateAppointModal.querySelector("#appointUserIdform");
+            let appointusername = updateAppointModal.querySelector("#appointnameform");
 
-        emailInput.value = appointRowToUpdate.querySelector("#appointemail").textContent.trim();
-        appointIdInput.value = appointRowToUpdate.querySelector("#appointid").textContent.trim();
-        userid.value = appointRowToUpdate.querySelector("#appointuserid").textContent.trim();
-        appointusername.value = appointRowToUpdate.querySelector("#appointname").textContent.trim();
-        // Store the row to update and the update button as properties of the update button
-        appointrow = appointRowToUpdate;
+            emailInput.value = appointRowToUpdate.querySelector("#appointemail").textContent.trim();
+            appointIdInput.value = appointRowToUpdate.querySelector("#appointid").textContent.trim();
+            userid.value = appointRowToUpdate.querySelector("#appointuserid").textContent.trim();
+            appointusername.value = appointRowToUpdate.querySelector("#appointname").textContent.trim();
+            // Store the row to update and the update button as properties of the update button
+            appointrow = appointRowToUpdate;
+        });
     });
-});
 
 
-// When the user clicks on the close button, close the update modal
-closeupdateappoint.onclick = function() {
-    document.querySelector("#updateappointModal").
-    style.display = "none";
-};
+    // When the user clicks on the close button, close the update modal
+    closeupdateappoint.onclick = function() {
+        document.querySelector("#updateappointModal").
+        style.display = "none";
+    };
 
-// When the user clicks outside the update modal, close it
-window.addEventListener("click", function(event) {
-    if (event.target == updateAppointModal) {
+    // When the user clicks outside the update modal, close it
+    window.addEventListener("click", function(event) {
+        if (event.target == updateAppointModal) {
+            updateAppointModal.style.display = "none";
+        }
+    });
+
+    // When the user clicks on the update button, update the row and close the update modal
+    updatappointButton.addEventListener("click", function() {
+
+        // Update the row here
+
+
+
+
+        let emailvalue = document.getElementById("appointEmailform").value;
+        let appointId = document.getElementById("appointIdform").value;
+        let userid = document.getElementById("appointUserIdform").value;
+        let nameValue = document.getElementById("appointnameform").value
+        // Update the text content of an element with ID "name" inside a row element
+
+        appointrow.querySelector("#appointemail").textContent = emailvalue;
+
+        appointrow.querySelector("#appointid").textContent = appointId;
+
+        appointrow.querySelector("#appointuserid").textContent = userid;
+        appointrow.querySelector("#appointname").textContent = nameValue
         updateAppointModal.style.display = "none";
-    }
-});
-
-// When the user clicks on the update button, update the row and close the update modal
-updatappointButton.addEventListener("click", function() {
-
-    // Update the row here
-
-
-
-
-    let emailvalue = document.getElementById("appointEmailform").value;
-    let appointId = document.getElementById("appointIdform").value;
-    let userid = document.getElementById("appointUserIdform").value;
-    let nameValue = document.getElementById("appointnameform").value
-    // Update the text content of an element with ID "name" inside a row element
-
-    appointrow.querySelector("#appointemail").textContent = emailvalue;
-
-    appointrow.querySelector("#appointid").textContent = appointId;
-
-    appointrow.querySelector("#appointuserid").textContent = userid;
-    appointrow.querySelector("#appointname").textContent = nameValue
-    updateAppointModal.style.display = "none";
-});
+    });
 </script>
 
 <script>
-// Get the modal element
-let modal = document.getElementById("deleteModal");
+    // Get the modal element
+    let modal = document.getElementById("deleteModal");
 
-// Get all the delete buttons
-let deleteButtons = document.querySelectorAll('.delete');
+    // Get all the delete buttons
+    let deleteButtons = document.querySelectorAll('.delete');
 
-// Get the cancel button element
-let cancelButton = document.getElementById("cancelButton");
+    // Get the cancel button element
+    let cancelButton = document.getElementById("cancelButton");
 
-// Get the confirm button element
-let confirmButton = document.getElementById("confirmButton");
+    // Get the confirm button element
+    let confirmButton = document.getElementById("confirmButton");
 
-let closeButton = document.querySelector(".close");
-// When the user clicks on a delete button, open the modal
-deleteButtons.forEach(function(deleteButton) {
-    deleteButton.addEventListener("click", function() {
-        modal.style.display = "block";
-        // Set the row to delete as the parent of the clicked button
-        let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
-        // Store the row to delete as a property of the confirm button
-        confirmButton.rowToDelete = rowToDelete;
+    let closeButton = document.querySelector(".close");
+    // When the user clicks on a delete button, open the modal
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener("click", function() {
+            modal.style.display = "block";
+            // Set the row to delete as the parent of the clicked button
+            let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
+            // Store the row to delete as a property of the confirm button
+            confirmButton.rowToDelete = rowToDelete;
+        });
     });
-});
 
 
 
-// When the user clicks on the close button, close the modal
-closeButton.onclick = function() {
-    modal.style.display = "none";
-}
-window.addEventListener("click", function(event) {
-    if (event.target == modal) {
+    // When the user clicks on the close button, close the modal
+    closeButton.onclick = function() {
         modal.style.display = "none";
     }
-});
+    window.addEventListener("click", function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
 
-// When the user clicks on confirm, delete the row and close the modal
-confirmButton.onclick = function() {
-    // Delete the row here
-    let rowToDelete = confirmButton.rowToDelete;
-    rowToDelete.parentNode.removeChild(rowToDelete);
-    modal.style.display = "none";
-};
+    // When the user clicks on confirm, delete the row and close the modal
+    confirmButton.onclick = function() {
+        // Delete the row here
+        let rowToDelete = confirmButton.rowToDelete;
+        rowToDelete.parentNode.removeChild(rowToDelete);
+        modal.style.display = "none";
+    };
 </script>
