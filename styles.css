@@ -1180,7 +1180,7 @@ html {
 
 .navbar-admin {
   width: 100%;
-  background: #fff;
+  background: #fff ;
   position: static;
   z-index: 10;
   height: 80px;
