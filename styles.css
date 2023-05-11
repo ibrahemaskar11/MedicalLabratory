@@ -632,6 +632,7 @@ html {
   width: 50%;
 }
 .profile-card-right-group {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -735,7 +736,7 @@ html {
   color: rgb(209 213 219);
   padding: 2rem 1rem;
   /* border-top: 4px solid rgb(209 213 219); */
-
+margin-top: auto;;
   /* border-top: 4px solid var(--slate); */
 }
 .footer-container {
@@ -1724,7 +1725,31 @@ html .pricing {
   display: flex;
   justify-content: center;
 }
-.update-user{
-margin-left: 90%;
+.update-user-info{
+  position: absolute;
 
+bottom: 0;
+right:0;
+}
+
+.update-user-info{
+
+  display: inline-block;
+  border-radius: 5px; /* make the element square */
+  padding: 6px; /* adjust as necessary */
+}
+
+.update-user-info{
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  color: #fff; /* add text color if necessary */
+}
+
+.update-user-info {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
+.update-user-info:hover {
+  background-color: rgba(0, 0, 0, 0.11); /* change to desired hover background color */
 }

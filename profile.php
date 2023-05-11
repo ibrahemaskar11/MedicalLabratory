@@ -121,23 +121,23 @@
                     <div>
                         <ul class="basic-ul  user-card-right">
                             <li>
-                                <p><span> full name: ahmed<?php
+                                <p><span> full name: <span id="profilename">ahmed</span></span><?php
                                                     // echo " ".$_SESSION['user']['name'];
-                                                    ?></p>
+                                                    ?>
 
                             </li>
                             <li>
-                                <p><span>email:af@gmail.com<?php
+                                <p><span>email:<span id="profileemail">af@gmail.com</span></span><?php
                                                 // echo " ".$_SESSION['user']['email'];
-                                                ?></p>
+                                                ?>
                             </li>
                             <li>
-                                <p><span>age: 22<?php
+                                <p><span>age: <span id="profileage">22</span></span><?php
                                                 // echo " ".$_SESSION['user']['age'];
-                                                ?></p>
+                                                ?>
                             </li>
                             <li>
-                                <p><span>from: banha <?php
+                                <p><span>from: <span id="profilefrom">banha</span></span> <?php
                                                 // echo " ".$_SESSION['user']['address'];
                                                 ?></p>
                             </li>
@@ -146,7 +146,8 @@
                         </ul>
 
                     </div>
-                    <div class="update-user"><img src=" ../assets/icons8-modify-20.png"></div>
+                    <div class=" update-user-info"><img src=" assets/icons8-modify-20.png">
+                    </div>
                 </div>
                 <div class="name">
                     <div class="welcome">
@@ -473,11 +474,28 @@
             </div>
         </div>
 
+        <div id="editUserInfo" class="edit-modal">
+            <div class="edit-modal-content">
+                <span class="close-edit" id="close-user-info">&times;</span>
+                <h2>Edit Info</h2>
+                <form>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-        <script>
-        new WOW().init();
-        </script>
+                    <label for=""></label>
+                    <input type="text" id="editusername" name="" placeholder="name">
+                    <label for=""></label>
+                    <input type="text" id="edituseremail" name="" placeholder="email">
+                    <label for=""></label>
+                    <input type="text" id="edituserage" name="" placeholder="age">
+                    <label for=""></label>
+                    <input type="text" id="edituserfrom" name="" placeholder="from">
+
+
+
+                    <button type="button" id="edit-user-info-button">Submit Info</button>
+
+                </form>
+            </div>
+        </div>
 
 
 </body>
@@ -587,3 +605,37 @@ updateButton.addEventListener("click", function() {
 </script>
 
 <!-- Include ScrollReveal.js -->
+<script>
+let userinfomodal = document.getElementById("editUserInfo");
+let closeUserInfo = document.getElementById("close-user-info");
+let infoToUpdate = ""
+let submitNewInfo = document.getElementById("edit-user-info-button")
+let editButton = document.querySelector(".update-user-info")
+editButton.addEventListener("click", function() {
+    userinfomodal.style.display = "block";
+    infoToUpdate = editButton.parentElement
+    console.log(infoToUpdate.querySelector("#profilename"))
+    document.getElementById("editusername").value = infoToUpdate.querySelector("#profilename").textContent;
+    document.getElementById("edituseremail").value = infoToUpdate.querySelector("#profileemail").textContent;
+    document.getElementById("edituserage").value = infoToUpdate.querySelector("#profileage").textContent;
+    document.getElementById("edituserfrom").value = infoToUpdate.querySelector("#profilefrom").textContent;
+
+})
+
+
+window.onclick = function(event) {
+    if (event.target == userinfomodal) {
+        userinfomodal.style.display = "none";
+    }
+};
+
+
+closeUserInfo.onclick = function() {
+    userinfomodal.style.display = "none";
+};
+submitNewInfo.addEventListener("click", function() {
+
+    userinfomodal.style.display = "none";
+
+})
+</script>

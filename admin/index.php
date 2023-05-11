@@ -25,10 +25,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="adminstyles.css" />
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="../modals.css" />
 
+    <link rel="stylesheet" href="../styles.css" />
+
+    <link rel="stylesheet" href="../modals.css" />
+    <link rel="stylesheet" href="adminstyles.css" />
     <link rel="stylesheet" href="media-query.css" />
     <title>Edge Laboratory</title>
 </head>
@@ -299,7 +300,7 @@
     </section>
 
 
-    <footer class="footer" id="contact">
+    <footer class="footer " id="contact">
         <div class="footer-container">
             <div class="footer-contact-us">
                 <h3>Contact Us</h3>
