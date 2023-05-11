@@ -66,6 +66,7 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                 <h1 class="Poiret">edge.</h1>
                 <div class="nav-list-container">
                     <ul class="nav-list ">
+
                         <li><a href="http://localhost:8001/MedicalLabratory/"> Home</a></li>
                         <li><a href="http://localhost:8001/MedicalLabratory/"> Home</a></li>
                         <li><a href="#">About</a></li>
@@ -80,15 +81,8 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                     <?php if (!isset($_SESSION['user'])) : ?>
                         <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/login.php">Sign In</a>
                         <a class="btn sign-up" href="http://localhost:8001/MedicalLabratory/signup.php">Sign Up</a>
-                        <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/login.php">Sign In</a>
-                        <a class="btn sign-up" href="http://localhost:8001/MedicalLabratory/signup.php">Sign Up</a>
                     <?php else : ?>
                         <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/logout.php">Logout</a>
-                        <!-- <a class="account-btn" href="http://localhost:8001/MedicalLabratory/profile.php">
-                        <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/logout.php">Logout</a>
-                        <!-- <a class="account-btn" href="http://localhost:8001/MedicalLabratory/profile.php">
-                            <img src="./assets/icons8-user-24.png" alt="">
-                        </a> -->
                     <?php endif; ?>
                 </div>
             </div>
@@ -133,49 +127,48 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                     <div>
                         <ul class="basic-ul  user-card-right">
                             <li>
-                                <p><span> full name: <span id="profilename">ahmed</span></span>
+                                <p>
+                                    <span> full name: <span id="profilename">
+                                            <?php
+                                            echo $_SESSION['user']['name'];
+                                            ?>
+                                        </span>
+
 
                             </li>
+
                             <li>
-                                <p><span>email:<span id="profileemail">af@gmail.com</span></span>
-
-
+                                <p>
+                                    <span>email: 
+                                        <?php
+                                        echo $_SESSION['user']['email'];
+                                        ?>
+                                    </span>
                             </li>
                             <li>
-                                <p><span>email:af@gmail.com<?php
-                                                            // echo " ".$_SESSION['user']['email'];
-                                                            ?>
-                            </li>
-                            <li>
-                                <p><span>age: <span id="profileage">22</span></span><?php
-                                                                                    // echo " ".$_SESSION['user']['age'];
-                                                                                    ?>
+                                <p>
+                                    <span>age: <span id="profileage">
+                                            <?php
+                                            echo $_SESSION['user']['age'];
+                                            ?>
+                                        </span>
                             </li>
                             <li>
                                 <p><span>from: <span id="profilefrom">banha</span></span>
                             </li>
-                            <li>
-                                <p><span>age: <?php
-                                                echo " " . $_SESSION['user']['age'];
-                                                ?></p>
-                            </li>
-                            <li>
-                                <p><span>from: banha <?php
-                                                        // echo " ".$_SESSION['user']['address'];
-                                                        ?></p>
-                            </li>
-
-
                         </ul>
 
-                    </div>
-                    <div class=" update-user-info"><img src=" assets/icons8-modify-20.png">
+                        <div class=" update-user-info"><img src=" assets/icons8-modify-20.png">
+                        </div>
                     </div>
                 </div>
                 <div class="name">
                     <div class="welcome">
-                        <p>welcome <span> <?php //echo $_SESSION['user']['name'] ;
-                                            ?></span> to</p>
+                        <p>welcome <span>
+                                <?php
+                                echo $_SESSION['user']['name'];
+                                ?>
+                            </span> to</p>
                         <h2>EDGE.</h2>
                         <p>we care about your health</p>
                     </div>
