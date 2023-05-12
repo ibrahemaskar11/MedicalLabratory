@@ -6,6 +6,11 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 $appointments = fetchAppointments();
+if (isset($_POST['delete_app'])) {
+    $app_id = $_POST['app_id'];
+    deleteAppointment($app_id);
+    $appointments = fetchAppointments();
+}
 // print_r($appointments);
 ?>
 
@@ -25,35 +30,15 @@ $appointments = fetchAppointments();
 </head>
 
 <body>
-    <nav class="navbar-admin">
-        <div class="navbar-container">
-            <div class="navbar-left">
-                <h1 class="Poiret">edge.</h1>
-                <div class=" nav-list-container">
-                    <ul class="nav-list ">
-                        <li><a href="./index.php"> Users</a></li>
-                        <li><a href="./reports.php">Reports</a></li>
-                        <li><a href="./appointments.php">Apointments</a></li>
-
-                    </ul>
-                </div>
-            </div>
-            <div class="navbar-right ">
-                <a class="btn sign-in" href="logout.php">log out</a>
-
-            </div>
-    </nav>
-
-
-
+    <?php include __DIR__ . '/../components/adminnavbar.php'; ?>
     <section id="appointments">
 
         <h1>APPOINTMENTS</h1>
         <?php foreach ($appointments as $appointment) : ?>
-            <div class='row containerrow indgo'>
+            <div class='row containerrow indgo' data-id="<?php echo $appointment['app_id'] ?>">
 
 
-                <div class="rowheaders">
+                <div class=" rowheaders">
 
                     <li>
                         <div class="rowItem">
@@ -109,7 +94,7 @@ $appointments = fetchAppointments();
                     <li>
                         <div class=" rowItem">
                             <h3>
-                                user-id
+                                MRN
                             </h3>
                             <h4 id="appointuserid">
                                 <?php echo $appointment['mrn'] ?>
@@ -119,7 +104,9 @@ $appointments = fetchAppointments();
                     <li>
                         <div class=" rowButtons">
                             <div class="update-appoint"><img src=" ../assets/icons8-modify-20.png"></div>
-                            <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
+                            <div class="delete" data-id="<?php echo $appointment['app_id'] ?>">
+                                <img src="../assets/icons8-delete-20.png">
+                            </div>
                         </div>
                     </li>
 
@@ -394,14 +381,15 @@ $appointments = fetchAppointments();
     </div>
 
     <div id="deleteModal" class="modal">
-        <div class="modal-content">
+        <form action="appointments.php" method="POST" class="modal-content">
+            <input type="hidden" id="delete_id_input" name="app_id" value="">
             <span class="close">&times;</span>
             <h3>Are you sure you want to delete this record?</h3>
             <div class="modal-buttons">
 
-                <button id="confirmButton">Delete</button>
+                <button type="submit" name="delete_app" id="confirmButton">Delete</button>
             </div>
-        </div>
+        </form>
     </div>
 
 </body>
@@ -496,9 +484,12 @@ $appointments = fetchAppointments();
     let confirmButton = document.getElementById("confirmButton");
 
     let closeButton = document.querySelector(".close");
+
+    let deleteIdInput = document.querySelector("#delete_id_input");
     // When the user clicks on a delete button, open the modal
     deleteButtons.forEach(function(deleteButton) {
         deleteButton.addEventListener("click", function() {
+            deleteIdInput.value = deleteButton.dataset.id;
             modal.style.display = "block";
             // Set the row to delete as the parent of the clicked button
             let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
@@ -506,8 +497,6 @@ $appointments = fetchAppointments();
             confirmButton.rowToDelete = rowToDelete;
         });
     });
-
-
 
     // When the user clicks on the close button, close the modal
     closeButton.onclick = function() {
@@ -518,12 +507,4 @@ $appointments = fetchAppointments();
             modal.style.display = "none";
         }
     });
-
-    // When the user clicks on confirm, delete the row and close the modal
-    confirmButton.onclick = function() {
-        // Delete the row here
-        let rowToDelete = confirmButton.rowToDelete;
-        rowToDelete.parentNode.removeChild(rowToDelete);
-        modal.style.display = "none";
-    };
 </script>

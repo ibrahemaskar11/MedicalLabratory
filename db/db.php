@@ -82,3 +82,24 @@ function fetchAppointments($userId)
     mysqli_close($conn);
     return $appointments;
 }
+
+function fetchReports($userId){
+    $conn = db_connect();
+
+    $sql =
+        "SELECT r.report_id, r.url, u.username, u.email, u.mrn, a.date, a.time, a.phone_number, t.name AS test_name
+        FROM reports r
+        JOIN users u ON r.mrn = u.mrn
+        JOIN appointments a ON r.appointment_id = a.app_id
+        JOIN tests t ON a.test_type = t.test_id
+        WHERE u.mrn = ?";
+
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $userId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $reports = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return $reports;
+}

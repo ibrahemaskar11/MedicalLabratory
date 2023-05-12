@@ -5,9 +5,17 @@ if (!isset($_SESSION['user'])) {
     header('location:login.php');
     exit();
 }
-$appointments = fetchAppointments($_SESSION['user']['id'])
+$appointments = fetchAppointments($_SESSION['user']['id']);
+$reports = fetchReports($_SESSION['user']['id']);
 
+// print_r($reports);
+// print_r($appointments);
 
+// session_start();
+// if (!isset($_SESSION['user'])) {
+//     header('location:login.php');
+//     exit();
+// }
 //     $tests=['Cardiologists', 'Dermatologists', 'Endocrinologists', 'Gastroenterologists', 'Allergists', 'Immunologists'];
 //     $id = $_SESSION['user']['userid'];
 //     require('conn-db.php');
@@ -49,9 +57,6 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
     <link rel="stylesheet" href="./styles/styles.css" />
     <link rel="stylesheet" href="./styles/modals.css" />
     <link rel="stylesheet" href="./styles/media-query.css" />
-    <link rel="stylesheet" href="./styles/styles.css" />
-    <link rel="stylesheet" href="./styles/modals.css" />
-    <link rel="stylesheet" href="./styles/media-query.css" />
     <title>Edge Laboratory</title>
 
 
@@ -60,55 +65,7 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 
 <body>
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="navbar-left">
-                <h1 class="Poiret">edge.</h1>
-                <div class="nav-list-container">
-                    <ul class="nav-list ">
-
-                        <li><a href="http://localhost:8001/MedicalLabratory/"> Home</a></li>
-                        <li><a href="http://localhost:8001/MedicalLabratory/"> Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Contact us</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="navbar-right__actions ">
-                <div class="navbar-right ">
-                    <?php if (!isset($_SESSION['user'])) : ?>
-                        <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/login.php">Sign In</a>
-                        <a class="btn sign-up" href="http://localhost:8001/MedicalLabratory/signup.php">Sign Up</a>
-                    <?php else : ?>
-                        <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/logout.php">Logout</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="navbar-right ">
-                <div class="navbar-btn ">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-
-            </div>
-        </div>
-        <div class="navbar-mobile ">
-            <ul class="navbar-mobile__list hidden" id="list-mobile">
-                <li><a href="#hom"> Home</a></li>
-                <li><a href="#abt">About</a></li>
-                <li><a href="#srvs">Services</a></li>
-                <li><a href="#pri">Pricing</a></li>
-                <li><a href="#us">Contact us</a></li>
-            </ul>
-            <div class="navbar-mobile__actions">
-                <button class=" sign-in__mobile">Sign In</button>
-                <button class=" sign-up__mobile">Sign Up</button>
-            </div>
-        </div>
-    </nav>
+    <?php include __DIR__ . '/components/navbar.php' ?>
 
     <section class="contact" id="home">
         <div class=" contact-img-container">
@@ -128,47 +85,58 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                         <ul class="basic-ul  user-card-right">
                             <li>
                                 <p>
-                                    <span> full name: <span id="profilename">
+                                    <span>name:
+                                        <span id="profilename">
                                             <?php
                                             echo $_SESSION['user']['name'];
                                             ?>
                                         </span>
-
-
-                            </li>
-
-                            <li>
-                                <p>
-                                    <span>email: 
-                                        <?php
-                                        echo $_SESSION['user']['email'];
-                                        ?>
                                     </span>
                             </li>
                             <li>
                                 <p>
-                                    <span>age: <span id="profileage">
+                                    <span>email:<span id="profileemail">
                                             <?php
-                                            echo $_SESSION['user']['age'];
+                                            echo " " . $_SESSION['user']['email'];
                                             ?>
                                         </span>
+                                    </span>
                             </li>
                             <li>
-                                <p><span>from: <span id="profilefrom">banha</span></span>
+                                <p>
+                                    <span>age:
+                                        <span id="profileage">
+                                            <?php
+                                            echo " " . $_SESSION['user']['age'];
+                                            ?>
+                                        </span>
+                                    </span>
                             </li>
+                            <li>
+                                <p>
+                                    <span>from: <span id="profilefrom">
+                                            <?php
+                                            echo " " . $_SESSION['user']['address'];
+                                            ?></span>
+                                    </span>
+                                </p>
+                            </li>
+
+
                         </ul>
 
-                        <div class=" update-user-info"><img src=" assets/icons8-modify-20.png">
-                        </div>
+                    </div>
+                    <div class=" update-user-info"><img src=" assets/icons8-modify-20.png">
                     </div>
                 </div>
                 <div class="name">
                     <div class="welcome">
-                        <p>welcome <span>
-                                <?php
-                                echo $_SESSION['user']['name'];
+                        <p>welcome
+                            <span>
+                                <?php echo $_SESSION['user']['name'];
                                 ?>
-                            </span> to</p>
+                            </span> to
+                        </p>
                         <h2>EDGE.</h2>
                         <p>we care about your health</p>
                     </div>
@@ -184,68 +152,31 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                 <h1>reports</h1>
             </div>
             <div class="parent-container">
-
-
-                <?php
-                // foreach($reports as $report){
-                //     $id = $report['id'];
-                //     $testIndex = $report['test_type'] ;
-                //     $testIndex= $testIndex-1;
-                //     $testType = $tests[$testIndex];
-                //     $appointmentId = $report['appointment_id'];
-                //     $sql = $conn->prepare("SELECT * FROM appointments where id = '$appointmentId'");
-                //     $sql->execute();
-                //     $data = $sql->fetch();
-                //     $reportLink = $report['filename'];
-                // echo  
-                ?>
                 <div class="child1-container">
-                    <div class='card indgo pointer'>
-                        <div class="date-card">
-                            <div class="day">21</div>
-                            <div>
-                                <div class="month">September</div>
-                                <div class="year">2017</div>
-                            </div>
-                        </div>
-                        <div class="cardcontent">
-                            <h2> testType</h2>
-                            <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                ad mea essent possim iriure.
+                    <?php foreach ($reports as $report) : ?>
+                        <a href="./view.php?url=<?php echo $report['url'] ?>" target="_blank">
+                            <div class='card indgo pointer'>
+                                <div class="date-card">
+                                    <div class="day"><?php echo date('d', strtotime($report['date'])) ?></div>
+                                    <div>
+                                        <div class="month"><?php echo date('M', strtotime($report['date'])) ?></div>
+                                        <div class="year"><?php echo date('Y', strtotime($report['date'])) ?></div>
+                                    </div>
+                                </div>
+                                <div class="cardcontent">
+                                    <h2><?php echo $report['test_name'] ?></h2>
+                                    <p>
+                                        This is a <?php echo $report['test_name'] ?> test taken on <?php echo $report['date'] ?> at <?php echo $report['time'] ?> you can check the results of your test from here
+                                        <span style="margin-top:0.8rem; display:block; color:black;">
+                                            Click here to view your test results
+                                        </span>
+                                    </p>
 
-                        </div>
-                    </div>
-                    <div class='card indgo pointer'>
-                        <div class="date-card">
-                            <div class="day">21</div>
-                            <div>
-                                <div class="month">September</div>
-                                <div class="year">2017</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="cardcontent">
-                            <h2> $testType</h2>
-                            <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                ad mea essent possim iriure.
-
-                        </div>
-                    </div>
-                    <div class='card indgo pointer'>
-                        <div class="date-card">
-                            <div class="day">21</div>
-                            <div>
-                                <div class="month">September</div>
-                                <div class="year">2017</div>
-                            </div>
-                        </div>
-                        <div class="cardcontent">
-                            <h2> $testType</h2>
-                            <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                ad mea essent possim iriure.
-
-                        </div>
-                    </div>
-                    <div class='card indgo pointer'>
+                        </a>
+                    <?php endforeach; ?>
+                    <!-- <div class='card indgo pointer'>
                         <div class="date-card">
                             <div class="day">21</div>
                             <div>
@@ -259,7 +190,37 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                                 ad mea essent possim iriure.
 
                         </div>
-                    </div>
+                    </div> -->
+                    <!-- <div class='card indgo pointer'>
+                        <div class="date-card">
+                            <div class="day">21</div>
+                            <div>
+                                <div class="month">September</div>
+                                <div class="year">2017</div>
+                            </div>
+                        </div>
+                        <div class="cardcontent">
+                            <h2> $testType</h2>
+                            <p>Lisque persius interesset his et, in quot quidam persequeris vim,
+                                ad mea essent possim iriure.
+
+                        </div>
+                    </div> -->
+                    <!-- <div class='card indgo pointer'>
+                        <div class="date-card">
+                            <div class="day">21</div>
+                            <div>
+                                <div class="month">September</div>
+                                <div class="year">2017</div>
+                            </div>
+                        </div>
+                        <div class="cardcontent">
+                            <h2> $testType</h2>
+                            <p>Lisque persius interesset his et, in quot quidam persequeris vim,
+                                ad mea essent possim iriure.
+
+                        </div>
+                    </div> -->
 
 
                 </div>
@@ -274,24 +235,9 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                     <h1>appointments</h1>
                 </div>
                 <div class="parent-container">
-
-
-                    <?php
-                    // foreach($reports as $report){
-                    //     $id = $report['id'];
-                    //     $testIndex = $report['test_type'] ;
-                    //     $testIndex= $testIndex-1;
-                    //     $testType = $tests[$testIndex];
-                    //     $appointmentId = $report['appointment_id'];
-                    //     $sql = $conn->prepare("SELECT * FROM appointments where id = '$appointmentId'");
-                    //     $sql->execute();
-                    //     $data = $sql->fetch();
-                    //     $reportLink = $report['filename'];
-                    // echo  
-                    ?>
                     <div class="chhild2-container">
                         <?php foreach ($appointments as $appointment) : ?>
-                            <div class='card indgo pointer'>
+                            <div class='card indgo pointer' data-id="<?php echo $appointment['app_id'] ?>">
                                 <div class="date-card">
                                     <div class="day"><?php echo date('d', strtotime($appointment['date'])) ?></div>
                                     <div>
@@ -316,70 +262,6 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                                 </div>
                             </div>
                         <?php endforeach; ?>
-                        <!-- <div class='card indgo pointer'>
-                            <div class="date-card">
-                                <div class="day">21</div>
-                                <div>
-                                    <div class="month">September</div>
-                                    <div class="year">2017</div>
-                                </div>
-                            </div>
-                            <div class="cardcontent">
-                                <h2> $testType</h2>
-                                <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                    ad mea essent possim iriure.
-                                <div class="download">
-                                    <div class=" rowButtons">
-                                        <div class="update"><img src="assets/icons8-modify-20.png"></div>
-                                        <div class="delete"> <img src="assets/icons8-delete-20.png"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div> -->
-                        <!-- <div class='card indgo pointer'>
-                            <div class="date-card">
-                                <div class="day">21</div>
-                                <div>
-                                    <div class="month">September</div>
-                                    <div class="year">2017</div>
-                                </div>
-                            </div>
-                            <div class="cardcontent">
-                                <h2> unique</h2>
-                                <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                    ad mea essent possim iriure.
-                                <div class="download">
-                                    <div class=" rowButtons">
-                                        <div class="update"><img src="assets/icons8-modify-20.png"></div>
-                                        <div class="delete"> <img src="assets/icons8-delete-20.png"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div> -->
-                        <!-- <div class='card indgo pointer'>
-                            <div class="date-card">
-                                <div class="day">21</div>
-                                <div>
-                                    <div class="month">September</div>
-                                    <div class="year">2017</div>
-                                </div>
-                            </div>
-                            <div class="cardcontent">
-                                <h2> $testType</h2>
-                                <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                    ad mea essent possim iriure.
-                                <div class="download">
-                                    <div class=" rowButtons">
-                                        <div class="update"><img src="assets/icons8-modify-20.png"></div>
-                                        <div class="delete"> <img src="assets/icons8-delete-20.png"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-
                     </div>
 
                 </div>
@@ -516,10 +398,6 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
                 </form>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-        <script>
-            new WOW().init();
-        </script>
 
 </body>
 
@@ -638,10 +516,10 @@ $appointments = fetchAppointments($_SESSION['user']['id'])
         userinfomodal.style.display = "block";
         infoToUpdate = editButton.parentElement
         console.log(infoToUpdate.querySelector("#profilename"))
-        document.getElementById("editusername").value = infoToUpdate.querySelector("#profilename").textContent;
-        document.getElementById("edituseremail").value = infoToUpdate.querySelector("#profileemail").textContent;
-        document.getElementById("edituserage").value = infoToUpdate.querySelector("#profileage").textContent;
-        document.getElementById("edituserfrom").value = infoToUpdate.querySelector("#profilefrom").textContent;
+        document.getElementById("editusername").value = infoToUpdate.querySelector("#profilename").textContent.trim();
+        document.getElementById("edituseremail").value = infoToUpdate.querySelector("#profileemail").textContent.trim();
+        document.getElementById("edituserage").value = infoToUpdate.querySelector("#profileage").textContent.trim();
+        document.getElementById("edituserfrom").value = infoToUpdate.querySelector("#profilefrom").textContent.trim();
 
     })
 

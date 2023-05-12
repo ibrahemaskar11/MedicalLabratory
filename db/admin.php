@@ -55,3 +55,125 @@ function fetchAppointments()
     mysqli_close($conn);
     return $appointments;
 }
+function fetchReports()
+{
+    $conn = db_connect();
+
+    $sql =
+        "SELECT r.report_id, r.url, u.username, u.email, u.mrn, a.date, a.time, a.phone_number, t.name AS test_name
+        FROM reports r
+        JOIN users u ON r.mrn = u.mrn
+        JOIN appointments a ON r.appointment_id = a.app_id
+        JOIN tests t ON a.test_type = t.test_id";
+
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $reports = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return $reports;
+};
+
+function deleteAppointment($appointmentId)
+{
+    $conn = db_connect();
+    $stmt = mysqli_prepare($conn, "DELETE FROM appointments WHERE app_id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $appointmentId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+function deleteUser($mrn)
+{
+    $conn = db_connect();
+    $stmt = mysqli_prepare($conn, "DELETE FROM users WHERE mrn = ?");
+    mysqli_stmt_bind_param($stmt, "i", $mrn);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+function deleteReport($reportId)
+{
+    $conn = db_connect();
+    $stmt = mysqli_prepare($conn, "DELETE FROM reports WHERE report_id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $reportId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+
+function updateUser($mrn, $userName, $userEmail, $userAddress, $userDate)
+{
+
+    $sql = "UPDATE users SET username = ?, email = ?, birthdate = ?, address = ? WHERE mrn = ?";
+    $conn = db_connect();
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ssssi", $userName, $userEmail, $userDate, $userAddress, $mrn);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+
+function uploadFile($testTypeID, $appointmentID, $mrn, $file)
+{
+    $targetDir = '../uploads/';
+    $conn = db_connect();
+
+    // Database query statements
+    $testTypeQuery = "SELECT name FROM tests WHERE test_id = ?";
+    $usernameQuery = "SELECT username FROM users WHERE mrn = ?";
+    $appointmentQuery = "SELECT time, date FROM appointments WHERE app_id = ?";
+
+
+    $stmtTestType = mysqli_prepare($conn, $testTypeQuery);
+    $stmtUsername = mysqli_prepare($conn, $usernameQuery);
+    $stmtAppointment = mysqli_prepare($conn, $appointmentQuery);
+
+    mysqli_stmt_bind_param($stmtTestType, "i", $testTypeID);
+    mysqli_stmt_bind_param($stmtUsername, "i", $mrn);
+    mysqli_stmt_bind_param($stmtAppointment, "i", $appointmentID);
+
+    mysqli_stmt_execute($stmtTestType);
+    $resultTestType = mysqli_stmt_get_result($stmtTestType);
+
+    mysqli_stmt_execute($stmtUsername);
+    $resultUsername = mysqli_stmt_get_result($stmtUsername);
+
+    mysqli_stmt_execute($stmtAppointment);
+    $resultAppointment = mysqli_stmt_get_result($stmtAppointment);
+
+    // Fetch data from results
+    $testTypeData = mysqli_fetch_assoc($resultTestType);
+    $usernameData = mysqli_fetch_assoc($resultUsername);
+    $appointmentData = mysqli_fetch_assoc($resultAppointment);
+
+    // Close database statements and connection
+    mysqli_stmt_close($stmtTestType);
+    mysqli_stmt_close($stmtUsername);
+    mysqli_stmt_close($stmtAppointment);
+    mysqli_close($conn);
+
+    // Extract relevant data
+    $testName = $testTypeData['name'];
+    $username = $usernameData['username'];
+    $time = $appointmentData['time'];
+    $appointmentDate = $appointmentData['date'];
+
+    // File upload
+    $targetDir = '../uploads/';
+    $fileName = $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time) . '.pdf';
+    $targetFile = $targetDir . $fileName;
+
+    if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+        $reportQuery = "INSERT INTO reports (url, mrn, test_type, appointment_id) VALUES (?, ?, ?, ?)";
+        $conn = db_connect();
+        $stmt = mysqli_prepare($conn, $reportQuery);
+        mysqli_stmt_bind_param($stmt, "siii", $fileName, $mrn, $testTypeID, $appointmentID);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+    } else {
+        return 'Failed to upload the file.';
+    }
+}

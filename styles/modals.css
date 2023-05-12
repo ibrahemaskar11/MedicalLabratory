@@ -62,7 +62,7 @@
     
   
   /* Update Modal */
-  .update-modal,.add-modal {
+  .update-modal,.add-modal,.edit-modal {
       border-radius: 0.75rem;
       display: none;
       position: fixed;
@@ -74,15 +74,15 @@
       overflow: auto;
       background-color: rgba(0, 0, 0, 0.4);
     }
-    .closeupdate,.close-update-test,.close-update-appoint,.close-add {
+    .closeupdate,.close-update-test,.close-update-appoint,.close-add,.close-edit {
       color: #aaa;
       float: right;
       font-size: 28px;
       font-weight: bold;
     }
     
-    .closeupdate:hover,.close-update-test:hover,.close-update-appoint:hover,.close-add:hover
-    .closeupdate:focus,.close-update-test:focus,.close-update-appoint:focus,.close-add:focus {
+    .closeupdate:hover,.close-update-test:hover,.close-update-appoint:hover,.close-add:hover,.close-edit:hover
+    .closeupdate:focus,.close-update-test:focus,.close-update-appoint:focus,.close-add:focus,.close-edit:focus {
       color: black;
       text-decoration: none;
       cursor: pointer;
@@ -90,7 +90,7 @@
     
     /* Update Modal Content */
    /* Update Modal Content */
-   .update-modal-content,.add-modal-content {
+   .update-modal-content,.add-modal-content,.edit-modal-content {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -125,12 +125,18 @@
     .update-modal-content .close-update-appoint:hover,
   
     .add-modal-content .close-add:hover
+    .edit-modal-content .close-edit:hover
      {
       color: black;
       text-decoration: none;
       cursor: pointer;
     }
-    
+    .close-edit:hover
+     {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
     /* Form */
     .update-modal-content form {
       display: flex;
@@ -182,7 +188,11 @@
       margin-top: 20px;
       cursor: pointer;
       font-size: 16px;
-    }
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
+}
     
     .update-modal-content form button:hover {
       background-color: rgba(44, 3, 73, 0.877) ;
@@ -307,6 +317,7 @@
     padding: 20px ;
     border: 1px solid #888;
     width: 30%;
+    height: 15rem;
     min-width: 300px;
     border-radius: 0.75rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -339,7 +350,7 @@
 
 
   .choose-options {
-    margin-top:2em;
+    /* margin-top:2em; */
     margin-bottom:1em;
     text-align: center;
   }
@@ -395,3 +406,64 @@
 }
 
   
+.update-modal-content form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Label */
+.update-modal-content form label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+
+/* Input */
+.edit-modal-content form input[type="text"],
+.edit-modal-content form input[type="email"],
+.edit-modal-content form input[type="tel"],
+.edit-modal-content form input[type="date"],
+.edit-modal-content form input[type="time"]
+ {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+}
+
+.edit-modal-content form input[type="text"]:focus,
+.edit-modal-content form input[type="email"]:focus,
+.edit-modal-content form input[type="tel"]:focus,
+.edit-modal-content form input[type="date"]:focus,
+.edit-modal-content form input[type="time"]:focus {
+  outline: none;
+  border: 2px solid #666;
+}
+
+/* Button */
+.edit-modal-content form button {
+  background-color: var(--indigo);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  margin-left:35%;
+}
+
+.edit-modal-content form button:hover {
+  background-color: rgba(44, 3, 73, 0.877) ;
+
+}

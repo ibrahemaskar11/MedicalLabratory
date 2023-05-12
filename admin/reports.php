@@ -1,3 +1,17 @@
+<?php
+require_once __DIR__ . '/../db/admin.php';
+session_start();
+if (!isset($_SESSION['admin'])) {
+    header('location:login.php');
+    exit;
+}
+$reports = fetchReports();
+if (isset($_POST['delete_report'])) {
+    $report_id = $_POST['user_report_id'];
+    deleteReport($report_id);
+    $reports = fetchReports();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,120 +29,99 @@
 
 <body>
 
-    <nav class="navbar-admin">
-        <div class="navbar-container">
-            <div class="navbar-left">
-                <h1 class="Poiret"">edge.</h1>
-                <div class=" nav-list-container">
-                    <ul class="nav-list ">
-                        <li><a href="index.php"> Users</a></li>
-                        <li><a href="reports.php">Reports</a></li>
-                        <li><a href="appointments.php">Apointments</a></li>
-
-                    </ul>
-            </div>
-        </div>
-        <div class="navbar-right ">
-            <a class="btn sign-in" href="logout.php">log out</a>
-
-        </div>
-    </nav>
-
+    <?php include __DIR__ . '/../components/adminnavbar.php'; ?>
     <section id="reps">
 
-        <h1> TESTS</h1>
-        <div class='row containerrow indgo '>
+        <h1> Reports</h1>
+        <?php foreach ($reports as $report) : ?>
+            <div class='row containerrow indgo '>
+                <div class="rowheaders">
 
-
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="testname">
-                            ahmed
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            date
-                        </h3>
-                        <h4 id="testdate">
-                            11/12/1011
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4 id="testtype">
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="testemail">
-                            ahmed@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            phone
-                        </h3>
-                        <h4 id="testphone">
-                            01222213
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="testuserId">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-
-                    <div class=" rowButtons">
-                        <div class="update-test"><img src=" ../assets/icons8-modify-20.png">
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                id
+                            </h3>
+                            <h4>
+                                <?php echo $report['report_id']; ?>
+                            </h4>
                         </div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                name
+                            </h3>
+                            <h4 id="testname">
+                                <?php echo $report['username']; ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                date
+                            </h3>
+                            <h4 id="testdate">
+                                <?php echo $report['date']; ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                type
+                            </h3>
+                            <h4 id="testtype">
+                                <?php echo $report['test_name']; ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class=" rowItem">
+                            <h3>
+                                email
+                            </h3>
+                            <h4 id="testemail">
+                                <?php echo $report['email']; ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                phone
+                            </h3>
+                            <h4 id="testphone">
+                                <?php echo $report['phone_number']; ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
+                                MRN
+                            </h3>
+                            <h4 id="testuserId">
+                                <?php echo $report['mrn']; ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+
+                        <div class=" rowButtons">
+                            <a class="view pointer" href="../view.php?url=<?php echo $report['url'] ?>"> <img src="../assets/icons8-file-24 (1).png"></a>
+                            <div class="update-test pointer" data-id="<?php echo $report['report_id'] ?>"><img src=" ../assets/icons8-modify-20.png">
+                            </div>
+                            <div class="delete pointer" data-id="<?php echo $report['report_id'] ?>"> <img src="../assets/icons8-delete-20.png"></div>
+                        </div>
+                    </li>
 
 
+                </div>
             </div>
-
-
-
-
-        </div>
-        <div class='row containerrow indgo '>
+        <?php endforeach; ?>
+        <!-- <div class='row containerrow indgo '>
 
             <div class=" rowcontainer">
             </div>
@@ -219,8 +212,8 @@
 
 
 
-        </div>
-        <div class='row containerrow indgo '>
+        </div> -->
+        <!-- <div class='row containerrow indgo '>
 
             <div class=" rowcontainer">
             </div>
@@ -311,7 +304,7 @@
 
 
 
-        </div>
+        </div> -->
     </section>
 
     <!-- <footer class="footer" id="contact">
@@ -417,14 +410,15 @@
     </div>
 
     <div id="deleteModal" class="modal">
-        <div class="modal-content">
+        <form action="reports.php" method="POST" class="modal-content">
+            <input type="hidden" id="delete_report_value" name="user_report_id" value="">
             <span class="close">&times;</span>
             <h3>Are you sure you want to delete this record?</h3>
             <div class="modal-buttons">
 
-                <button id="confirmButton">Delete</button>
+                <button type="submit" name="delete_report" id="confirmButton">Delete</button>
             </div>
-        </div>
+        </form>
     </div>
 </body>
 
@@ -522,14 +516,16 @@
     let confirmButton = document.getElementById("confirmButton");
 
     let closeButton = document.querySelector(".close");
+    let deleteInput = document.getElementById("delete_report_value")
+
     // When the user clicks on a delete button, open the modal
     deleteButtons.forEach(function(deleteButton) {
         deleteButton.addEventListener("click", function() {
             modal.style.display = "block";
+            deleteInput.value = deleteButton.dataset.id;
+            console.log(deleteInput.value);
             // Set the row to delete as the parent of the clicked button
-            let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
             // Store the row to delete as a property of the confirm button
-            confirmButton.rowToDelete = rowToDelete;
         });
     });
 
@@ -544,12 +540,4 @@
             modal.style.display = "none";
         }
     });
-
-    // When the user clicks on confirm, delete the row and close the modal
-    confirmButton.onclick = function() {
-        // Delete the row here
-        let rowToDelete = confirmButton.rowToDelete;
-        rowToDelete.parentNode.removeChild(rowToDelete);
-        modal.style.display = "none";
-    };
 </script>

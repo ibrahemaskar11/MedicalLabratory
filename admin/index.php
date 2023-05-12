@@ -1,23 +1,3 @@
-<!-- <?php
-        //   session_start();
-        // if(!isset($_SESSION['admin'])){
-        //     header('http://localhost:1337/MedicalLaboratory/admin/login.php');
-        //     exit();
-        // }
-        //     require('../conn-db.php');
-        //     $userSql = $conn->prepare("SELECT * FROM users");
-        //     $userSql->execute();
-        //     $users = $userSql->fetchAll();
-        //     $appointmentSql = $conn->prepare("SELECT * FROM appointments");
-        //     $appointmentSql->execute();
-        //     $appointments = $appointmentSql->fetchAll();
-        //     $tests=['Cardiologists', 'Dermatologists', 'Endocrinologists', 'Gastroenterologists', 'Allergists', 'Immunologists'];
-        //     $id = $_SESSION['admin']['username'];
-        //     $testsSql = $conn->prepare("SELECT * FROM tests");
-        //     $testsSql->execute();
-        //     $testResults = $testsSql->fetchAll();
-
-        ?> -->
 <?php
 require_once __DIR__ . '/../db/admin.php';
 session_start();
@@ -26,6 +6,43 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 $users = fetchUsers();
+if (isset($_POST['delete_user'])) {
+    $user_mrn = $_POST['user_mrn'];
+    deleteUser($user_mrn);
+    $users = fetchUsers();
+}
+
+if (isset($_POST['add-report'])) {
+    $testTypeID = $_POST['test-type'];
+    $appointmentID = $_POST['app_id'];
+    $mrn = $_POST['mrn'];
+    $file = $_FILES['report-file'];
+
+    $result = uploadFile($testTypeID, $appointmentID, $mrn, $file);
+    echo $result;
+}
+if (isset($_POST['update_user'])) {
+    $userMrn = $_POST['user_mrn'];
+    $userEmail = $_POST['email'];
+    $userName = $_POST['name'];
+    $userDate = $_POST['date'];
+    $userAddress = $_POST['address'];
+    $error = "";
+    if (empty($userMrn) || empty($userEmail) || empty($userName) || empty($userDate) || empty($userAddress)) {
+        $error = "Missing credentials";
+    }
+    if ($userDate > date("Y-m-d")) {
+        $error = "Please enter a valid date";
+    }
+    if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+        $error = "Please enter a valid email";
+    }
+    if (empty($error)) {
+        updateUser($userMrn, $userName, $userEmail, $userAddress, $userDate);
+        $users = fetchUsers();
+    }
+}
+
 // print_r($_SESSION['admin'])
 ?>
 <!DOCTYPE html>
@@ -44,31 +61,16 @@ $users = fetchUsers();
 </head>
 
 <body>
-    <nav class="navbar-admin">
-        <div class="navbar-container">
-            <div class="navbar-left">
-                <h1 class="Poiret">edge.</h1>
-                <div class=" nav-list-container">
-                    <ul class="nav-list ">
-                        <li><a href="index.php"> Users</a></li>
-                        <li><a href="reports.php">Reports</a></li>
-                        <li><a href="appointments.php">Apointments</a></li>
-
-                    </ul>
-                </div>
-            </div>
-            <div class="navbar-right ">
-                <a class="btn sign-in" href="logout.php">log out</a>
-
-            </div>
-    </nav>
-
-
+    <?php include __DIR__ . '/../components/adminnavbar.php'; ?>
     <section id="users">
         <h1>USERS</h1>
 
 
-
+        <h3 class="input-error" style="margin-top: 1.5rem;" id="form-error">
+            <?php if (!empty($error)) : ?>
+                <?php echo $error; ?>
+            <?php endif; ?>
+        </h3>
         <?php foreach ($users as $user) :  ?>
             <div class='row containerrow indgo'>
                 <div class="rowcontainer"></div>
@@ -116,9 +118,9 @@ $users = fetchUsers();
                     </li>
                     <li>
                         <div class=" rowButtons">
-                            <div class="add"><img src=" ../assets/icons8-add-20.png"></div>
-                            <div class="update"><img src=" ../assets/icons8-modify-20.png"></div>
-                            <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
+                            <div class="add" id="actions-add-report" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-add-20.png"></div>
+                            <div class="update" id="actions-update-user" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-modify-20.png"></div>
+                            <div class="delete" data-mrn="<?php echo $user['mrn'] ?>"> <img src="../assets/icons8-delete-20.png"></div>
 
                         </div>
                     </li>
@@ -410,14 +412,15 @@ $users = fetchUsers();
 
 
     <div id="deleteModal" class="modal">
-        <div class="modal-content">
+        <form action="index.php" method="POST" class="modal-content">
+            <input type="hidden" id="delete_mrn_value" name="user_mrn" value="">
             <span class="close">&times;</span>
             <h3>Are you sure you want to delete this record?</h3>
             <div class="modal-buttons">
 
-                <button id="confirmButton">Delete</button>
+                <button type="submit" name="delete_user" id="confirmButton">Delete</button>
             </div>
-        </div>
+        </form>
     </div>
     <!-- Add a button to trigger the modal -->
 
@@ -427,16 +430,16 @@ $users = fetchUsers();
         <div class="add-modal-content">
             <span class="close-add" id="close-add-test">&times;</span>
             <h2>add report</h2>
-            <form>
+            <form action="index.php" method="POST" enctype="multipart/form-data">
 
                 <label for=""></label>
-                <input type="text" id="" name="" placeholder="MRN">
+                <input type="text" id="mrn-input" name="mrn" placeholder="MRN">
                 <label for=""></label>
-                <input type="text" id="" name="" placeholder="appointment-id">
+                <input type="text" id="app-id" name="app_id" placeholder="appointment-id">
 
 
 
-                <select class="select" name="selected">
+                <select class="select" name="test-type">
                     <option value="0">Test Type:</option>
                     <option value="1">Cardiologists</option>
                     <option value="2">Dermatologists</option>
@@ -449,9 +452,8 @@ $users = fetchUsers();
 
 
 
-                <input type="file" id="myFile" name="myFile" class="file-input">
-                <button type="button" id="add-button-test">add test</button>
-
+                <input type="file" id="myFile" name="report-file" class="file-input">
+                <button type="submit" name="add-report" id="add-button-test">add test</button>
             </form>
         </div>
     </div>
@@ -461,14 +463,16 @@ $users = fetchUsers();
         <div class="update-modal-content">
             <span class="closeupdate">&times;</span>
             <h2>Update User</h2>
-            <form>
+            <form action="index.php" method="POST">
+                <input type="hidden" id="update_mrn_value" name="user_mrn" value="">
                 <label for="name"></label>
                 <input type="text" id="nameform" name="name" placeholder="name">
                 <label for=" email"></label>
                 <input type="email" id="emailform" name="email" placeholder="email">
-                <label for="phone"></label>
-                <input type="tel" id="phoneform" name="phone" placeholder="phone">
-                <button type="button" id="updateButton">Update</button>
+                <label for="Address"></label>
+                <input type="text" id="address" name="address" placeholder="Address">
+                <input type="date" id="date" placeholder="date" name="date" />
+                <button type="submit" name="update_user" id="updateButton">Update</button>
             </form>
         </div>
     </div>
@@ -534,10 +538,13 @@ $users = fetchUsers();
     let confirmButton = document.getElementById("confirmButton");
 
     let closeButton = document.querySelector(".close");
+    let deleteMrnValue = document.getElementById("delete_mrn_value");
     // When the user clicks on a delete button, open the modal
     deleteButtons.forEach(function(deleteButton) {
         deleteButton.addEventListener("click", function() {
             modal.style.display = "block";
+            deleteMrnValue.value = deleteButton.dataset.mrn
+
             // Set the row to delete as the parent of the clicked button
             let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
             // Store the row to delete as a property of the confirm button
@@ -556,14 +563,6 @@ $users = fetchUsers();
             modal.style.display = "none";
         }
     });
-
-    // When the user clicks on confirm, delete the row and close the modal
-    confirmButton.onclick = function() {
-        // Delete the row here
-        let rowToDelete = confirmButton.rowToDelete;
-        rowToDelete.parentNode.removeChild(rowToDelete);
-        modal.style.display = "none";
-    };
 </script>
 <script defer>
     // Get the update modal element
@@ -579,11 +578,14 @@ $users = fetchUsers();
     // Get the update button element
 
     let row = ""
+    let updateMrnValue = document.getElementById("update_mrn_value");
     // When the user clicks on an update button, open the update modal
     updateButtons.forEach(function(updateButton) {
         updateButton.addEventListener("click", function() {
             updateModal.style.display = "block";
             // Set the row to update as the parent of the clicked button
+            console.log(updateButton.dataset.mrn);
+            updateMrnValue.value = updateButton.dataset.mrn
             let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
             // Set the input values to the current row values
 
@@ -655,13 +657,12 @@ $users = fetchUsers();
 
     let addcloseButton = document.querySelector(".choose-modal-close");
     // When the user clicks on a delete button, open the modal
+    let mrnInput = document.getElementById("mrn-input")
     addButtons.forEach(function(addButton) {
         addButton.addEventListener("click", function() {
+            mrnInput.value = addButton.dataset.mrn
+            console.log(addButton.dataset.mrn);
             addmodal.style.display = "block";
-            // Set the row to delete as the parent of the clicked button
-
-            // Store the row to delete as a property of the confirm button
-
         });
     });
 
@@ -678,8 +679,6 @@ $users = fetchUsers();
             addmodal.style.display = "none";
         }
     });
-
-    // When the user clicks on confirm, delete the row and close the modal
 </script>
 
 
@@ -737,6 +736,7 @@ $users = fetchUsers();
 
     // Get the cancel button element
     let addtest = document.querySelector(".choose-test")
+
 
 
     // Get the confirm button element
