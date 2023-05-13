@@ -5,6 +5,16 @@ $appointmentError = "";
 $appointmentSuccess = "";
 //  print_r($_SESSION['user']);
 
+$conn = db_connect();
+$sql = "SELECT test_id, name FROM tests";
+
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$tests = mysqli_fetch_all($result, MYSQLI_ASSOC);
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
+
 
 
 if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
@@ -425,14 +435,13 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                     <input type="text" placeholder="Your Phone Number" id="phone" name="phone">
                                 </li>
                                 <li>
-                                    <select class="select" name="test">
+                                    <select class="select" name="selected">
                                         <option value="0">Test Type:</option>
-                                        <option value="1">Cardiologists</option>
-                                        <option value="2">Dermatologists</option>
-                                        <option value="3">Endocrinologists</option>
-                                        <option value="4">Gastroenterologists</option>
-                                        <option value="5">Allergists</option>
-                                        <option value="6">Immunologists</option>
+                                        <?php foreach ($tests as $test) : ?>
+                                            <option value="<?php echo $test['test_id']; ?>">
+                                                <?php echo $test['name']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </li>
                                 <li>

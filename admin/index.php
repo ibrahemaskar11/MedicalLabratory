@@ -5,6 +5,7 @@ if (!isset($_SESSION['admin'])) {
     header('location:login.php');
     exit();
 }
+
 $users = fetchUsers();
 if (isset($_POST['delete_user'])) {
     $user_mrn = $_POST['user_mrn'];
@@ -42,6 +43,40 @@ if (isset($_POST['update_user'])) {
         $users = fetchUsers();
     }
 }
+if (isset($_POST['add_app'])) {
+    // print_r($_POST);
+    $userMrn = $_POST['user_mrn'];
+    $testType = $_POST['selected'];
+    $date = $_POST['date'];
+    $email = $_POST['email'];
+    $time = $_POST['time'];
+    $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $error = "";
+    if (empty($userMrn) || empty($testType) || empty($date) || empty($email) || empty($time) || empty($name) || empty($phone)) {
+        $error = "Missing credentials";
+    }
+    if ($date < date("Y-m-d")) {
+        $error = "Please enter a valid date";
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Please enter a valid email";
+    }
+    if (empty($error)) {
+        addAppointment($userMrn, $phone, $testType, $time, $date);
+    }
+}
+
+$conn = db_connect();
+$sql = "SELECT test_id, name FROM tests";
+
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$tests = mysqli_fetch_all($result, MYSQLI_ASSOC);
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
+// print_r($tests);
 
 // print_r($_SESSION['admin'])
 ?>
@@ -81,7 +116,7 @@ if (isset($_POST['update_user'])) {
                             <h3>
                                 MRN
                             </h3>
-                            <h4>
+                            <h4 id="mrn">
                                 <?php echo $user['mrn'] ?>
                             </h4>
                         </div>
@@ -118,9 +153,9 @@ if (isset($_POST['update_user'])) {
                     </li>
                     <li>
                         <div class=" rowButtons">
-                            <div class="add" id="actions-add-report" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-add-20.png"></div>
-                            <div class="update" id="actions-update-user" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-modify-20.png"></div>
-                            <div class="delete" data-mrn="<?php echo $user['mrn'] ?>"> <img src="../assets/icons8-delete-20.png"></div>
+                            <div class="add" id="actions-add-report" data-name="<?php echo $user['username'] ?>" data-email="<?php echo $user['email'] ?>" data-address="<?php echo $user['address'] ?>" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-add-20.png"></div>
+                            <div class="update" id="actions-update-user" data-date="<?php echo $user['birthdate'] ?>" data-name="<?php echo $user['username'] ?>" data-email="<?php echo $user['email'] ?>" data-address="<?php echo $user['address'] ?>" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-modify-20.png"></div>
+                            <div class="delete" data-name="<?php echo $user['username'] ?>" data-email="<?php echo $user['email'] ?>" data-address="<?php echo $user['address'] ?>" data-mrn="<?php echo $user['mrn'] ?>"> <img src="../assets/icons8-delete-20.png"></div>
 
                         </div>
                     </li>
@@ -375,36 +410,26 @@ if (isset($_POST['update_user'])) {
         <div class="add-modal-content">
             <span class="close-add" id="close-add-appoint">&times;</span>
             <h2>add appointment</h2>
-            <form>
-                <label for=""></label>
-                <input type="text" id="" name="" placeholder="name">
-                <label for=""></label>
-                <input type="text" id="" name="" placeholder="user-id">
-                <label for=""></label>
-                <input type="text" id="" name="" placeholder="phone">
+            <form action="index.php" method="POST">
+                <input type="text" id="add-appointment__name" name="name" placeholder="name">
+                <input type="email" id="add-appointment__email" name="email" placeholder="email">
+                <input type="text" id="" name="phone" placeholder="phone">
 
-
-                <label for=""></label>
-                <input type="email" id="" name="email" placeholder="email">
 
                 <select class="select" name="selected">
                     <option value="0">Test Type:</option>
-                    <option value="1">Cardiologists</option>
-                    <option value="2">Dermatologists</option>
-                    <option value="3">Endocrinologists</option>
-                    <option value="4">Gastroenterologists</option>
-                    <option value="5">Allergists</option>
-                    <option value="6">Immunologists</option>
+                    <?php foreach ($tests as $test) : ?>
+                        <option value="<?php echo $test['test_id']; ?>">
+                            <?php echo $test['name']; ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
-                <label for="time"></label>
                 <input name="time" type="time" placeholder="time" name="time">
 
 
-                <label for="date"></label>
                 <input name="date" type="date" id="" placeholder=" Date">
-
-
-                <button type="button" id="add-button">add appointment</button>
+                <input type="hidden" id="add-appointment__mrn" value="" name="user_mrn" placeholder="MRN">
+                <button type="submit" name="add_app" id="add-button">add appointment</button>
 
             </form>
         </div>
@@ -439,14 +464,13 @@ if (isset($_POST['update_user'])) {
 
 
 
-                <select class="select" name="test-type">
+                <select class="select" name="selected">
                     <option value="0">Test Type:</option>
-                    <option value="1">Cardiologists</option>
-                    <option value="2">Dermatologists</option>
-                    <option value="3">Endocrinologists</option>
-                    <option value="4">Gastroenterologists</option>
-                    <option value="5">Allergists</option>
-                    <option value="6">Immunologists</option>
+                    <?php foreach ($tests as $test) : ?>
+                        <option value="<?php echo $test['test_id']; ?>">
+                            <?php echo $test['name']; ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
 
 
@@ -586,6 +610,8 @@ if (isset($_POST['update_user'])) {
             // Set the row to update as the parent of the clicked button
             console.log(updateButton.dataset.mrn);
             updateMrnValue.value = updateButton.dataset.mrn
+            document.getElementById("address").value = updateButton.dataset.address;
+            document.getElementById("date").value = updateButton.dataset.date.substr(0, 10);
             let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
             // Set the input values to the current row values
 
@@ -658,9 +684,14 @@ if (isset($_POST['update_user'])) {
     let addcloseButton = document.querySelector(".choose-modal-close");
     // When the user clicks on a delete button, open the modal
     let mrnInput = document.getElementById("mrn-input")
+    mrnInputAppointment = document.getElementById('add-appointment__mrn')
     addButtons.forEach(function(addButton) {
         addButton.addEventListener("click", function() {
             mrnInput.value = addButton.dataset.mrn
+            mrnInputAppointment.value = addButton.dataset.mrn
+            document.getElementById('add-appointment__name').value = addButton.dataset.name
+            document.getElementById('add-appointment__email').value = addButton.dataset.email
+
             console.log(addButton.dataset.mrn);
             addmodal.style.display = "block";
         });
@@ -691,9 +722,14 @@ if (isset($_POST['update_user'])) {
     let addButton = document.querySelector('#add-button');
 
     // Get the cancel button element
+
     let addappoint = document.querySelector(".choose-appointment")
-
-
+    let addAppointmentName = document.getElementById('add-appointment__name')
+    let addAppointmentEmail = document.getElementById('add-appointment__email')
+    let addAppointmentMRN = document.getElementById('add-appointment__mrn')
+    let nameValue = document.getElementById('name')
+    let emailvalue = document.getElementById('email')
+    let mrnValue = document.getElementById('mrn')
     // Get the confirm button element
 
 

@@ -7,7 +7,57 @@ if (!isset($_SESSION['user'])) {
 }
 $appointments = fetchAppointments($_SESSION['user']['id']);
 $reports = fetchReports($_SESSION['user']['id']);
+if (isset($_POST['update_user'])) {
+    $mrn = $_SESSION['user']['id'];
+    $appointmentId = $_POST['appointmentid'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $testType = $_POST['selected'];
+    if (empty($mrn) || empty($appointmentId) || empty($phone) || empty($email) || empty($date) || empty($time) || empty($testType)) {
+        $error = "Missing credentials";
+    }
+    if (empty($error)) {
+        $error = '';
+        updateAppointment($appointmentId, $mrn, $phone, $testType, $time, $date);
+        $appointments = fetchAppointments($_SESSION['user']['id']);
+    }
+}
+if (isset($_POST['delete_app'])) {
+    $appointmentId = $_POST['app_id'];
+    deleteAppointment($appointmentId);
+    $appointments = fetchAppointments($_SESSION['user']['id']);
+}
+$birthdate = $_SESSION['user']['birthdate'];
+$formattedDate = date('Y-m-d', strtotime($birthdate));
 
+if (isset($_POST['edit_user'])) {
+    $mrn = $_SESSION['user']['id'];
+    $usernameInput = $_POST['username_input'];
+    $emailInput = $_POST['email_input'];
+    $addressInput = $_POST['address_input'];
+    $dateInput = $_POST['date_input'];
+    if (empty($usernameInput) || empty($emailInput) || empty($addressInput) || empty($dateInput)) {
+        $error = "Missing credentials";
+    }
+    if (empty($error)) {
+        updateUser($mrn, $usernameInput, $emailInput, $addressInput, $dateInput);
+    }
+}
+if (isset($_POST['update_password'])) {
+    $currentPassword = $_POST['current_password'];
+    $newPassword = $_POST['new_password'];
+    if (empty($currentPassword) || empty($newPassword)) {
+        $error = "missing information";
+    } else {
+        $mrn = $_SESSION['user']['id'];
+        $message = updateUserPassword($mrn, $currentPassword, $newPassword);
+        if ($message == "something went wrong") {
+            $error = "something went wrong with password change";
+        }
+    }
+}
 // print_r($reports);
 // print_r($appointments);
 
@@ -121,6 +171,13 @@ $reports = fetchReports($_SESSION['user']['id']);
                                     </span>
                                 </p>
                             </li>
+                            <li>
+                                <h3 class="input-error" style="width:100%," id="form-error">
+                                    <?php if (!empty($error)) : ?>
+                                        <?php echo $error; ?>
+                                    <?php endif; ?>
+                                </h3>
+                            </li>
 
 
                         </ul>
@@ -142,6 +199,7 @@ $reports = fetchReports($_SESSION['user']['id']);
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- ///////////////////////////reports///////////////////////////////////////////////////// -->
         <section id="reports" class="sectionStart">
@@ -234,6 +292,11 @@ $reports = fetchReports($_SESSION['user']['id']);
                 <div class="title">
                     <h1>appointments</h1>
                 </div>
+                <h3 class="input-error" style="margin-top: 1.5rem; width:100%, text-align:center;" id="form-error">
+                    <?php if (!empty($error)) : ?>
+                        <?php echo $error; ?>
+                    <?php endif; ?>
+                </h3>
                 <div class="parent-container">
                     <div class="chhild2-container">
                         <?php foreach ($appointments as $appointment) : ?>
@@ -254,8 +317,8 @@ $reports = fetchReports($_SESSION['user']['id']);
                                     </p>
                                     <div class="download">
                                         <div class=" rowButtons">
-                                            <div class="update"><img src="assets/icons8-modify-20.png"></div>
-                                            <div class="delete"> <img src="assets/icons8-delete-20.png"></div>
+                                            <div class="update" data-id="<?php echo $appointment['app_id'] ?>" data-phone="<?php echo $appointment['phone_number'] ?>"><img src="assets/icons8-modify-20.png"></div>
+                                            <div class="delete" data-id="<?php echo $appointment['app_id'] ?>"> <img src="assets/icons8-delete-20.png"></div>
                                         </div>
                                     </div>
 
@@ -331,25 +394,26 @@ $reports = fetchReports($_SESSION['user']['id']);
 
 
         <div id="deleteModal" class="modal">
-            <div class="modal-content">
+            <form action="profile.php" method="POST" class="modal-content">
+                <input type="hidden" id="delete_id_input" name="app_id" value="">
                 <span class="close">&times;</span>
-                <h3>Are you sure you want to delete this appointment?</h3>
+                <h3>Are you sure you want to delete this record?</h3>
                 <div class="modal-buttons">
 
-                    <button id="confirmButton">Delete</button>
+                    <button type="submit" name="delete_app" id="confirmButton">Delete</button>
                 </div>
-            </div>
+            </form>
         </div>
         <!-- The update modal form -->
         <div id="updateModal" class="update-modal">
             <div class="update-modal-content">
                 <span class="closeupdate">&times;</span>
                 <h2>Update Appointment</h2>
-                <form>
+                <form action="profile.php" method="POST">
                     <label for="appointmentid"></label>
-                    <input type="text" id="nameform" name="appointmentid" placeholder="appointment-id">
+                    <input type="text" id="appIdForm" name="appointmentid" placeholder="appointment-id">
                     <label for=" email"></label>
-                    <input type="email" id="emailform" name="email" placeholder="email">
+                    <input type="email" value="<?php echo $_SESSION['user']['email']; ?>" id="emailform" name="email" placeholder="email">
                     <label for="phone"></label>
                     <input type="tel" id="phoneform" name="phone" placeholder="phone">
                     <label for="select"></label>
@@ -370,7 +434,7 @@ $reports = fetchReports($_SESSION['user']['id']);
                     <input name="date" type="date" placeholder="Date">
 
 
-                    <button type="button" id="updateButton">Update</button>
+                    <button type="submit" name="update_user" id="updateButton">Update</button>
 
                 </form>
             </div>
@@ -380,25 +444,43 @@ $reports = fetchReports($_SESSION['user']['id']);
             <div class="edit-modal-content">
                 <span class="close-edit" id="close-user-info">&times;</span>
                 <h2>Edit Info</h2>
-                <form>
+                <form action="profile.php" method="POST">
 
                     <label for=""></label>
-                    <input type="text" id="editusername" name="" placeholder="name">
+                    <input type="text" id="editusername" name="username_input" placeholder="name">
                     <label for=""></label>
-                    <input type="text" id="edituseremail" name="" placeholder="email">
+                    <input type="text" id="edituseremail" name="email_input" placeholder="email">
                     <label for=""></label>
-                    <input type="text" id="edituserage" name="" placeholder="age">
+                    <input type="date" value="<?php echo $formattedDate; ?>" id="edituserage" name="date_input" placeholder="age">
                     <label for=""></label>
-                    <input type="text" id="edituserfrom" name="" placeholder="from">
+                    <input type="text" id="edituserfrom" name="address_input" placeholder="from">
 
 
-
-                    <button type="button" id="edit-user-info-button">Submit Info</button>
+                    <h3 class="changing-password pointer">change password</h3>
+                    <button type="submit" name="edit_user" id="edit-user-info-button">Submit Info</button>
 
                 </form>
             </div>
         </div>
+        <div id="change-password" class="edit-modal">
+            <div class="edit-modal-content">
+                <span class="close-edit" id="close-change-password">&times;</span>
+                <h2>change the password</h2>
+                <form action="profile.php" method="POST">
 
+                    <label for=""></label>
+                    <input type="password" id="" name="current_password" placeholder="Current password">
+                    <label for=""></label>
+                    <input type="password" id="" name="new_password" placeholder="New password ">
+
+
+
+
+                    <button type="submit" name="update_password" id="confirm-change-password">change</button>
+
+                </form>
+            </div>
+        </div>
 </body>
 
 <script defer>
@@ -428,6 +510,7 @@ $reports = fetchReports($_SESSION['user']['id']);
     // When the user clicks on a delete button, open the modal
     deleteButtons.forEach(function(deleteButton) {
         deleteButton.addEventListener("click", function() {
+            document.getElementById('delete_id_input').value = deleteButton.dataset.id;
             modal.style.display = "block";
             // Set the row to delete as the parent of the clicked button
             let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
@@ -475,6 +558,9 @@ $reports = fetchReports($_SESSION['user']['id']);
     updateButtons.forEach(function(updateButton) {
         updateButton.addEventListener("click", function() {
             updateModal.style.display = "block";
+            console.log(updateButton.dataset);
+            document.getElementById("phoneform").value = updateButton.dataset.phone;
+            document.getElementById("appIdForm").value = updateButton.dataset.id;
             // Set the row to update as the parent of the clicked button
             let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
             // Set the input values to the current row values
@@ -539,4 +625,30 @@ $reports = fetchReports($_SESSION['user']['id']);
         userinfomodal.style.display = "none";
 
     })
+</script>
+<script>
+    let changePasswordModal = document.getElementById("change-password");
+    let closeChangePassword = document.getElementById("close-change-password");
+    let confirmChangePassword = document.getElementById("confirm-change-password");
+    let changingthePassord = document.querySelector(".changing-password");
+    changingthePassord.addEventListener("click", function() {
+        changePasswordModal.style.display = "block";
+    });
+    window.addEventListener("click", function(event) {
+        // Check if the target of the click event is the modal
+        if (event.target === changePasswordModal) {
+            // Hide the modal
+            changePasswordModal.style.display = "none";
+        }
+    })
+    closeChangePassword.onclick = function() {
+        changePasswordModal.style.display = "none";
+    }
+    // When the user clicks on confirm, delete the row and close the modal
+    confirmChangePassword.onclick = function() {
+        // Delete the row here
+
+        changePasswordModal.style.display = "none";
+    };
+    // 
 </script>

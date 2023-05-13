@@ -60,7 +60,7 @@ function fetchReports()
     $conn = db_connect();
 
     $sql =
-        "SELECT r.report_id, r.url, u.username, u.email, u.mrn, a.date, a.time, a.phone_number, t.name AS test_name
+        "SELECT r.report_id, r.url,r.appointment_id, u.username, u.email, u.mrn, a.date, a.time, a.phone_number,t.test_id, t.name AS test_name
         FROM reports r
         JOIN users u ON r.mrn = u.mrn
         JOIN appointments a ON r.appointment_id = a.app_id
@@ -110,6 +110,94 @@ function updateUser($mrn, $userName, $userEmail, $userAddress, $userDate)
     $conn = db_connect();
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ssssi", $userName, $userEmail, $userDate, $userAddress, $mrn);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+function updateAppointment($app_id, $mrn, $phone, $testType, $time, $date)
+{
+    $conn = db_connect();
+    $sql = "UPDATE appointments SET mrn = ?, phone_number = ?, test_type = ?, time = ?, date = ? WHERE app_id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "isissi", $mrn, $phone, $testType, $time, $date, $app_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+
+function updateReport($mrn, $test_id, $report_id, $tempUrl, $appId, $file)
+{
+    $conn = db_connect();
+    // Database query statements
+    $testTypeQuery = "SELECT name FROM tests WHERE test_id = ?";
+    $usernameQuery = "SELECT username FROM users WHERE mrn = ?";
+    $appointmentQuery = "SELECT time, date FROM appointments WHERE app_id = ?";
+
+
+    $stmtTestType = mysqli_prepare($conn, $testTypeQuery);
+    $stmtUsername = mysqli_prepare($conn, $usernameQuery);
+    $stmtAppointment = mysqli_prepare($conn, $appointmentQuery);
+
+    mysqli_stmt_bind_param($stmtTestType, "i", $test_id);
+    mysqli_stmt_bind_param($stmtUsername, "i", $mrn);
+    mysqli_stmt_bind_param($stmtAppointment, "i", $appId);
+
+    mysqli_stmt_execute($stmtTestType);
+    $resultTestType = mysqli_stmt_get_result($stmtTestType);
+
+    mysqli_stmt_execute($stmtUsername);
+    $resultUsername = mysqli_stmt_get_result($stmtUsername);
+
+    mysqli_stmt_execute($stmtAppointment);
+    $resultAppointment = mysqli_stmt_get_result($stmtAppointment);
+
+    // Fetch data from results
+    $testTypeData = mysqli_fetch_assoc($resultTestType);
+    $usernameData = mysqli_fetch_assoc($resultUsername);
+    $appointmentData = mysqli_fetch_assoc($resultAppointment);
+
+    // Close database statements and connection
+    mysqli_stmt_close($stmtTestType);
+    mysqli_stmt_close($stmtUsername);
+    mysqli_stmt_close($stmtAppointment);
+    mysqli_close($conn);
+
+    // Extract relevant data
+    $testName = $testTypeData['name'];
+    $username = $usernameData['username'];
+    $time = $appointmentData['time'];
+    $appointmentDate = $appointmentData['date'];
+    $targetDir = '../uploads/';
+    // Delete the existing file
+    // unlink($targetDir . $tempUrl);
+
+    // File upload
+
+    $fileName = $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time) . '.pdf';
+    $targetFile = $targetDir . $fileName;
+
+    if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+        // Update the URL in the database
+        $conn = db_connect();
+        $sql = "UPDATE reports SET  mrn = ?, test_type = ?, appointment_id = ?, url = ? WHERE report_id = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "iiisi", $mrn, $test_id, $appId, $fileName, $report_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        // echo "The file " . basename($file["name"]) . " has been uploaded.";
+    }   else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+}
+
+
+
+function addAppointment($mrn, $phoneNumber, $testType, $time, $date)
+{
+    $conn = db_connect();
+    $stmt = mysqli_prepare($conn, "INSERT INTO appointments (mrn, phone_number, test_type, time, date) VALUES (?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "ssiss", $mrn, $phoneNumber, $testType, $time, $date);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     mysqli_close($conn);

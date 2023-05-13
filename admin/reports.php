@@ -11,6 +11,37 @@ if (isset($_POST['delete_report'])) {
     deleteReport($report_id);
     $reports = fetchReports();
 }
+// print_r($reports)
+
+if (isset($_POST['update-report'])) {
+    // print_r($_POST);
+    $mrn = $_POST['mrn'];
+    $test_id = $_POST['selected'];
+    $report_id = $_POST['report_id'];
+    $tempUrl = $_POST['temp_url'];
+    $appId = $_POST['app_id'];
+    $file = $_FILES['report-file'];
+    if (empty($mrn) || empty($test_id) || empty($report_id) || empty($tempUrl) || empty($appId)) {
+        $error = "Missing credentials";
+    }
+    if ($file['size'] == 0) {
+        $error = "Missing credentials";
+    }
+    if (empty($error)) {
+        updateReport($mrn, $test_id, $report_id, $tempUrl, $appId, $file);
+        $reports = fetchReports();
+    }
+}
+
+$conn = db_connect();
+$sql = "SELECT test_id, name FROM tests";
+
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$tests = mysqli_fetch_all($result, MYSQLI_ASSOC);
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +64,11 @@ if (isset($_POST['delete_report'])) {
     <section id="reps">
 
         <h1> Reports</h1>
+        <h3 class="input-error" style="margin-top: 1.5rem;" id="form-error">
+            <?php if (!empty($error)) : ?>
+                <?php echo $error; ?>
+            <?php endif; ?>
+        </h3>
         <?php foreach ($reports as $report) : ?>
             <div class='row containerrow indgo '>
                 <div class="rowheaders">
@@ -110,8 +146,9 @@ if (isset($_POST['delete_report'])) {
                     <li>
 
                         <div class=" rowButtons">
-                            <a class="view pointer" href="../view.php?url=<?php echo $report['url'] ?>"> <img src="../assets/icons8-file-24 (1).png"></a>
-                            <div class="update-test pointer" data-id="<?php echo $report['report_id'] ?>"><img src=" ../assets/icons8-modify-20.png">
+                            <a class="view pointer" href="../view.php?url=<?php echo $report['url'] ?>" target="_blank"> <img src="../assets/icons8-file-24 (1).png"></a>
+                            <div class="update-test pointer" data-app="<?php echo $report['appointment_id'] ?>" data-mrn="<?php echo $report['mrn'] ?>" data-test="<?php echo $report['test_id'] ?>" data-url="<?php echo $report['url'] ?>" data-id="<?php echo $report['report_id'] ?>">
+                                <img src=" ../assets/icons8-modify-20.png">
                             </div>
                             <div class="delete pointer" data-id="<?php echo $report['report_id'] ?>"> <img src="../assets/icons8-delete-20.png"></div>
                         </div>
@@ -371,40 +408,39 @@ if (isset($_POST['delete_report'])) {
 
 
 
-    <div id="updateTestModal" class="update-modal">
-        <div class="update-modal-content">
-            <span class="close-update-test">&times;</span>
-            <h2>Update test</h2>
-            <form>
-                <label for="testname"></label>
-                <input type="text" id="testnameform" placeholder="name">
-                <label for="testuserid"></label>
-                <input type="text" id="userIdform" name="appointmentid" placeholder="userId">
+    <div id="updateTestModal" class="add-modal">
+        <div class="add-modal-content">
+            <span class="close-add" id="close-update-test">&times;</span>
+            <h2>Update Report</h2>
+            <form action="reports.php" method="POST" enctype="multipart/form-data">
 
-                <label for=" email"></label>
-                <input type="email" id="testemailform" name="email" placeholder="email">
-                <label for="phone"></label>
-                <input type="tel" id="testphoneform" name="phone" placeholder="phone">
-                <label for="select"></label>
-                <select class="select" name="selected">
+                <label for=""></label>
+                <input type="text" id="mrn-input" placeholder="MRN">
+                <label for=""></label>
+                <input type="text" id="app-id" placeholder="appointment-id">
+
+
+
+                <select class="select" id="selected" name="">
                     <option value="0">Test Type:</option>
-                    <option value="1">Cardiologists</option>
-                    <option value="2">Dermatologists</option>
-                    <option value="3">Endocrinologists</option>
-                    <option value="4">Gastroenterologists</option>
-                    <option value="5">Allergists</option>
-                    <option value="6">Immunologists</option>
+                    <?php foreach ($tests as $test) : ?>
+                        <option value="<?php echo $test['test_id']; ?>">
+                            <?php echo $test['name']; ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
-                <label for="time"></label>
-                <input name="time" type="time" placeholder="time" name="time">
 
 
-                <label for="date"></label>
-                <input name="date" type="date" id="testdateform" placeholder=" Date">
 
 
-                <button type="button" id="updateButton">Update</button>
-
+                <input type="file" id="myFile" name="report-file" class="file-input">
+                <input type="hidden" value="" name="temp_url" id="url">
+                <input type="hidden" value="" name="report_id" id="report-id">
+                <input type="hidden" id="app-id_input_hidden" name="app_id">
+                <input type="hidden" id="mrn_input_hidden" name="mrn">
+                <input type="hidden" id="selected_input_hidden" name="selected">
+                <span> last uploaded: <?php echo $report['url'] ?></span>
+                <button type="submit" name="update-report" id="add-button-test">update report</button>
             </form>
         </div>
     </div>
@@ -426,12 +462,14 @@ if (isset($_POST['delete_report'])) {
 <script defer>
     // Get the update modal element
     let updateTestModal = document.querySelector("#updateTestModal");
+    console.log(updateTestModal);
 
     // Get all the update buttons
     let updateTestButtons = document.querySelectorAll('.update-test');
 
     // Get the close button element
-    let closeupdatetest = updateTestModal.querySelector(".close-update-test");
+    let closeupdatetest = updateTestModal.querySelector("#close-update-test");
+    console.log(closeupdatetest);
 
     // Get the update button element
     let updateTestButton = updateTestModal.querySelector("#updateButton");
@@ -444,26 +482,28 @@ if (isset($_POST['delete_report'])) {
             updateTestModal.style.display = "block";
             // Set the row to update as the parent of the clicked button
             let testRowToUpdate = updateTestButton.parentNode.parentNode.parentNode.parentElement;
-
             // Set the input values to the current row values
-            let emailInput = updateTestModal.querySelector("#testemailform");
-            let phoneInput = updateTestModal.querySelector("#testphoneform");
-            let userid = updateTestModal.querySelector("#userIdform");
-            let testusername = updateTestModal.querySelector("#testnameform");
+            let mrnInput = document.querySelector("#mrn-input");
+            let fileInput = document.querySelector("#url");
+            let appointmentIDInput = document.querySelector("#app-id");
+            let testType = document.querySelector("#selected");
+            let reportId = document.querySelector("#report-id");
 
-            emailInput.value = testRowToUpdate.querySelector("#testemail").textContent.trim();
-            phoneInput.value = testRowToUpdate.querySelector("#testphone").textContent.trim();
-            userid.value = testRowToUpdate.querySelector("#testuserId").textContent.trim();
-            testusername.value = testRowToUpdate.querySelector("#testname").textContent.trim();
-            // Store the row to update and the update button as properties of the update button
-            testrow = testRowToUpdate;
+            mrnInput.value = updateTestButton.dataset.mrn
+            document.querySelector("#mrn_input_hidden").value = updateTestButton.dataset.mrn
+            appointmentIDInput.value = updateTestButton.dataset.app
+            document.querySelector("#app-id_input_hidden").value = updateTestButton.dataset.app
+            testType.value = updateTestButton.dataset.test
+            document.querySelector("#selected_input_hidden").value = updateTestButton.dataset.test
+            fileInput.value = updateTestButton.dataset.url
+            reportId.value = updateTestButton.dataset.id
         });
     });
 
 
     // When the user clicks on the close button, close the update modal
     closeupdatetest.onclick = function() {
-        document.querySelector("#updateTestModal").style.display = "none"
+        updateTestModal.style.display = "none"
     };
 
     // When the user clicks outside the update modal, close it

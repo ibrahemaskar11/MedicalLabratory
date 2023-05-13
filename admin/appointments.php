@@ -11,6 +11,31 @@ if (isset($_POST['delete_app'])) {
     deleteAppointment($app_id);
     $appointments = fetchAppointments();
 }
+if (isset($_POST['update_app'])) {
+    $app_id = $_POST['app_id'];
+    $mrn = $_POST['user_mrn'];
+    $phone = $_POST['phone'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $testType = $_POST['selected'];
+    $time = $_POST['time'];
+    $formattedTime = $time . ':00';
+    $date = $_POST['date'];
+
+    if (empty($mrn) || empty($phone) || empty($name) || empty($email) || empty($testType) || empty($time) || empty($date)) {
+        $error = "Missing credentials";
+    }
+    if ($date < date("Y-m-d")) {
+        $error = "wrong information entered";
+    }
+    if (!preg_match("/^[0-9]{11}$/", $phone)) {
+        $error = "wrong information entered";
+    }
+    if (empty($error)) {
+        updateAppointment($app_id, $mrn, $phone, $testType, $formattedTime, $date);
+        $appointments = fetchAppointments();
+    }
+}
 // print_r($appointments);
 ?>
 
@@ -34,6 +59,12 @@ if (isset($_POST['delete_app'])) {
     <section id="appointments">
 
         <h1>APPOINTMENTS</h1>
+        <h3 class="input-error" style="margin-top: 1.5rem;" id="form-error">
+            <?php if (!empty($error)) : ?>
+                <?php echo $error; ?>
+            <?php endif; ?>
+        </h3>
+
         <?php foreach ($appointments as $appointment) : ?>
             <div class='row containerrow indgo' data-id="<?php echo $appointment['app_id'] ?>">
 
@@ -103,7 +134,7 @@ if (isset($_POST['delete_app'])) {
                     </li>
                     <li>
                         <div class=" rowButtons">
-                            <div class="update-appoint"><img src=" ../assets/icons8-modify-20.png"></div>
+                            <div class="update-appoint" data-id="<?php echo $appointment['app_id'] ?>" data-mrn="<?php echo $appointment['mrn'] ?>" data-phone="<?php echo $appointment['phone_number'] ?>"><img src=" ../assets/icons8-modify-20.png"></div>
                             <div class="delete" data-id="<?php echo $appointment['app_id'] ?>">
                                 <img src="../assets/icons8-delete-20.png">
                             </div>
@@ -346,16 +377,15 @@ if (isset($_POST['delete_app'])) {
         <div class="update-modal-content">
             <span class="close-update-appoint">&times;</span>
             <h2>Update appointment</h2>
-            <form>
+            <form action="appointments.php" method="POST">
                 <label for="appointnameform"></label>
-                <input type="text" id="appointnameform" placeholder="name">
+                <input type="text" name="name" id="appointnameform" placeholder="name">
                 <label for="appointUserIdform"></label>
-                <input type="text" id="appointUserIdform" name="appointmentid" placeholder="user-id">
                 <label for="appointIDform"></label>
-                <input type="email" id="appointIdform" name="email" placeholder="appointment-id">
+                <input type="email" id="appointEmailform" name="email" placeholder="email">
+                <input type="text" id="phone" name="phone" placeholder="phone">
 
                 <label for=" appointEmailform"></label>
-                <input type="email" id="appointEmailform" name="email" placeholder="email">
 
                 <select class="select" name="selected">
                     <option value="0">Test Type:</option>
@@ -373,8 +403,9 @@ if (isset($_POST['delete_app'])) {
                 <label for="date"></label>
                 <input name="date" type="date" id="testdateform" placeholder=" Date">
 
-
-                <button type="button" id="updateAppointButton">Update</button>
+                <input type="hidden" id="update-appointment__mrn" value="" name="user_mrn" placeholder="MRN">
+                <input type="hidden" id="update-appointment__id" value="" name="app_id" placeholder="MRN">
+                <button type="submit" name="update_app" id="updateAppointButton">Update</button>
 
             </form>
         </div>
@@ -424,9 +455,10 @@ if (isset($_POST['delete_app'])) {
             let appointusername = updateAppointModal.querySelector("#appointnameform");
 
             emailInput.value = appointRowToUpdate.querySelector("#appointemail").textContent.trim();
-            appointIdInput.value = appointRowToUpdate.querySelector("#appointid").textContent.trim();
-            userid.value = appointRowToUpdate.querySelector("#appointuserid").textContent.trim();
             appointusername.value = appointRowToUpdate.querySelector("#appointname").textContent.trim();
+            document.getElementById('update-appointment__mrn').value = updatappointButton.dataset.mrn;
+            document.getElementById('update-appointment__id').value = updatappointButton.dataset.id;
+            document.getElementById('phone').value = updatappointButton.dataset.phone
             // Store the row to update and the update button as properties of the update button
             appointrow = appointRowToUpdate;
         });
@@ -463,9 +495,9 @@ if (isset($_POST['delete_app'])) {
         appointrow.querySelector("#appointemail").textContent = emailvalue;
 
         appointrow.querySelector("#appointid").textContent = appointId;
+        appointrow.querySelector("#appointname").textContent = nameValue
 
         appointrow.querySelector("#appointuserid").textContent = userid;
-        appointrow.querySelector("#appointname").textContent = nameValue
         updateAppointModal.style.display = "none";
     });
 </script>
