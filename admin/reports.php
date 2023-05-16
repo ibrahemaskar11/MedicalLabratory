@@ -61,7 +61,7 @@ mysqli_close($conn);
 
 <body>
 
-    <?php include __DIR__ . '/../components/adminnavbar.php'; ?>
+    <?php include __DIR__ . '/../components/navbar.php'; ?>
     <section id="reps">
 
         <h1> Reports</h1>

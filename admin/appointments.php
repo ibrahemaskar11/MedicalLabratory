@@ -55,7 +55,7 @@ if (isset($_POST['update_app'])) {
 </head>
 
 <body>
-    <?php include __DIR__ . '/../components/adminnavbar.php'; ?>
+    <?php include __DIR__ . '/../components/navbar.php'; ?>
     <section id="appointments">
 
         <h1>APPOINTMENTS</h1>

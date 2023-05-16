@@ -101,7 +101,7 @@ mysqli_close($conn);
 </head>
 
 <body>
-    <?php include __DIR__ . '/../components/adminnavbar.php'; ?>
+    <?php include __DIR__ . '/../components/navbar.php'; ?>
     <section id="users">
         <h1>USERS</h1>
 

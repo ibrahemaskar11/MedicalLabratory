@@ -52,6 +52,7 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
     }
 } else if (isset($_POST['appointment']) && !isset($_SESSION['user'])) {
     $appointmentError = "You need to login first";
+    echo '<script>alert("' . $appointmentError . '");</script>';
     // exit();
 }
 // if(isset($_POST['submit'])){
