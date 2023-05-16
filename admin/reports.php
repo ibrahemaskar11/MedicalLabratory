@@ -8,7 +8,8 @@ if (!isset($_SESSION['admin'])) {
 $reports = fetchReports();
 if (isset($_POST['delete_report'])) {
     $report_id = $_POST['user_report_id'];
-    deleteReport($report_id);
+    $report_url = $_POST['user_report_url'];
+    deleteReport($report_id, $report_url);
     $reports = fetchReports();
 }
 // print_r($reports)
@@ -146,11 +147,11 @@ mysqli_close($conn);
                     <li>
 
                         <div class=" rowButtons">
-                            <a class="view pointer" href="../view.php?url=<?php echo $report['url'] ?>" target="_blank"> <img src="../assets/icons8-file-24 (1).png"></a>
+                            <a class="view pointer" href="./view.php?url=<?php echo $report['url'] ?>" target="_blank"> <img src="../assets/icons8-file-24 (1).png"></a>
                             <div class="update-test pointer" data-app="<?php echo $report['appointment_id'] ?>" data-mrn="<?php echo $report['mrn'] ?>" data-test="<?php echo $report['test_id'] ?>" data-url="<?php echo $report['url'] ?>" data-id="<?php echo $report['report_id'] ?>">
                                 <img src=" ../assets/icons8-modify-20.png">
                             </div>
-                            <div class="delete pointer" data-id="<?php echo $report['report_id'] ?>"> <img src="../assets/icons8-delete-20.png"></div>
+                            <div class="delete pointer" data-url="<?php echo $report['url'] ?>" data-id="<?php echo $report['report_id'] ?>"> <img src="../assets/icons8-delete-20.png"></div>
                         </div>
                     </li>
 
@@ -448,6 +449,7 @@ mysqli_close($conn);
     <div id="deleteModal" class="modal">
         <form action="reports.php" method="POST" class="modal-content">
             <input type="hidden" id="delete_report_value" name="user_report_id" value="">
+            <input type="hidden" id="delete_report_url" name="user_report_url" value="">
             <span class="close">&times;</span>
             <h3>Are you sure you want to delete this record?</h3>
             <div class="modal-buttons">
@@ -490,10 +492,13 @@ mysqli_close($conn);
             let reportId = document.querySelector("#report-id");
 
             mrnInput.value = updateTestButton.dataset.mrn
+            mrnInput.disabled = true;
             document.querySelector("#mrn_input_hidden").value = updateTestButton.dataset.mrn
             appointmentIDInput.value = updateTestButton.dataset.app
+            appointmentIDInput.disabled = true;
             document.querySelector("#app-id_input_hidden").value = updateTestButton.dataset.app
             testType.value = updateTestButton.dataset.test
+            testType.disabled = true;
             document.querySelector("#selected_input_hidden").value = updateTestButton.dataset.test
             fileInput.value = updateTestButton.dataset.url
             reportId.value = updateTestButton.dataset.id
@@ -557,13 +562,15 @@ mysqli_close($conn);
 
     let closeButton = document.querySelector(".close");
     let deleteInput = document.getElementById("delete_report_value")
+    let deleteUrl = document.getElementById("delete_report_url")
 
     // When the user clicks on a delete button, open the modal
     deleteButtons.forEach(function(deleteButton) {
         deleteButton.addEventListener("click", function() {
             modal.style.display = "block";
             deleteInput.value = deleteButton.dataset.id;
-            console.log(deleteInput.value);
+            deleteUrl.value = deleteButton.dataset.url;
+
             // Set the row to delete as the parent of the clicked button
             // Store the row to delete as a property of the confirm button
         });

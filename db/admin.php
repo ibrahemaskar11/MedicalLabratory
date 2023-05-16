@@ -93,7 +93,7 @@ function deleteUser($mrn)
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 }
-function deleteReport($reportId)
+function deleteReport($reportId, $reportUrl)
 {
     $conn = db_connect();
     $stmt = mysqli_prepare($conn, "DELETE FROM reports WHERE report_id = ?");
@@ -101,6 +101,11 @@ function deleteReport($reportId)
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
+    $targetDir = '../uploads/';
+    $targetFile = $targetDir . $reportUrl;
+    if (file_exists($targetFile)) {
+        unlink($targetFile);
+    }
 }
 
 function updateUser($mrn, $userName, $userEmail, $userAddress, $userDate)
@@ -186,7 +191,7 @@ function updateReport($mrn, $test_id, $report_id, $tempUrl, $appId, $file)
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
         // echo "The file " . basename($file["name"]) . " has been uploaded.";
-    }   else {
+    } else {
         echo "Sorry, there was an error uploading your file.";
     }
 }

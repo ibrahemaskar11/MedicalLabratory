@@ -23,10 +23,15 @@
     }
     if (empty($password)) {
       $error = "Missing credentials";
-    } else if (empty($address)) {
+    }
+    if (empty($address)) {
       $error = "Missing credentials";
-    } else if (empty($birthDate)) {
+    }
+    if (empty($birthDate)) {
       $error = "Missing credentials";
+    }
+    if ($birthDate >= date("Y-m-d", strtotime("-16 years"))) {
+      $error = "User can not be less than 16 years old";
     }
     if (empty($error)) {
       try {

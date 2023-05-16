@@ -328,7 +328,7 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                     <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
                                     <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span>Liver Function Blood Test</li>
                                 </ul>
-                                <button class="btn plan-actions">Get Started</button>
+                                <!-- <button class="btn plan-actions">Get Started</button> -->
                             </div>
                         </div>
                         <div class="pricing-plan pricing-plan-premium">
@@ -359,7 +359,7 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                         Levels
                                     </li>
                                 </ul>
-                                <button class="btn plan-actions">Get Started</button>
+                                <!-- <button class="btn plan-actions">Get Started</button> -->
                             </div>
                         </div>
                         <div class="pricing-plan">
@@ -387,7 +387,7 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                                     <li style="visibility: hidden;"> <span><img src="./assets/icons8-done-48.png" alt=""></span> Cholesterol Lipid Levels</li>
 
                                 </ul>
-                                <button class="btn plan-actions">Get Started</button>
+                                <!-- <button class="btn plan-actions">Get Started</button> -->
                             </div>
                         </div>
 

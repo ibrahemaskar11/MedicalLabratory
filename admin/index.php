@@ -14,13 +14,16 @@ if (isset($_POST['delete_user'])) {
 }
 
 if (isset($_POST['add-report'])) {
-    $testTypeID = $_POST['test-type'];
+    $testTypeID = $_POST['selected'];
     $appointmentID = $_POST['app_id'];
     $mrn = $_POST['mrn'];
     $file = $_FILES['report-file'];
 
-    $result = uploadFile($testTypeID, $appointmentID, $mrn, $file);
-    echo $result;
+    if (!empty($testTypeID) && !empty($appointmentID) && !empty($mrn) && $file['size'] != 0 && $appointmentID != 0) {
+        uploadFile($testTypeID, $appointmentID, $mrn, $file);
+    } else {
+        $error = "Error: Missing required input values.";
+    }
 }
 if (isset($_POST['update_user'])) {
     $userMrn = $_POST['user_mrn'];
@@ -32,8 +35,8 @@ if (isset($_POST['update_user'])) {
     if (empty($userMrn) || empty($userEmail) || empty($userName) || empty($userDate) || empty($userAddress)) {
         $error = "Missing credentials";
     }
-    if ($userDate > date("Y-m-d")) {
-        $error = "Please enter a valid date";
+    if ($userDate >= date("Y-m-d", strtotime("-16 years"))) {
+        $error = "User can not be less than 16 years old";
     }
     if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
         $error = "Please enter a valid email";
@@ -92,6 +95,8 @@ mysqli_close($conn);
     <link rel="stylesheet" href="../styles/modals.css" />
 
     <link rel="stylesheet" href="../styles/media-query.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <title>Edge Laboratory</title>
 </head>
 
@@ -153,7 +158,7 @@ mysqli_close($conn);
                     </li>
                     <li>
                         <div class=" rowButtons">
-                            <div class="add" id="actions-add-report" data-name="<?php echo $user['username'] ?>" data-email="<?php echo $user['email'] ?>" data-address="<?php echo $user['address'] ?>" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-add-20.png"></div>
+                            <div class="add add-report" id="actions-add-report" data-name="<?php echo $user['username'] ?>" data-email="<?php echo $user['email'] ?>" data-address="<?php echo $user['address'] ?>" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-add-20.png"></div>
                             <div class="update" id="actions-update-user" data-date="<?php echo $user['birthdate'] ?>" data-name="<?php echo $user['username'] ?>" data-email="<?php echo $user['email'] ?>" data-address="<?php echo $user['address'] ?>" data-mrn="<?php echo $user['mrn'] ?>"><img src=" ../assets/icons8-modify-20.png"></div>
                             <div class="delete" data-name="<?php echo $user['username'] ?>" data-email="<?php echo $user['email'] ?>" data-address="<?php echo $user['address'] ?>" data-mrn="<?php echo $user['mrn'] ?>"> <img src="../assets/icons8-delete-20.png"></div>
 
@@ -458,23 +463,17 @@ mysqli_close($conn);
             <form action="index.php" method="POST" enctype="multipart/form-data">
 
                 <label for=""></label>
-                <input type="text" id="mrn-input" name="mrn" placeholder="MRN">
+                <input type="text" id="mrn-input" placeholder="MRN">
+                <input type="hidden" id="mrn-input_hidden" name="mrn" placeholder="MRN">
                 <label for=""></label>
-                <input type="text" id="app-id" name="app_id" placeholder="appointment-id">
+                <!-- <input type="text" id="app-id" name="app_id" placeholder="appointment-id"> -->
+                <select class="select" id="appointment-dropdown" name="app_id">
+                    <option value="0">appointment:</option>
 
-
-
-                <select class="select" name="selected">
-                    <option value="0">Test Type:</option>
-                    <?php foreach ($tests as $test) : ?>
-                        <option value="<?php echo $test['test_id']; ?>">
-                            <?php echo $test['name']; ?>
-                        </option>
-                    <?php endforeach; ?>
                 </select>
 
 
-
+                <input hidden class="select" id="test-id" name="selected">
 
                 <input type="file" id="myFile" name="report-file" class="file-input">
                 <button type="submit" name="add-report" id="add-button-test">add test</button>
@@ -684,10 +683,13 @@ mysqli_close($conn);
     let addcloseButton = document.querySelector(".choose-modal-close");
     // When the user clicks on a delete button, open the modal
     let mrnInput = document.getElementById("mrn-input")
+    let mrnInputHidden = document.getElementById("mrn-input_hidden")
     mrnInputAppointment = document.getElementById('add-appointment__mrn')
     addButtons.forEach(function(addButton) {
         addButton.addEventListener("click", function() {
             mrnInput.value = addButton.dataset.mrn
+            mrnInputHidden.value = addButton.dataset.mrn
+            mrnInput.disabled = true
             mrnInputAppointment.value = addButton.dataset.mrn
             document.getElementById('add-appointment__name').value = addButton.dataset.name
             document.getElementById('add-appointment__email').value = addButton.dataset.email
@@ -804,4 +806,61 @@ mysqli_close($conn);
         document.getElementById("chooseModal").style.display = "none";
         addtestmodal.style.display = "none";
     };
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.add-report').click(function(event) {
+            console.log('hello');
+            let mrn = $(this).data('mrn');
+
+            // Perform an AJAX request to fetch the user appointments
+            $.ajax({
+                url: '../db/fetch_appointments.php', // Replace with the appropriate URL to fetch user appointments
+                method: 'POST',
+                data: {
+                    mrn: mrn
+                },
+                success: function(response) {
+                    // Parse the response data (assuming it's in JSON format)
+                    var appointments = response;
+
+                    // Get a reference to the <select> element
+                    var selectElement = $('#appointment-dropdown');
+
+                    // Clear the existing options
+                    selectElement.empty();
+
+                    // Add a default option
+                    selectElement.append('<option value="0">Appointment:</option>');
+                    console.log(appointments);
+
+                    // Add the appointments as options
+                    for (var i = 0; i < appointments.length; i++) {
+                        var appointment = appointments[i];
+                        selectElement.append(`<option data-test=${appointment.test_type} value=${appointment.app_id} + appointment.app_id > ${appointment.app_id}: on ${appointment.date} </option>`);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.error(error);
+                }
+            });
+        });
+        $('#appointment-dropdown').change(function() {
+            // Check if an option is selected
+            if ($(this).val() !== '0') {
+                console.log('An option is selected');
+                let test = $(this).find(':selected').data('test');
+                $('#test-id').val(test);
+                console.log($('#test-id').val());
+            } else {
+                // No option is selected
+                console.log('No option is selected');
+
+                // Here, you can handle the case when no option is selected
+            }
+        });
+
+    });
 </script>
