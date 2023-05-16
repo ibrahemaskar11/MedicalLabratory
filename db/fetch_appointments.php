@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/db.php';
+require_once __DIR__ . 'conn.php';
 
 // Extract the MRN from the request body
 $mrn = $_POST['mrn'];

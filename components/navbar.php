@@ -1,32 +1,35 @@
-<?php
-$requestUri = $_SERVER['REQUEST_URI'];
-?>
-
-<nav class="<?php if (str_contains($requestUri, 'admin')) {
-                echo ('navbar-admin');
-            } else {
-                echo 'navbar';
-            } ?>">
+<nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-left">
             <h1 class="Poiret">edge.</h1>
             <div class="nav-list-container">
-                <?php if (str_contains($requestUri, 'admin')) : ?>
-                   <ul class="nav-list ">
-                        <li><a href="index.php"> Users</a></li>
-                        <li><a href="reports.php">Reports</a></li>
-                        <li><a href="appointments.php">Apointments</a></li>
-                    </ul>
-                <?php else : ?>
-                    <ul class="nav-list ">
-                        <li><a href="http://localhost:8001/MedicalLabratory/#hom"> Home</a></li>
-                        <li><a href="http://localhost:8001/MedicalLabratory/#abt">About</a></li>
-                        <li><a href="http://localhost:8001/MedicalLabratory/#srvs">Services</a></li>
-                        <li><a href="http://localhost:8001/MedicalLabratory/#pri">Pricing</a></li>
-                        <li><a href="http://localhost:8001/MedicalLabratory/#us">Make an Appointment</a></li>
-                    </ul>
-                <?php endif; ?>
-
+                <ul class="nav-list ">
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#hom";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#hom";
+                                    } ?>"> Home</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#abt";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#abt";
+                                    } ?>">About</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#srvs";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#srvs";
+                                    } ?>">Services</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#pri";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#pri";
+                                    } ?>">Pricing</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#us";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#us";
+                                    } ?>">Make an Appointment</a></li>
+                </ul>
             </div>
         </div>
         <div class="navbar-right__actions ">

@@ -1,12 +1,5 @@
 <?php
-
-function db_connect()
-{
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    $conn = mysqli_connect('localhost', 'root', '', 'MedicalLaboratory', 4306);
-
-    return $conn;
-}
+require_once 'conn.php';
 
 function login($email, $password)
 {
