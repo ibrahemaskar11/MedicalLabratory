@@ -4,11 +4,31 @@
             <h1 class="Poiret">edge.</h1>
             <div class="nav-list-container">
                 <ul class="nav-list ">
-                    <li><a href="http://localhost:8001/MedicalLabratory/"> Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Pricing</a></li>
-                    <li><a href="#">Contact us</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#hom";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#hom";
+                                    } ?>"> Home</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#abt";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#abt";
+                                    } ?>">About</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#srvs";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#srvs";
+                                    } ?>">Services</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#pri";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#pri";
+                                    } ?>">Pricing</a></li>
+                    <li><a href="<?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
+                                        echo "#us";
+                                    } else {
+                                        echo "http://localhost:8001/MedicalLabratory/#us";
+                                    } ?>">Make an Appointment</a></li>
                 </ul>
             </div>
         </div>
@@ -19,7 +39,7 @@
                     <a class="btn sign-up" href="http://localhost:8001/MedicalLabratory/signup.php">Sign Up</a>
                 <?php else : ?>
                     <a class="btn sign-in" href="http://localhost:8001/MedicalLabratory/logout.php">Logout</a>
-                    <?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/") {
+                    <?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
                         echo '<a class="account-btn" href="http://localhost:8001/MedicalLabratory/profile.php">
                             <img src="./assets/icons8-user-24.png" alt="">
                         </a>';
@@ -53,3 +73,16 @@
         </div>
     </div>
 </nav>
+
+<script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>

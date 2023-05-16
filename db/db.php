@@ -71,7 +71,7 @@ function fetchAppointments($userId)
     $sql = "SELECT a.app_id, a.date, a.time, a.phone_number, t.name AS test_name
         FROM appointments a
         JOIN tests t ON a.test_type = t.test_id
-        WHERE a.mrn = ?";
+        WHERE a.mrn = ? AND a.date >= CURDATE()";
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $userId);
@@ -188,7 +188,7 @@ function updateUserPassword($mrn, $currentPassword, $newPassword)
 
         // Close the database connection
         mysqli_close($conn);
-        return 'success';   
+        return 'success';
     } else {
         return 'something went wrong';
     }

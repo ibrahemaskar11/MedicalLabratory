@@ -58,44 +58,8 @@ if (isset($_POST['update_password'])) {
         }
     }
 }
-// print_r($reports);
-// print_r($appointments);
 
-// session_start();
-// if (!isset($_SESSION['user'])) {
-//     header('location:login.php');
-//     exit();
-// }
-//     $tests=['Cardiologists', 'Dermatologists', 'Endocrinologists', 'Gastroenterologists', 'Allergists', 'Immunologists'];
-//     $id = $_SESSION['user']['userid'];
-//     require('conn-db.php');
-//     $sql = $conn->prepare("SELECT * FROM appointments where userid = '$id'");
-//     $sql->execute();
-//     $data = $sql->fetchAll();
-
-//     if(isset($_POST['update'])){
-//         $id=filter_var($_POST['id'],FILTER_SANITIZE_STRING);
-//         $phoneNumber=filter_var($_POST['phone'],FILTER_SANITIZE_STRING);
-//         $email=filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
-//         $selected = $_POST['selected'];
-//         $time = $_POST['time'];
-//         $date = $_POST['date'];
-//         $user = $_SESSION['user']['userid'];
-//         $sql = $conn->prepare("UPDATE 
-//         appointments SET  phone_number = '$phoneNumber', appointment_date = '$date', time='$time',test_type = '$selected' WHERE id = '$id'");
-//         $sql->execute();
-//         header("Refresh:0");
-//     }
-//     if(isset($_POST['delete'])){
-//         $delete_id = $_POST['delete_id'];
-//         $sql2 = $conn->prepare("DELETE from appointments WHERE id = '$delete_id'");
-//         $sql2->execute();
-//         header("Refresh:0");
-
-//     }
-//     $reportSql = $conn->prepare("SELECT * FROM tests where userid = '$id'");
-//     $reportSql->execute();
-//     $reports = $reportSql->fetchAll();
+$formattedDate = date('Y-m-d', strtotime($_SESSION['user']['birthdate']));
 
 ?>
 <!DOCTYPE html>
@@ -411,7 +375,8 @@ if (isset($_POST['update_password'])) {
                 <h2>Update Appointment</h2>
                 <form action="profile.php" method="POST">
                     <label for="appointmentid"></label>
-                    <input type="text" id="appIdForm" name="appointmentid" placeholder="appointment-id">
+                    <input type="text" id="appIdForm" placeholder="appointment-id">
+                    <input type="hidden" id="appIdForm_hidden" name="appointmentid" placeholder="appointment-id">
                     <label for=" email"></label>
                     <input type="email" value="<?php echo $_SESSION['user']['email']; ?>" id="emailform" name="email" placeholder="email">
                     <label for="phone"></label>
@@ -451,7 +416,7 @@ if (isset($_POST['update_password'])) {
                     <label for=""></label>
                     <input type="text" id="edituseremail" name="email_input" placeholder="email">
                     <label for=""></label>
-                    <input type="date" value="<?php echo $formattedDate; ?>" id="edituserage" name="date_input" placeholder="age">
+                    <input type="date" value="<?php echo $formattedDate ?>" id="edituserage" name="date_input" placeholder="age">
                     <label for=""></label>
                     <input type="text" id="edituserfrom" name="address_input" placeholder="from">
 
@@ -561,6 +526,9 @@ if (isset($_POST['update_password'])) {
             console.log(updateButton.dataset);
             document.getElementById("phoneform").value = updateButton.dataset.phone;
             document.getElementById("appIdForm").value = updateButton.dataset.id;
+            document.getElementById("appIdForm_hidden").value = updateButton.dataset.id;
+            document.getElementById("appIdForm").disabled = true;
+
             // Set the row to update as the parent of the clicked button
             let rowToUpdate = updateButton.parentNode.parentNode.parentElement.parentElement;
             // Set the input values to the current row values
@@ -604,7 +572,7 @@ if (isset($_POST['update_password'])) {
         console.log(infoToUpdate.querySelector("#profilename"))
         document.getElementById("editusername").value = infoToUpdate.querySelector("#profilename").textContent.trim();
         document.getElementById("edituseremail").value = infoToUpdate.querySelector("#profileemail").textContent.trim();
-        document.getElementById("edituserage").value = infoToUpdate.querySelector("#profileage").textContent.trim();
+        // document.getElementById("edituserage").value = infoToUpdate.querySelector("#profileage").textContent.trim();
         document.getElementById("edituserfrom").value = infoToUpdate.querySelector("#profilefrom").textContent.trim();
 
     })

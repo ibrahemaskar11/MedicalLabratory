@@ -8,7 +8,7 @@ $mrn = $_POST['mrn'];
 $conn = db_connect();
 
 // Prepare the SQL query to retrieve appointments based on MRN
-$sql = "SELECT * FROM appointments WHERE mrn = ?";
+$sql = "SELECT * FROM appointments WHERE mrn = ? AND date <= CURDATE()";
 $stmt = mysqli_prepare($conn, $sql);
 
 // Bind the MRN parameter and execute the query

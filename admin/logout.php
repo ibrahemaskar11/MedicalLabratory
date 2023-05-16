@@ -1,5 +1,4 @@
 <?php
 session_start();
-session_unset();
+unset($_SESSION['admin']);
 header('location:/MedicalLabratory/admin/login.php');
-?>

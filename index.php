@@ -22,7 +22,7 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
     $userid = $_SESSION['user']['id'];
     $email = $_SESSION['user']['email'];
     $phoneNumber = $_POST['phone'];
-    $selected = $_POST['test'];
+    $selected = $_POST['selected'];
     $time = $_POST['time'];
     $date = $_POST['date'];
     if (empty($phoneNumber)) {
@@ -300,7 +300,7 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                 </div>
             </div>
         </section>
-        <section class="pricing" id="pricing">
+        <section class="pricing" id="pri">
             <div class="container">
                 <div class="pricing-container">
                     <h3>Pricing</h3>

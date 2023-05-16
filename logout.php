@@ -1,5 +1,7 @@
 <?php
 session_start();
-session_unset();
-header('location:index.php');
-?>
+
+// Unset the user session variable
+unset($_SESSION['user']);
+
+header('location: index.php');

@@ -45,6 +45,7 @@ function fetchAppointments()
         FROM appointments a
         JOIN tests t ON a.test_type = t.test_id
         JOIN users u ON a.mrn = u.mrn
+        ORDER BY a.date DESC
 ";
 
     $stmt = mysqli_prepare($conn, $sql);

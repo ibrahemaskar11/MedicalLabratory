@@ -105,6 +105,16 @@ if (isset($_POST['update_app'])) {
                     <li>
                         <div class="rowItem">
                             <h3>
+                                date
+                            </h3>
+                            <h4 id="appointemail">
+                                <?php echo $appointment['date'] ?>
+                            </h4>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rowItem">
+                            <h3>
                                 email
                             </h3>
                             <h4 id="appointemail">
@@ -112,6 +122,7 @@ if (isset($_POST['update_app'])) {
                             </h4>
                         </div>
                     </li>
+
                     <li>
                         <div class="rowItem">
                             <h3>
