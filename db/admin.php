@@ -10,7 +10,6 @@ function login($email, $password)
     $admin = mysqli_fetch_assoc($result);
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
-    print_r($admin);
     return $admin;
 }
 
@@ -170,8 +169,8 @@ function updateReport($mrn, $test_id, $report_id, $tempUrl, $appId, $file)
     // unlink($targetDir . $tempUrl);
 
     // File upload
-
-    $fileName = $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time) . '.pdf';
+    $randomNumber = rand(1, 9999); // Generates a random number between 1000 and 9999
+    $fileName = $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time) . '-' . $randomNumber . '.pdf';
     $targetFile = $targetDir . $fileName;
 
     if (move_uploaded_file($file['tmp_name'], $targetFile)) {
@@ -248,14 +247,15 @@ function uploadFile($testTypeID, $appointmentID, $mrn, $file)
 
     // File upload
     $targetDir = '../uploads/';
-    $fileName = $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time) . '.pdf';
-    $targetFile = $targetDir . $fileName;
-
+    $uniqueId = uniqid();
+    $fileName = $uniqueId . $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time);
+    $hashedFileName = hash('sha256', $fileName) . '.pdf';
+    $targetFile = $targetDir . $hashedFileName;
     if (move_uploaded_file($file['tmp_name'], $targetFile)) {
         $reportQuery = "INSERT INTO reports (url, mrn, test_type, appointment_id) VALUES (?, ?, ?, ?)";
         $conn = db_connect();
         $stmt = mysqli_prepare($conn, $reportQuery);
-        mysqli_stmt_bind_param($stmt, "siii", $fileName, $mrn, $testTypeID, $appointmentID);
+        mysqli_stmt_bind_param($stmt, "siii", $hashedFileName, $mrn, $testTypeID, $appointmentID);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         mysqli_close($conn);

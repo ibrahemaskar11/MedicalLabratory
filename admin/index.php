@@ -3,7 +3,7 @@ require_once __DIR__ . '/../db/admin.php';
 session_start();
 if (!isset($_SESSION['admin'])) {
     header('location:login.php');
-    exit();
+    exit;
 }
 
 $users = fetchUsers();
@@ -79,9 +79,11 @@ $result = mysqli_stmt_get_result($stmt);
 $tests = mysqli_fetch_all($result, MYSQLI_ASSOC);
 mysqli_stmt_close($stmt);
 mysqli_close($conn);
-// print_r($tests);
 
-// print_r($_SESSION['admin'])
+// echo "<pre>";
+// print_r($users);
+// echo "</pre>";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,11 +92,11 @@ mysqli_close($conn);
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles/adminstyles.css" />
-    <link rel="stylesheet" href="../styles/styles.css" />
-    <link rel="stylesheet" href="../styles/modals.css" />
+    <link rel="stylesheet" href="../styles/adminstyles.css?<?= rand() ?>" />
+    <link rel="stylesheet" href="../styles/styles.css?<?= rand() ?>" />
+    <link rel="stylesheet" href="../styles/modals.css?<?= rand() ?>" />
 
-    <link rel="stylesheet" href="../styles/media-query.css" />
+    <link rel="stylesheet" href="../styles/media-query.css?<?= rand() ?>" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <title>Edge Laboratory</title>

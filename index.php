@@ -116,8 +116,8 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles/styles.css" />
-    <link rel="stylesheet" href="./styles/media-query.css" />
+    <link rel="stylesheet" href="./styles/styles.css?<?= rand() ?>" />
+    <link rel="stylesheet" href="./styles/media-query.css?<?= rand() ?>" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         // $(document).ready(function() {
@@ -169,7 +169,7 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
 </head>
 
 <body>
-    <?php require __DIR__ . '/components/navbar.php' ?>
+    <?php include __DIR__ . '/components/navbar.php' ?>
 
     <main>
         <section class="hero" id="hero">
@@ -505,66 +505,8 @@ if (isset($_SESSION['user']) && isset($_POST['appointment'])) {
                     </div>
                 </div>
             </div>
-            <footer class="footer">
-                <div class="footer-container">
-                    <div class="footer-contact-us">
-                        <h3>Contact Us</h3>
-                        <ul>
-                            <li>2946 Angus Road, NY</li>
-                            <li>+31 123 456 7890</li>
-                            <li>contact@edge.com</li>
-                        </ul>
-                    </div>
-                    <div class="footer-account">
-                        <h3>Account</h3>
-                        <ul>
-                            <li>Sign in</li>
-                            <li>Create account</li>
-                            <li>IOS App</li>
-                            <li>Android App</li>
-                        </ul>
-                    </div>
-                    <div class="footer-company">
-                        <h3>Company</h3>
-                        <ul>
-                            <li>About Us</li>
-                            <li>Services</li>
-                            <li>Our Team</li>
-                            <li>Contacts</li>
-                        </ul>
-                    </div>
-                    <div class="footer-legal">
-                        <h3>LEGAL</h3>
-                        <ul>
-                            <li>Claims</li>
-                            <li>Privacy</li>
-                            <li>Terms</li>
-                            <li>Policies</li>
-                        </ul>
-                    </div>
+            <?php include __DIR__ . '/components/footer.php' ?>
 
-
-                    <div class="footer-subscribe">
-                        <h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
-                        <p>The latest news, articles, and resources, sent to your inbox weekly.</p>
-                        <div class="subscribe-actions">
-                            <input type="email" placeholder="Enter your email address">
-                            <button class="btn btn-subscribe">
-                                Subscribe
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-copyright">
-                    <h3 class="Poiret">edge</h3>
-                    <p class="footer__copyright">
-                        &copy; Copyright by
-                        <a class="footer__link twitter-link" href="https://twitter.com/ibrahim_askar11">Ibrahim Askar
-                        </a>All rights reserved
-                    </p>
-                </div>
-                </div>
-            </footer>
     </main>
     <script defer>
         const btn = document.querySelector(".navbar-btn");

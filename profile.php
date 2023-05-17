@@ -3,11 +3,11 @@ require_once __DIR__ . '/db/db.php';
 session_start();
 if (!isset($_SESSION['user'])) {
     header('location:login.php');
-    exit();
+    exit;
 }
 $appointments = fetchAppointments($_SESSION['user']['id']);
 $reports = fetchReports($_SESSION['user']['id']);
-if (isset($_POST['update_user'])) {
+if (isset($_POST['update_app'])) {
     $mrn = $_SESSION['user']['id'];
     $appointmentId = $_POST['appointmentid'];
     $phone = $_POST['phone'];
@@ -38,6 +38,9 @@ if (isset($_POST['edit_user'])) {
     $emailInput = $_POST['email_input'];
     $addressInput = $_POST['address_input'];
     $dateInput = $_POST['date_input'];
+    if ($dateInput >= date("Y-m-d", strtotime("-16 years"))) {
+        $error = "User can not be less than 16 years old";
+    }
     if (empty($usernameInput) || empty($emailInput) || empty($addressInput) || empty($dateInput)) {
         $error = "Missing credentials";
     }
@@ -68,9 +71,9 @@ $formattedDate = date('Y-m-d', strtotime($_SESSION['user']['birthdate']));
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles/styles.css" />
-    <link rel="stylesheet" href="./styles/modals.css" />
-    <link rel="stylesheet" href="./styles/media-query.css" />
+    <link rel="stylesheet" href="./styles/styles.css?<?= rand() ?>" />
+    <link rel="stylesheet" href="./styles/modals.css?<?= rand() ?>" />
+    <link rel="stylesheet" href="./styles/media-query.css?<?= rand() ?>" />
     <title>Edge Laboratory</title>
 
 
@@ -294,66 +297,7 @@ $formattedDate = date('Y-m-d', strtotime($_SESSION['user']['birthdate']));
                 </div>
         </section>
 
-        <footer class="footer" id="contact">
-            <div class="footer-container">
-                <div class="footer-contact-us">
-                    <h3>Contact Us</h3>
-                    <ul>
-                        <li>2946 Angus Road, NY</li>
-                        <li>+31 123 456 7890</li>
-                        <li>contact@edge.com</li>
-                    </ul>
-                </div>
-                <div class="footer-account">
-                    <h3>Account</h3>
-                    <ul>
-                        <li>Sign in</li>
-                        <li>Create account</li>
-                        <li>IOS App</li>
-                        <li>Android App</li>
-                    </ul>
-                </div>
-                <div class="footer-company">
-                    <h3>Company</h3>
-                    <ul>
-                        <li>About Us</li>
-                        <li>Services</li>
-                        <li>Our Team</li>
-                        <li>Contacts</li>
-                    </ul>
-                </div>
-                <div class="footer-legal">
-                    <h3>LEGAL</h3>
-                    <ul>
-                        <li>Claims</li>
-                        <li>Privacy</li>
-                        <li>Terms</li>
-                        <li>Policies</li>
-                    </ul>
-                </div>
-
-
-                <div class="footer-subscribe">
-                    <h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
-                    <p>The latest news, articles, and resources, sent to your inbox weekly.</p>
-                    <div class="subscribe-actions">
-                        <input type="email" placeholder="Enter your email address">
-                        <button class="btn btn-subscribe">
-                            Subscribe
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright">
-                <h3>EDGE</h3>
-                <p class="footer__copyright">
-                    &copy; Copyright by
-                    <a class="footer__link twitter-link" target="_blank" href="https://twitter.com/ibrahim_askar11">Ibrahim
-                        Askar </a>All rights reserved
-                </p>
-            </div>
-            </div>
-        </footer>
+        <?php include __DIR__ . '/components/footer.php' ?>
 
 
 
@@ -399,7 +343,7 @@ $formattedDate = date('Y-m-d', strtotime($_SESSION['user']['birthdate']));
                     <input name="date" type="date" placeholder="Date">
 
 
-                    <button type="submit" name="update_user" id="updateButton">Update</button>
+                    <button type="submit" name="update_app" id="updateButton">Update</button>
 
                 </form>
             </div>

@@ -20,22 +20,22 @@ if (isset($_POST['login'])) {
   }
   if (empty($error)) {
     $admin = login($email, $password);
-    $_SESSION['admin'] = [
-      "id" => $admin['id'],
-      "name" => $admin['name'],
-      "email" => $admin['email'],
-      "address" => $admin['address'],
-      "birthdate" => $admin['birthdate'],
-      "age" => $admin['age'],
-    ];
-    header('location:index.php');
-    print_r($admin);
     if ($admin === null) {
       $error = "Wrong email or password";
     } else {
       $error = '';
+      $_SESSION['admin'] = [
+        "id" => $admin['id'],
+        "name" => $admin['name'],
+        "email" => $admin['email'],
+        "address" => $admin['address'],
+        "birthdate" => $admin['birthdate'],
+        "age" => $admin['age'],
+      ];
       header("location: index.php");
     }
+    // header('location:index.php');
+    print_r($admin);
   }
 }
 
@@ -48,7 +48,7 @@ if (isset($_POST['login'])) {
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../styles/styles.css" />
+  <link rel="stylesheet" href="../styles/styles.css?<?= rand() ?>" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -199,7 +199,7 @@ if (isset($_POST['login'])) {
           </div> -->
         <!-- <div class="signup__footer">
           you don't have an account?
-          <a class="login__link" href="http://localhost:8001/MedicalLabratory/signup.php  "> sign up </a>
+          <a class="login__link" href="./signup.php  "> sign up </a>
           .
         </div> -->
       </div>

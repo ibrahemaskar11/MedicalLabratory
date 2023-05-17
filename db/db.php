@@ -128,20 +128,24 @@ function updateUser($mrn, $userName, $userEmail, $userAddress, $userDate)
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 
-    $conn = db_connect();
-    $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE mrn = ?");
-    mysqli_stmt_bind_param($stmt, "s", $mrn);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $user = mysqli_fetch_assoc($result);
-    mysqli_stmt_close($stmt);
+    // $conn = db_connect();
+    // $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE mrn = ?");
+    // mysqli_stmt_bind_param($stmt, "s", $mrn);
+    // mysqli_stmt_execute($stmt);
+    // $result = mysqli_stmt_get_result($stmt);
+    // $user = mysqli_fetch_assoc($result);
+    // mysqli_stmt_close($stmt);
+
+    $date = new DateTime($userDate);
+    $today = new DateTime();
+    $age = $today->diff($date)->y;
     $_SESSION['user'] = [
-        "id" => $user['mrn'],
-        "name" => $user['username'],
-        "email" => $user['email'],
-        "address" => $user['address'],
-        "birthdate" => $user['birthdate'],
-        "age" => $user['age'],
+        "id" => $mrn,
+        "name" => $userName,
+        "email" => $userEmail,
+        "address" => $userAddress,
+        "birthdate" => $userDate,
+        "age" => $age,
     ];
 }
 
@@ -160,6 +164,7 @@ function updateUserPassword($mrn, $currentPassword, $newPassword)
 
     // Fetch the hashed password from the result
     mysqli_stmt_bind_result($selectStmt, $hashedPassword);
+
     mysqli_stmt_fetch($selectStmt);
 
     // Close the select statement
