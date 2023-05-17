@@ -44,6 +44,9 @@ if (isset($_POST['edit_user'])) {
     if (empty($usernameInput) || empty($emailInput) || empty($addressInput) || empty($dateInput)) {
         $error = "Missing credentials";
     }
+    if (!preg_match("/^[a-zA-Z ]{2,30}$/", $usernameInput)) {
+        $error = "invalid username";
+    }
     if (empty($error)) {
         updateUser($mrn, $usernameInput, $emailInput, $addressInput, $dateInput);
     }

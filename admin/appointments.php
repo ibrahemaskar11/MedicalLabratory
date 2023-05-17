@@ -107,7 +107,7 @@ if (isset($_POST['update_app'])) {
                             <h3>
                                 date
                             </h3>
-                            <h4 id="appointemail">
+                            <h4 id="">
                                 <?php echo $appointment['date'] ?>
                             </h4>
                         </div>

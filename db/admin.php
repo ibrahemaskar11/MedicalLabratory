@@ -169,16 +169,16 @@ function updateReport($mrn, $test_id, $report_id, $tempUrl, $appId, $file)
     // unlink($targetDir . $tempUrl);
 
     // File upload
-    $randomNumber = rand(1, 9999); // Generates a random number between 1000 and 9999
-    $fileName = $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time) . '-' . $randomNumber . '.pdf';
-    $targetFile = $targetDir . $fileName;
+    $fileName = $report_id . $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time);
+    $hashedFileName = hash('sha256', $fileName) . '.pdf';
+    $targetFile = $targetDir . $hashedFileName;
 
     if (move_uploaded_file($file['tmp_name'], $targetFile)) {
         // Update the URL in the database
         $conn = db_connect();
         $sql = "UPDATE reports SET  mrn = ?, test_type = ?, appointment_id = ?, url = ? WHERE report_id = ?";
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "iiisi", $mrn, $test_id, $appId, $fileName, $report_id);
+        mysqli_stmt_bind_param($stmt, "iiisi", $mrn, $test_id, $appId, $hashedFileName, $report_id);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
@@ -187,7 +187,6 @@ function updateReport($mrn, $test_id, $report_id, $tempUrl, $appId, $file)
         echo "Sorry, there was an error uploading your file.";
     }
 }
-
 
 
 function addAppointment($mrn, $phoneNumber, $testType, $time, $date)
@@ -246,17 +245,22 @@ function uploadFile($testTypeID, $appointmentID, $mrn, $file)
     $appointmentDate = $appointmentData['date'];
 
     // File upload
+    $reportQuery = "INSERT INTO reports (url, mrn, test_type, appointment_id) VALUES (?, ?, ?, ?)";
+    $conn = db_connect();
+    $stmt = mysqli_prepare($conn, $reportQuery);
+    mysqli_stmt_bind_param($stmt, "siii", $hashedFileName, $mrn, $testTypeID, $appointmentID);
+    mysqli_stmt_execute($stmt);
+    $reportId = mysqli_insert_id($conn);
     $targetDir = '../uploads/';
-    $uniqueId = uniqid();
-    $fileName = $uniqueId . $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time);
+    $fileName = $reportId . $testName . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time);
     $hashedFileName = hash('sha256', $fileName) . '.pdf';
     $targetFile = $targetDir . $hashedFileName;
     if (move_uploaded_file($file['tmp_name'], $targetFile)) {
-        $reportQuery = "INSERT INTO reports (url, mrn, test_type, appointment_id) VALUES (?, ?, ?, ?)";
-        $conn = db_connect();
-        $stmt = mysqli_prepare($conn, $reportQuery);
-        mysqli_stmt_bind_param($stmt, "siii", $hashedFileName, $mrn, $testTypeID, $appointmentID);
+        $updateQuery = "UPDATE reports SET url = ? WHERE report_id = ?";
+        $stmt = mysqli_prepare($conn, $updateQuery);
+        mysqli_stmt_bind_param($stmt, "si", $hashedFileName, $reportId);
         mysqli_stmt_execute($stmt);
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
     } else {
